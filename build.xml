@@ -1,4 +1,4 @@
-<project name="BuildServer" default="selena" basedir="." xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+<project name="BuildServer" default="start" basedir="." xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
   
   <property name="dest" value="c:/IDEA" />
 
@@ -12,14 +12,55 @@
     </classpath>
   </taskdef>
 
- <target name="selena">
-   <property name="ivy-conf-xml" value="${basedir}/ivy-selena.xml" />
-   <antcall target="fetch" />
+ <target name="start">
+   <echo>Use r# for resharper update and idea to idea update</echo>
+   <fail/>
  </target>
 
- <target name="selena-pinned">
-   <property name="ivy-conf-xml" value="${basedir}/ivy-selena-pinned.xml" />
+ <target name="r#" depends="resharper" />
+
+ <target name="resharper">
+   <delete dir="${basedir}/tools" failonerror="false" />
+
+   <property name="ivy-conf-xml" value="${basedir}/ivy-resharper.xml" />
    <antcall target="fetch" />
+   <antcall target="resharper_install" />
+ </target>
+
+ <target name="resharper_install">
+   <delete dir="${basedir}/tools/tmp" failonerror="false" />
+   <mkdir dir="${basedir}/tools/tmp" />
+   <copy toDir="${basedir}/tools/tmp/" overwrite="true">
+     <fileset dir="${basedir}/tools">
+       <include name="ReSharper*.msi" />
+     </fileset>
+     <mapper type="regexp" from="ReSharper.*\.msi?" to="ReShareperSetup.msi"/>
+   </copy>  
+
+   <delete>
+     <fileset dir="${basedir}/tools">
+       <include name="ReSharper*.msi" />
+     </fileset>
+   </delete>
+
+   <exec executable="msiexec">
+     <arg value="/i"/>
+     <arg file="${basedir}/tools/tmp/ReShareperSetup.msi" />
+     <arg value="/passive" />
+   </exec>
+
+   <delete dir="${basedir}/tools" failonerror="false" />
+ </target>
+
+  <target name="idea">
+   <delete dir="${basedir}/tools" failonerror="false" />
+   <property name="ivy-conf-xml" value="${basedir}/ivy-selena.xml" />
+   <antcall target="fetch" />
+   <antcall target="gather"/>
+   <antcall target="patch"/>
+   <antcall target="replace"/>
+    
+   <delete dir="${basedir}/tools" failonerror="false" />
  </target>
 
 
@@ -56,12 +97,6 @@
     <ivy:resolve file="${ivy-conf-xml}" conf="${ivy-conf}" />
 
     <ivy:retrieve pattern="${basedir}/tools/[artifact].[ext]" conf="${ivy-conf}"/>
-
-    <antcall target="gather"/>
-    <antcall target="patch"/>
-    <antcall target="replace"/>
-    
-    <delete dir="${basedir}/tools" failonerror="false" />
   </target>
 
   <target name="replace">
