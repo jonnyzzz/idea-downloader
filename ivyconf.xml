@@ -1,14 +1,11 @@
-<ivyconf>
+<ivysettings>
   <property name='ivy.checksums' value=''/>
-  <conf defaultCache="${agent.work.dir}/.ivy/cache"/>
+  <caches defaultCacheDir="${ivy.basedir}/.ivy/cache" checkUpToDate="true"/>
   <statuses>
-    <status name='lastPinned' integration='false'/>
-    <status name='lastSuccessful' integration='false'/>
-    <status name='lastFinished' integration='false'/>
     <status name='integration' integration='true'/>
   </statuses>
   <resolvers>
-    <url name='teamcity-rep' latest='latest-time'>
+    <url name='teamcity-rep' alwaysCheckExactRevision='yes' checkmodified="true">
       <ivy pattern='http://buildserver.labs.intellij.net/httpAuth/repository/download/[module]/[revision]/teamcity-ivy.xml' />
       <artifact pattern='http://buildserver.labs.intellij.net/httpAuth/repository/download/[module]/[revision]/[artifact](.[ext])' />
     </url>
@@ -16,4 +13,4 @@
   <modules>
     <module organisation='.*' name='.*' matcher='regexp' resolver='teamcity-rep' />
   </modules>
-</ivyconf>
+</ivysettings>
