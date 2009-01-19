@@ -1,0 +1,10 @@
+<ivy-module version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
+  <info organisation="Jetbrains" module="TeamCity"/>
+  <dependencies>
+    <dependency org="org" name="bt274" rev="latest.lastPinned">
+      <include name="idea[0-9]+" ext="zip" matcher="exactOrRegexp"/>
+      <include name="idea.jar.unscrambled.16/idea" ext="jar" matcher="exactOrRegexp"/>
+    </dependency>
+  </dependencies>
+</ivy-module>
