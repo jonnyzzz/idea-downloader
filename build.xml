@@ -13,7 +13,7 @@
   </taskdef>
 
  <target name="start">
-   <echo>Use r# for resharper update and idea to idea update</echo>
+   <echo>Use 'r#' for resharper update and 'idea' to idea update</echo>
    <fail/>
  </target>
 
@@ -54,7 +54,7 @@
 
   <target name="idea">
    <delete dir="${basedir}/tools" failonerror="false" />
-   <property name="ivy-conf-xml" value="${basedir}/ivy-selena.xml" />
+   <property name="ivy-conf-xml" value="${basedir}/ivy-idea-8.1.xml" />
    <antcall target="fetch" />
    <antcall target="gather"/>
    <antcall target="patch"/>
