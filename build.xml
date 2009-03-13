@@ -19,6 +19,10 @@
 
  <target name="r#" depends="resharper" />
 
+ <target name="r#5" depends="resharper5" />
+
+
+
  <target name="resharper">
    <delete dir="${basedir}/tools" failonerror="false" />
 
@@ -26,6 +30,15 @@
    <antcall target="fetch" />
    <antcall target="msi_install" />
  </target>
+
+ <target name="resharper5">
+   <delete dir="${basedir}/tools" failonerror="false" />
+
+   <property name="ivy-conf-xml" value="${basedir}/ivy-resharper5.xml" />
+   <antcall target="fetch" />
+   <antcall target="msi_install" />
+ </target>
+
 
  <target name="tc-vs">
    <delete dir="${basedir}/tools" failonerror="false" />
@@ -52,7 +65,7 @@
      </fileset>
    </delete>
    
-   <fail />
+
    <exec executable="msiexec">
      <arg value="/i"/>
      <arg file="${basedir}/tools/tmp/ReShareperSetup.msi" />
