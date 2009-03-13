@@ -24,25 +24,35 @@
 
    <property name="ivy-conf-xml" value="${basedir}/ivy-resharper.xml" />
    <antcall target="fetch" />
-   <antcall target="resharper_install" />
+   <antcall target="msi_install" />
  </target>
 
- <target name="resharper_install">
+ <target name="tc-vs">
+   <delete dir="${basedir}/tools" failonerror="false" />
+
+   <property name="ivy-conf-xml" value="${basedir}/ivy-tc-plugin.xml" />
+   <antcall target="fetch" />
+   <antcall target="msi_install" />
+ </target>
+
+
+ <target name="msi_install">
    <delete dir="${basedir}/tools/tmp" failonerror="false" />
    <mkdir dir="${basedir}/tools/tmp" />
    <copy toDir="${basedir}/tools/tmp/" overwrite="true">
      <fileset dir="${basedir}/tools">
-       <include name="ReSharper*.msi" />
+       <include name="*.msi" />
      </fileset>
-     <mapper type="regexp" from="ReSharper.*\.msi?" to="ReShareperSetup.msi"/>
+     <mapper type="regexp" from=".*\.msi" to="ReShareperSetup.msi"/>
    </copy>  
 
    <delete>
      <fileset dir="${basedir}/tools">
-       <include name="ReSharper*.msi" />
+       <include name="*.msi" />
      </fileset>
    </delete>
-
+   
+   <fail />
    <exec executable="msiexec">
      <arg value="/i"/>
      <arg file="${basedir}/tools/tmp/ReShareperSetup.msi" />
