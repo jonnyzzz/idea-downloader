@@ -2,7 +2,7 @@
             xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="Jetbrains" module="TeamCity"/>
   <dependencies>
-    <dependency org="org" name="bt219" rev="latest.lastPinned">
+    <dependency org="org" name="bt219" rev="latest.lastSuccessful">
       <include name="ReSharperSetup.*" ext="msi" matcher="exactOrRegexp"/>
     </dependency>
   </dependencies>

@@ -17,11 +17,30 @@
    <fail/>
  </target>
 
- <target name="r#" depends="resharper" />
+ <target name="r#">
+   <call target="resharper"  />
+ </target>
 
- <target name="r#5" depends="resharper5" />
+ <target name="r#5">
+   <call target="resharper5" />
+ </target>
 
+ <target name="tc">
+   <call target="tc-vs-i" />
+ </target>
 
+ <target name="idea">
+   <call target="idea-i" />
+ </target>
+
+ <!-- End of public API -->
+
+ <macrodef name="call">
+   <attribute name="target" />
+   <sequential>
+     <ant antfile="${ant.file}" target="@{target}" />
+   </sequential>
+ </macrodef>
 
  <target name="resharper">
    <delete dir="${basedir}/tools" failonerror="false" />
@@ -39,8 +58,7 @@
    <antcall target="msi_install" />
  </target>
 
-
- <target name="tc-vs">
+ <target name="tc-vs-i">
    <delete dir="${basedir}/tools" failonerror="false" />
 
    <property name="ivy-conf-xml" value="${basedir}/ivy-tc-plugin.xml" />
@@ -75,7 +93,7 @@
    <delete dir="${basedir}/tools" failonerror="false" />
  </target>
 
-  <target name="idea">
+  <target name="idea-i">
    <delete dir="${basedir}/tools" failonerror="false" />
    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-8.1.xml" />
    <antcall target="fetch" />
