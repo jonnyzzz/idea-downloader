@@ -95,7 +95,7 @@
 
   <target name="idea-i">
    <delete dir="${basedir}/tools" failonerror="false" />
-   <property name="ivy-conf-xml" value="${basedir}/ivy-idea-8.1.xml" />
+   <property name="ivy-conf-xml" value="${basedir}/ivy-idea-trunk.xml" />
    <antcall target="fetch" />
    <antcall target="gather"/>
    <antcall target="patch"/>
@@ -183,6 +183,9 @@
 -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
 -agentlib:yjpagent</concat>   
 
+    <concat destfile="${basedir}/bin/bin/idea.properties" append="true">
+idea.is.internal=true
+    </concat>
 
     <property name="props" value="${basedir}/bin/bin/idea.properties" />    
     <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
