@@ -185,6 +185,7 @@
 
     <concat destfile="${basedir}/bin/bin/idea.properties" append="true">
 idea.is.internal=true
+update.indices.in.background=true
     </concat>
 
     <property name="props" value="${basedir}/bin/bin/idea.properties" />    
