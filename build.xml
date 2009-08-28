@@ -87,7 +87,6 @@
    <exec executable="msiexec">
      <arg value="/i"/>
      <arg file="${basedir}/tools/tmp/ReShareperSetup.msi" />
-     <arg value="/passive" />
    </exec>
 
    <delete dir="${basedir}/tools" failonerror="false" />
@@ -164,7 +163,7 @@
     </unzip>
 
     <copy todir="${basedir}/bin/lib" overwrite="true">
-      <fileset dir="${basedir}/tools/idea.jar.unscrambled.16" includes="idea.jar" />
+      <fileset dir="${basedir}/tools/idea.jar.unscramble.16" includes="idea.jar" />
     </copy>
   </target>
 
