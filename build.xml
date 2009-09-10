@@ -1,6 +1,6 @@
 <project name="BuildServer" default="start" basedir="." xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
   
-  <property name="dest" value="c:/IDEA" />
+  <property name="dest" value="${basedir}/../IDEA" />
 
   <taskdef uri="antlib:fr.jayasoft.ivy.ant"
            resource="fr/jayasoft/ivy/ant/antlib.xml">
