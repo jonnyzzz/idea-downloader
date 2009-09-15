@@ -1,0 +1,9 @@
+<ivy-module version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
+  <info organisation="Jetbrains" module="TeamCity"/>
+  <dependencies>
+    <dependency org="org" name="bt457" rev="latest.lastSuccessful">
+      <include name="IDEA/TeamCity-IDEAplugin" ext="zip" matcher="exactOrRegexp"/>
+    </dependency>
+  </dependencies>
+</ivy-module>

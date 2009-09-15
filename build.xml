@@ -1,5 +1,5 @@
 <project name="BuildServer" default="start" basedir="." xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
-  
+  <property environment="env"/>
   <property name="dest" value="${basedir}/../IDEA" />
 
   <taskdef uri="antlib:fr.jayasoft.ivy.ant"
@@ -31,6 +31,7 @@
 
  <target name="idea">
    <call target="idea-i" />
+   <call target="idea-p" />
  </target>
 
  <!-- End of public API -->
@@ -101,6 +102,27 @@
    <antcall target="replace"/>
     
    <delete dir="${basedir}/tools" failonerror="false" />
+ </target>
+
+ <target name="idea-p">
+   <delete dir="${basedir}/tools" failonerror="false"/>
+   <property name="ivy-conf-xml" value="${basedir}/ivy-idea-plugin.xml" />
+   <antcall target="fetch" />
+
+   <property name="userHome" value="${env.USERPROFILE}/.IntelliJIdea90/config/plugins" />
+   <property name="pluginHome" value="${userHome}/TeamCityIntegration" />
+
+   <echo message="${pluginHome}" />
+   <fail />
+
+
+   <delete dir="${pluginHome}" failonerror="false" />
+   <mkdir dir="${pluginHome}"/>
+
+
+   <unzip todir="${pluginHome}">
+     <fileset dir="${basedir}/tools/IDEA" includes="*.zip" />
+   </unzip> 
  </target>
 
 
