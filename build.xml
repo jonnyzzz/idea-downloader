@@ -113,14 +113,12 @@
    <property name="pluginHome" value="${userHome}/TeamCityIntegration" />
 
    <echo message="${pluginHome}" />
-   <fail />
-
 
    <delete dir="${pluginHome}" failonerror="false" />
    <mkdir dir="${pluginHome}"/>
 
 
-   <unzip todir="${pluginHome}">
+   <unzip dest="${pluginHome}/..">
      <fileset dir="${basedir}/tools/IDEA" includes="*.zip" />
    </unzip> 
  </target>
