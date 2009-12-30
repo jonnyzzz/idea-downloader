@@ -210,7 +210,7 @@ update.indices.in.background=true
     <property name="props" value="${basedir}/bin/bin/idea.properties" />    
     <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
 
-    <copy file="${basedir}/fsnotifier.exe" todir="${basedir}/bin/bin" overwrite="true"/>
+    <!--<copy file="${basedir}/fsnotifier.exe" todir="${basedir}/bin/bin" overwrite="true"/> -->
 
     <copy file="${basedir}/run.bat" todir="${basedir}/bin" />
   </target>
