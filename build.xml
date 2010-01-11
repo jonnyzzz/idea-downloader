@@ -17,11 +17,11 @@
    <fail/>
  </target>
 
- <target name="r#">
+ <target name="r#4">
    <call target="resharper"  />
  </target>
 
- <target name="r#5">
+ <target name="r#">
    <call target="resharper5" />
  </target>
 
