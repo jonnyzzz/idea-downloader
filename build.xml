@@ -95,7 +95,7 @@
 
   <target name="idea-i">
    <delete dir="${basedir}/tools" failonerror="false" />
-   <property name="ivy-conf-xml" value="${basedir}/ivy-idea-trunk.xml" />
+   <property name="ivy-conf-xml" value="${basedir}/ivy-idea-9.0.xml" />
    <antcall target="fetch" />
    <antcall target="gather"/>
    <antcall target="patch"/>
