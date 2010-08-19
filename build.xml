@@ -30,9 +30,15 @@
  </target>
 
  <target name="idea">
+   <call target="idea-ix" />
+   <call target="idea-px" />
+ </target>
+
+ <target name="idea9">
    <call target="idea-i" />
    <call target="idea-p" />
  </target>
+
 
  <!-- End of public API -->
 
@@ -93,9 +99,19 @@
    <delete dir="${basedir}/tools" failonerror="false" />
  </target>
 
-  <target name="idea-i">
+  <target name="idea-i"> 
+    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-9.0.xml" />
+    <antcall name="idea-i-base" />
+  </target>
+
+  <target name="idea-ix"> 
+    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-10.0.xml" />
+    <antcall name="idea-i-base" />
+  </target>
+
+  <target name="idea-i-base">
    <delete dir="${basedir}/tools" failonerror="false" />
-   <property name="ivy-conf-xml" value="${basedir}/ivy-idea-9.0.xml" />
+
    <antcall target="fetch" />
    <antcall target="gather"/>
    <antcall target="patch"/>
@@ -104,7 +120,17 @@
    <delete dir="${basedir}/tools" failonerror="false" />
  </target>
 
- <target name="idea-p">
+ <target name="idea-p"> 
+   <property name="idea-user-dir" value=".IntelliJIdea90" />
+   <antcall target="idea-p-base" />
+ </target>
+
+ <target name="idea-px"> 
+   <property name="idea-user-dir" value=".IntelliJIdea10" />
+   <antcall target="idea-p-base" />
+ </target>
+
+ <target name="idea-p-base">
    <delete dir="${basedir}/tools" failonerror="false"/>
    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-plugin.xml" />
    <antcall target="fetch" />
@@ -122,6 +148,7 @@
      <fileset dir="${basedir}/tools/IDEA" includes="*.zip" />
    </unzip> 
  </target>
+
 
 
   <target name="fetch" description="Retrieves artifacts for TeamCity">
@@ -184,6 +211,7 @@
 
     <copy todir="${basedir}/bin/lib" overwrite="true">
       <fileset dir="${basedir}/tools/idea.jar.unscramble.16" includes="idea.jar" />
+      <fileset dir="${basedir}/tools/idea.jar.unscramble" includes="idea.jar" />
     </copy>
   </target>
 
