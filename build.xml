@@ -101,12 +101,12 @@
 
   <target name="idea-i"> 
     <property name="ivy-conf-xml" value="${basedir}/ivy-idea-9.0.xml" />
-    <antcall name="idea-i-base" />
+    <antcall target="idea-i-base" />
   </target>
 
   <target name="idea-ix"> 
     <property name="ivy-conf-xml" value="${basedir}/ivy-idea-10.0.xml" />
-    <antcall name="idea-i-base" />
+    <antcall target="idea-i-base" />
   </target>
 
   <target name="idea-i-base">
@@ -135,7 +135,7 @@
    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-plugin.xml" />
    <antcall target="fetch" />
 
-   <property name="userHome" value="${env.USERPROFILE}/.IntelliJIdea90/config/plugins" />
+   <property name="userHome" value="${env.USERPROFILE}/${idea-user-dir}/config/plugins" />
    <property name="pluginHome" value="${userHome}/TeamCityIntegration" />
 
    <echo message="${pluginHome}" />
@@ -209,9 +209,11 @@
       <fileset dir="${basedir}/tools" includes="idea*.zip"/>
     </unzip>
 
-    <copy todir="${basedir}/bin/lib" overwrite="true">
-      <fileset dir="${basedir}/tools/idea.jar.unscramble.16" includes="idea.jar" />
-      <fileset dir="${basedir}/tools/idea.jar.unscramble" includes="idea.jar" />
+    <copy todir="${basedir}/bin/lib" overwrite="true" flatten="true">
+      <fileset dir="${basedir}/tools">
+        <include name="idea.jar.unscramble.16/idea.jar" />
+        <include name="idea.jar.unscramble/idea.jar" />
+      </fileset>
     </copy>
   </target>
 
@@ -221,7 +223,8 @@
     <replaceregexp file="${opts}" match="-Xmx\d+m" replace="-Xmx1424m" flags="g" byline="true"/>
     <replaceregexp file="${opts}" match="-Xms\d+m" replace="-Xms512m" flags="g" byline="true"/>
     <replaceregexp file="${opts}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=300m" flags="g" byline="true"/>
-<!--<replaceregexp file="${opts}" match="-agentlib:yjpagent=[^,]+,sessionname=[^\s]+" replace="" flags="g" byline="true" />
+    <replaceregexp file="${opts}" match="-agentlib:yjpagent=[^,]+,sessionname=[^\s]+" replace="" flags="g" byline="true" />
+<!--
     <replaceregexp file="${opts}" match="-agentlib:yjpagent=disablej2ee,disablecounts,disablealloc,sessionname=IntelliJIDEA" replace="" flags="g" byline="true" />
     -->
    
