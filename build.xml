@@ -224,9 +224,7 @@
     <replaceregexp file="${opts}" match="-Xms\d+m" replace="-Xms512m" flags="g" byline="true"/>
     <replaceregexp file="${opts}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=300m" flags="g" byline="true"/>
     <replaceregexp file="${opts}" match="-agentlib:yjpagent=[^,]+,sessionname=[^\s]+" replace="" flags="g" byline="true" />
-<!--
-    <replaceregexp file="${opts}" match="-agentlib:yjpagent=disablej2ee,disablecounts,disablealloc,sessionname=IntelliJIDEA" replace="" flags="g" byline="true" />
-    -->
+    <replaceregexp file="${opts}" match="-agentlib:yjpagent=disablej2ee,disablecounts,disablealloc,sessionname=IntelliJIdea(\d*)" replace="" flags="g" byline="true" />
    
     <concat destfile="${basedir}/bin/bin/idea.exe.vmoptions" append="true">
 -XX:+HeapDumpOnOutOfMemoryError
