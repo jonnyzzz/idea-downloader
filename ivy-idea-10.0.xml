@@ -2,7 +2,7 @@
             xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="Jetbrains" module="TeamCity"/>
   <dependencies>
-    <dependency org="org" name="bt24" rev="latest.lastSuccessful">
+    <dependency org="org" name="bt1224" rev="latest.lastSuccessful">
       <include name="ideaIU-[0-9]+\.[0-9]+" ext="zip" matcher="exactOrRegexp"/>
       <include name="idea.jar.unscramble/idea" ext="jar" matcher="exactOrRegexp"/>
     </dependency>
