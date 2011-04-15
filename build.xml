@@ -13,7 +13,7 @@
   </taskdef>
 
  <target name="start">
-   <echo>Use 'r#' for resharper update and 'idea' to idea update</echo>
+   <echo>Use 'r#' (r#4) for resharper update and 'idea' (idea9, idea10) to update idea</echo>
    <fail/>
  </target>
 
@@ -30,9 +30,15 @@
  </target>
 
  <target name="idea">
+   <call target="idea-it" />
+   <call target="idea-px" />
+ </target>
+
+ <target name="idea10">
    <call target="idea-ix" />
    <call target="idea-px" />
  </target>
+
 
  <target name="idea9">
    <call target="idea-i" />
@@ -98,6 +104,11 @@
 
    <delete dir="${basedir}/tools" failonerror="false" />
  </target>
+
+  <target name="idea-it"> 
+    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-trunk.xml" />
+    <antcall target="idea-i-base" />
+  </target>
 
   <target name="idea-i"> 
     <property name="ivy-conf-xml" value="${basedir}/ivy-idea-9.0.xml" />
