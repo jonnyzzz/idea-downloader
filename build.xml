@@ -29,7 +29,9 @@
    <call target="tc-vs-i" />
  </target>
 
- <target name="idea">
+ <target name="idea" depends="idea15" />
+
+ <target name="ideat">
    <call target="idea-it" />
    <call target="idea-px" />
  </target>
@@ -39,6 +41,10 @@
    <call target="idea-px" />
  </target>
 
+ <target name="idea15">
+   <call target="idea-ix5" />
+   <call target="idea-px" />
+ </target>
 
  <target name="idea9">
    <call target="idea-i" />
@@ -119,6 +125,12 @@
     <property name="ivy-conf-xml" value="${basedir}/ivy-idea-10.0.xml" />
     <antcall target="idea-i-base" />
   </target>
+
+  <target name="idea-ix5"> 
+    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-10.5.xml" />
+    <antcall target="idea-i-base" />
+  </target>
+
 
   <target name="idea-i-base">
    <delete dir="${basedir}/tools" failonerror="false" />
