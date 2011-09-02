@@ -17,18 +17,6 @@
    <fail/>
  </target>
 
- <target name="r#4">
-   <call target="resharper"  />
- </target>
-
- <target name="r#">
-   <call target="resharper5" />
- </target>
-
- <target name="tc">
-   <call target="tc-vs-i" />
- </target>
-
  <target name="idea" depends="idea15" />
 
  <target name="ideat">
@@ -36,21 +24,10 @@
    <call target="idea-px" />
  </target>
 
- <target name="idea10">
-   <call target="idea-ix" />
-   <call target="idea-px" />
- </target>
-
  <target name="idea15">
    <call target="idea-ix5" />
    <call target="idea-px" />
  </target>
-
- <target name="idea9">
-   <call target="idea-i" />
-   <call target="idea-p" />
- </target>
-
 
  <!-- End of public API -->
 
@@ -61,68 +38,9 @@
    </sequential>
  </macrodef>
 
- <target name="resharper">
-   <delete dir="${basedir}/tools" failonerror="false" />
-
-   <property name="ivy-conf-xml" value="${basedir}/ivy-resharper.xml" />
-   <antcall target="fetch" />
-   <antcall target="msi_install" />
- </target>
-
- <target name="resharper5">
-   <delete dir="${basedir}/tools" failonerror="false" />
-
-   <property name="ivy-conf-xml" value="${basedir}/ivy-resharper5.xml" />
-   <antcall target="fetch" />
-   <antcall target="msi_install" />
- </target>
-
- <target name="tc-vs-i">
-   <delete dir="${basedir}/tools" failonerror="false" />
-
-   <property name="ivy-conf-xml" value="${basedir}/ivy-tc-plugin.xml" />
-   <antcall target="fetch" />
-   <antcall target="msi_install" />
- </target>
-
-
- <target name="msi_install">
-   <delete dir="${basedir}/tools/tmp" failonerror="false" />
-   <mkdir dir="${basedir}/tools/tmp" />
-   <copy toDir="${basedir}/tools/tmp/" overwrite="true">
-     <fileset dir="${basedir}/tools">
-       <include name="*.msi" />
-     </fileset>
-     <mapper type="regexp" from=".*\.msi" to="ReShareperSetup.msi"/>
-   </copy>  
-
-   <delete>
-     <fileset dir="${basedir}/tools">
-       <include name="*.msi" />
-     </fileset>
-   </delete>
-   
-
-   <exec executable="msiexec">
-     <arg value="/i"/>
-     <arg file="${basedir}/tools/tmp/ReShareperSetup.msi" />
-   </exec>
-
-   <delete dir="${basedir}/tools" failonerror="false" />
- </target>
 
   <target name="idea-it"> 
     <property name="ivy-conf-xml" value="${basedir}/ivy-idea-trunk.xml" />
-    <antcall target="idea-i-base" />
-  </target>
-
-  <target name="idea-i"> 
-    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-9.0.xml" />
-    <antcall target="idea-i-base" />
-  </target>
-
-  <target name="idea-ix"> 
-    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-10.0.xml" />
     <antcall target="idea-i-base" />
   </target>
 
