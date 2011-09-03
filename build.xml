@@ -13,121 +13,34 @@
   </taskdef>
 
  <target name="start">
-   <echo>Use 'r#' (r#4) for resharper update and 'idea' (idea9, idea10) to update idea</echo>
+   <echo>Use 'idea' to update idea 10.5</echo>
    <fail/>
  </target>
 
- <target name="idea" depends="idea15" />
 
- <target name="ideat">
-   <call target="idea-it" />
-   <call target="idea-px" />
+ <target name="idea">
+    <antcall target="idea-fetch" />
+    <antcall target="idea-prepare" />
+    <antcall target="idea-replace"/>
  </target>
 
- <target name="idea15">
-   <call target="idea-ix5" />
-   <call target="idea-px" />
- </target>
+ <target name="idea-fetch">
+      <antcall target="clean-fetched" />     
+      <delete dir="${basedir}/bin" failonerror="false" />
 
- <!-- End of public API -->
-
- <macrodef name="call">
-   <attribute name="target" />
-   <sequential>
-     <ant antfile="${ant.file}" target="@{target}" />
-   </sequential>
- </macrodef>
-
-
-  <target name="idea-it"> 
-    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-trunk.xml" />
-    <antcall target="idea-i-base" />
-  </target>
-
-  <target name="idea-ix5"> 
-    <property name="ivy-conf-xml" value="${basedir}/ivy-idea-10.5.xml" />
-    <antcall target="idea-i-base" />
-  </target>
-
-
-  <target name="idea-i-base">
-   <delete dir="${basedir}/tools" failonerror="false" />
-
-   <antcall target="fetch" />
-   <antcall target="gather"/>
-   <antcall target="patch"/>
-   <antcall target="replace"/>
-    
-   <delete dir="${basedir}/tools" failonerror="false" />
- </target>
-
- <target name="idea-p"> 
-   <property name="idea-user-dir" value=".IntelliJIdea90" />
-   <antcall target="idea-p-base" />
- </target>
-
- <target name="idea-px"> 
-   <property name="idea-user-dir" value=".IntelliJIdea10" />
-   <antcall target="idea-p-base" />
- </target>
-
- <target name="idea-p-base">
-   <delete dir="${basedir}/tools" failonerror="false"/>
-   <property name="ivy-conf-xml" value="${basedir}/ivy-idea-plugin.xml" />
-   <antcall target="fetch" />
-
-   <property name="userHome" value="${env.USERPROFILE}/${idea-user-dir}/config/plugins" />
-   <property name="pluginHome" value="${userHome}/TeamCityIntegration" />
-
-   <echo message="${pluginHome}" />
-
-   <delete dir="${pluginHome}" failonerror="false" />
-   <mkdir dir="${pluginHome}"/>
-
-
-   <unzip dest="${pluginHome}/..">
-     <fileset dir="${basedir}/tools/IDEA" includes="*.zip" />
-   </unzip> 
+      <fetch config="@{version-config}"/>
+      <fetch config="ivy-idea-plugin.xml" />
  </target>
 
 
+ <target name="idea-prepare"> 
+      <antcall target="gather"/>
+      <antcall target="patch"/>
+      <antcall target="idea-plugin"/>
+ </target>
 
-  <target name="fetch" description="Retrieves artifacts for TeamCity">
-    <delete dir="${basedir}/tools" failonerror="false" />
-    <mkdir dir="${basedir}/tools"/>
 
-    <property name="ivy-conf" value="default" />
-  
-    <condition property="teamcity.auth.userId" value="labs\builduser">
-      <not>
-        <isset property="${teamcity.auth.userId}"/>
-      </not>
-    </condition>
-
-    <condition property="teamcity.auth.password" value="***REMOVED***">
-      <not>
-        <isset property="${teamcity.auth.password}"/>
-      </not>
-    </condition>
-
-    <condition property="agent.work.dir" value=".."> <!-- Ivy cache will be put there -->
-      <not>
-        <isset property="${agent.work.dir}"/>
-      </not>
-    </condition>
-
-    <ivy:configure file="${basedir}/ivyconf.xml"
-                   host="buildserver.labs.intellij.net"
-                   realm="TeamCity"
-                   username="${teamcity.auth.userId}"
-                   passwd="${teamcity.auth.password}"/>
-
-    <ivy:resolve file="${ivy-conf-xml}" conf="${ivy-conf}" />
-
-    <ivy:retrieve pattern="${basedir}/tools/[artifact].[ext]" conf="${ivy-conf}"/>
-  </target>
-
-  <target name="replace">
+ <target name="idea-replace">
     <delete dir="${dest}.old" failonerror="false"/>
     <mkdir dir="${dest}.old"/>
    
@@ -140,7 +53,77 @@
     <move todir="${dest}"> 
       <fileset dir="${basedir}/bin" includes="**/*" />
     </move>
-  </target>
+ </target>
+
+
+
+
+
+
+ <target name="idea-plugin">
+     <property name="pluginHome" value="${basedir}/bin/plugins/TeamCityIntegration" />
+
+     <echo message="${pluginHome}" />
+
+     <delete dir="${pluginHome}" failonerror="false" />
+     <mkdir dir="${pluginHome}"/>
+
+
+     <unzip dest="${pluginHome}/..">
+       <fileset dir="${basedir}/tools/IDEA" includes="*.zip" />
+     </unzip> 
+ </target> 
+
+
+ <target name="clean-fetched">
+    <delete dir="${basedir}/tools" failonerror="false" />
+    <mkdir dir="${basedir}/tools"/>
+ </target>
+
+ <target name="initialize-ivy" depends="do-initialize-ivy"/>
+
+ <target name="do-initialize-ivy"> 
+     <ivy:configure file="${basedir}/ivyconf.xml"
+                    host="buildserver.labs.intellij.net"
+                    realm="TeamCity"
+                    username="${teamcity.auth.userId}"
+                    passwd="${teamcity.auth.password}"/>
+ </target>
+
+
+ <macrodef name="fetch">
+   <attribute name="config" />
+   <sequential>
+     <property name="ivy-conf-xml" value="${basedir}/@{config}" />
+     <property name="ivy-conf" value="default" />
+  
+     <condition property="teamcity.auth.userId" value="labs\builduser">
+       <not>
+         <isset property="${teamcity.auth.userId}"/>
+       </not>
+     </condition>
+
+     <condition property="teamcity.auth.password" value="***REMOVED***">
+       <not>
+         <isset property="${teamcity.auth.password}"/>
+       </not>
+     </condition>
+
+     <condition property="agent.work.dir" value=".."> <!-- Ivy cache will be put there -->
+       <not>
+         <isset property="${agent.work.dir}"/>
+       </not>
+     </condition>
+
+     <antcall target="initialize-ivy"/>
+
+     <ivy:resolve file="${ivy-conf-xml}" conf="${ivy-conf}" />
+
+     <ivy:retrieve pattern="${basedir}/tools/[artifact].[ext]" conf="${ivy-conf}"/>
+
+   </sequential>
+ </macrodef>
+
 
   <target name="gather">
     <delete dir="${basedir}/bin" failonerror="false" />
