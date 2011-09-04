@@ -24,11 +24,10 @@
     <antcall target="idea-replace"/>
  </target>
 
- <target name="idea-fetch">
-      <antcall target="clean-fetched" />     
+ <target name="idea-fetch" depends="clean-fetched, initialize-ivy">
       <delete dir="${basedir}/bin" failonerror="false" />
 
-      <fetch config="@{version-config}"/>
+      <fetch config="ivy-idea-10.5.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
  </target>
 
@@ -56,9 +55,7 @@
  </target>
 
 
-
-
-
+ <!-- impl -->
 
  <target name="idea-plugin">
      <property name="pluginHome" value="${basedir}/bin/plugins/TeamCityIntegration" />
@@ -82,20 +79,7 @@
 
  <target name="initialize-ivy" depends="do-initialize-ivy"/>
 
- <target name="do-initialize-ivy"> 
-     <ivy:configure file="${basedir}/ivyconf.xml"
-                    host="buildserver.labs.intellij.net"
-                    realm="TeamCity"
-                    username="${teamcity.auth.userId}"
-                    passwd="${teamcity.auth.password}"/>
- </target>
-
-
- <macrodef name="fetch">
-   <attribute name="config" />
-   <sequential>
-     <property name="ivy-conf-xml" value="${basedir}/@{config}" />
-     <property name="ivy-conf" value="default" />
+ <target name="do-initialize-ivy">
   
      <condition property="teamcity.auth.userId" value="labs\builduser">
        <not>
@@ -115,12 +99,22 @@
        </not>
      </condition>
 
-     <antcall target="initialize-ivy"/>
 
-     <ivy:resolve file="${ivy-conf-xml}" conf="${ivy-conf}" />
+     <ivy:configure file="${basedir}/ivyconf.xml"
+                    host="buildserver.labs.intellij.net"
+                    realm="TeamCity"
+                    username="${teamcity.auth.userId}"
+                    passwd="${teamcity.auth.password}"/>
+ </target>
 
+
+ <macrodef name="fetch">
+   <attribute name="config" />
+   <sequential>
+     <property name="ivy-conf" value="default" />
+
+     <ivy:resolve file="${basedir}/@{config}" conf="${ivy-conf}" />
      <ivy:retrieve pattern="${basedir}/tools/[artifact].[ext]" conf="${ivy-conf}"/>
-
    </sequential>
  </macrodef>
 
