@@ -24,7 +24,9 @@
     <antcall target="idea-replace"/>
  </target>
 
- <target name="idea-fetch" depends="clean-fetched, initialize-ivy">
+ <target name="idea-fetch" depends="initialize-ivy">
+      <delete dir="${basedir}/tools" failonerror="false" />
+      <mkdir dir="${basedir}/tools"/>
       <delete dir="${basedir}/bin" failonerror="false" />
 
       <fetch config="ivy-idea-10.5.xml"/>
@@ -71,11 +73,6 @@
      </unzip> 
  </target> 
 
-
- <target name="clean-fetched">
-    <delete dir="${basedir}/tools" failonerror="false" />
-    <mkdir dir="${basedir}/tools"/>
- </target>
 
  <target name="initialize-ivy" depends="do-initialize-ivy"/>
 
