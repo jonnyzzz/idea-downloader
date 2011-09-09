@@ -13,7 +13,7 @@
   </taskdef>
 
  <target name="start">
-   <echo>Use 'idea' to update idea 10.5</echo>
+   <echo>Use 'idea' or 'idea-fetch[-trunk] idea-prepare idea-replace' to update idea 10.5 [trunk]</echo>
    <fail/>
  </target>
 
@@ -24,12 +24,19 @@
     <antcall target="idea-replace"/>
  </target>
 
- <target name="idea-fetch" depends="initialize-ivy">
-      <delete dir="${basedir}/tools" failonerror="false" />
-      <mkdir dir="${basedir}/tools"/>
-      <delete dir="${basedir}/bin" failonerror="false" />
+ <target name="idea-clean">
+    <delete dir="${basedir}/tools" failonerror="false" />
+    <mkdir dir="${basedir}/tools"/>
+    <delete dir="${basedir}/bin" failonerror="false" />
+ </target>
 
+ <target name="idea-fetch" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-10.5.xml"/>
+      <fetch config="ivy-idea-plugin.xml" />
+ </target>
+
+ <target name="idea-fetch-trunk" depends="initialize-ivy, idea-clean">
+      <fetch config="ivy-idea-trunk.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
  </target>
 
@@ -145,6 +152,7 @@
 -XX:+HeapDumpOnOutOfMemoryError
 -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
 -XX:+UseCompressedOops
+-XX:ReservedCodeCacheSize=128m
 </concat>   
 
     <concat destfile="${basedir}/bin/bin/idea.properties" append="true">
