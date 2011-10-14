@@ -30,8 +30,13 @@
     <delete dir="${basedir}/bin" failonerror="false" />
  </target>
 
- <target name="idea-fetch" depends="initialize-ivy, idea-clean">
+ <target name="idea-fetch-10.5" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-10.5.xml"/>
+      <fetch config="ivy-idea-plugin.xml" />
+ </target>
+
+ <target name="idea-fetch-11" depends="initialize-ivy, idea-clean">
+      <fetch config="ivy-idea-11.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
  </target>
 
