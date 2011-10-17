@@ -33,6 +33,10 @@
  <target name="idea-fetch-10.5" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-10.5.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
+
+      <antcall target="idea-prepare" />
+       
+      <copy file="${basedir}/IdeaWin32.dll.11" tofile="${basedir}/bin/IdeaWin32.dll" overwrite="true" />
  </target>
 
  <target name="idea-fetch-11" depends="initialize-ivy, idea-clean">
@@ -43,13 +47,8 @@
  <target name="idea-fetch-trunk" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-trunk.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
- </target>
 
-
- <target name="idea-prepare"> 
-      <antcall target="gather"/>
-      <antcall target="patch"/>
-      <antcall target="idea-plugin"/>
+      <antcall target="idea-prepare" />
  </target>
 
 
@@ -70,6 +69,13 @@
 
 
  <!-- impl -->
+
+ <target name="idea-prepare"> 
+      <antcall target="gather"/>
+      <antcall target="patch"/>
+      <antcall target="idea-plugin"/>
+ </target>
+
 
  <target name="idea-plugin">
      <property name="pluginHome" value="${basedir}/bin/plugins/TeamCityIntegration" />
