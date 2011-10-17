@@ -18,12 +18,6 @@
  </target>
 
 
- <target name="idea">
-    <antcall target="idea-fetch" />
-    <antcall target="idea-prepare" />
-    <antcall target="idea-replace"/>
- </target>
-
  <target name="idea-clean">
     <delete dir="${basedir}/tools" failonerror="false" />
     <mkdir dir="${basedir}/tools"/>
@@ -35,19 +29,21 @@
       <fetch config="ivy-idea-plugin.xml" />
 
       <antcall target="idea-prepare" />
-       
-      <copy file="${basedir}/IdeaWin32.dll.11" tofile="${basedir}/bin/IdeaWin32.dll" overwrite="true" />
  </target>
 
  <target name="idea-fetch-11" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-11.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
+
+      <property name="idea11" value="1" />
+      <antcall target="idea-prepare" />
  </target>
 
  <target name="idea-fetch-trunk" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-trunk.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
 
+      <property name="idea11" value="1" />
       <antcall target="idea-prepare" />
  </target>
 
@@ -150,7 +146,7 @@
     </copy>
   </target>
 
-  <target name="patch">
+  <target name="patch" depends="patch_64">
     <property name="opts" value="${basedir}/bin/bin/idea.exe.vmoptions"/>
     
     <replaceregexp file="${opts}" match="-Xmx\d+m" replace="-Xmx1424m" flags="g" byline="true"/>
@@ -179,4 +175,8 @@ update.indices.in.background=true
     <copy file="${basedir}/run.bat" todir="${basedir}/bin" />
   </target>
 
+
+  <target name="patch_64" if="idea11">
+      <copy file="${basedir}/IdeaWin32.dll.11" tofile="${basedir}/bin/IdeaWin32.dll" overwrite="true" />
+  </target>
 </project>
