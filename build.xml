@@ -35,7 +35,6 @@
       <fetch config="ivy-idea-11.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
 
-      <property name="idea11" value="1" />
       <antcall target="idea-prepare" />
  </target>
 
@@ -43,7 +42,6 @@
       <fetch config="ivy-idea-trunk.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
 
-      <property name="idea11" value="1" />
       <antcall target="idea-prepare" />
  </target>
 
@@ -146,7 +144,7 @@
     </copy>
   </target>
 
-  <target name="patch" depends="patch_64">
+  <target name="patch">
     <property name="opts" value="${basedir}/bin/bin/idea.exe.vmoptions"/>
     
     <replaceregexp file="${opts}" match="-Xmx\d+m" replace="-Xmx1424m" flags="g" byline="true"/>
@@ -170,13 +168,7 @@ update.indices.in.background=true
     <property name="props" value="${basedir}/bin/bin/idea.properties" />    
     <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
 
-    <copy file="${basedir}/yjpagent.dll.x64" tofile="${basedir}/bin/bin/yjpagent.dll" overwrite="true"/>
-
     <copy file="${basedir}/run.bat" todir="${basedir}/bin" />
   </target>
 
-
-  <target name="patch_64" if="idea11">
-      <copy file="${basedir}/IdeaWin32.dll.11" tofile="${basedir}/bin/IdeaWin32.dll" overwrite="true" />
-  </target>
 </project>
