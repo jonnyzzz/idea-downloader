@@ -169,6 +169,8 @@ update.indices.in.background=true
     <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
 
     <copy file="${basedir}/run.bat" todir="${basedir}/bin" />
+    <copy file="${basedir}/fsnotifier.exe" todir="${basedir}/bin/bin" overwrite="true" />
+    
   </target>
 
 </project>
