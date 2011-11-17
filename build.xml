@@ -145,13 +145,15 @@
   </target>
 
   <target name="patch">
-    <property name="opts" value="${basedir}/bin/bin/idea.exe.vmoptions"/>
+    <copy file="${basedir}/bin/bin/idea64.exe.vmoptions" tofile="${basedir}/bin/bin/idea.exe.vmoptions" overwrite="true"/>
+ 
+   <property name="opts" value="${basedir}/bin/bin/idea.exe.vmoptions"/>
     
     <replaceregexp file="${opts}" match="-Xmx\d+m" replace="-Xmx1424m" flags="g" byline="true"/>
     <replaceregexp file="${opts}" match="-Xms\d+m" replace="-Xms512m" flags="g" byline="true"/>
+    <replaceregexp file="${opts}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
+    <replaceregexp file="${opts}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
     <replaceregexp file="${opts}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
-    <replaceregexp file="${opts}" match="-agentlib:yjpagent=[^,]+,sessionname=[^\s]+" replace="" flags="g" byline="true" />
-    <replaceregexp file="${opts}" match="-agentlib:yjpagent=disablej2ee,disablecounts,disablealloc,sessionname=IntelliJIdea(\d*)" replace="" flags="g" byline="true" />
    
     <concat destfile="${basedir}/bin/bin/idea.exe.vmoptions" append="true">
 -XX:+HeapDumpOnOutOfMemoryError
@@ -160,9 +162,11 @@
 -XX:ReservedCodeCacheSize=128m
 </concat>   
 
+    <copy file="${basedir}/bin/bin/idea.exe.vmoptions" tofile="${basedir}/bin/bin/idea64.exe.vmoptions" overwrite="true"/>
+
+
     <concat destfile="${basedir}/bin/bin/idea.properties" append="true">
-idea.is.internal=true
-update.indices.in.background=true
+       ## patched by jonnyzz
     </concat>
 
     <property name="props" value="${basedir}/bin/bin/idea.properties" />    
