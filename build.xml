@@ -41,8 +41,10 @@
  <target name="idea-fetch-trunk" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-trunk.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
+      <fetch config="ivy-idea-kotlin.xml" />
 
       <antcall target="idea-prepare" />
+      <antcall target="idea-kotlin" />
  </target>
 
 
@@ -82,6 +84,19 @@
 
      <unzip dest="${pluginHome}/..">
        <fileset dir="${basedir}/tools/IDEA" includes="*.zip" />
+     </unzip> 
+ </target> 
+
+ <target name="idea-kotlin">
+     <property name="pluginHome" value="${basedir}/bin/plugins/Kotlin" />
+
+     <echo message="${pluginHome}" />
+
+     <delete dir="${pluginHome}" failonerror="false" />
+     <mkdir dir="${pluginHome}"/>
+
+     <unzip dest="${pluginHome}/..">
+       <fileset dir="${basedir}/tools/KotlinPlugin" includes="*.zip" />
      </unzip> 
  </target> 
 
