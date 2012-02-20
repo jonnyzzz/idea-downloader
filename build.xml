@@ -96,7 +96,10 @@
      <mkdir dir="${pluginHome}"/>
 
      <unzip dest="${pluginHome}/..">
-       <fileset dir="${basedir}/tools/KotlinPlugin" includes="*.zip" />
+       <fileset dir="${basedir}/tools">
+         <include name="KotlinPlugin/*.zip" />
+         <include name="kotlin*.zip" />
+       </fileset>
      </unzip> 
  </target> 
 

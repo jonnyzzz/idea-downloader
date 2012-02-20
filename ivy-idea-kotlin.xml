@@ -3,7 +3,7 @@
   <info organisation="Jetbrains" module="TeamCity"/>
   <dependencies>
     <dependency org="org" name="bt1416" rev="latest.lastFinished">
-      <include name="[Kk]otlin[pP]lugin/[kK]otlin-[pP]lugin.*" ext="zip" matcher="exactOrRegexp"/>
+      <include name="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" ext="zip" matcher="exactOrRegexp"/>
     </dependency>
   </dependencies>
 </ivy-module>
