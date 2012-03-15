@@ -38,6 +38,16 @@
       <antcall target="idea-prepare" />
  </target>
 
+ <target name="idea-fetch-11.1" depends="initialize-ivy, idea-clean">
+      <fetch config="ivy-idea-11.1.xml"/>
+      <fetch config="ivy-idea-plugin.xml" />
+      <fetch config="ivy-idea-kotlin.xml" />
+
+      <antcall target="idea-prepare" />
+      <antcall target="idea-kotlin" />
+ </target>
+
+
  <target name="idea-fetch-trunk" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-trunk.xml"/>
       <fetch config="ivy-idea-plugin.xml" />
