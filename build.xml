@@ -24,23 +24,25 @@
     <delete dir="${basedir}/bin" failonerror="false" />
  </target>
 
+ <property name="ivy-teamcity-idea-plugin" value="ivy-idea-plugin-7.0.x.xml" />
+
  <target name="idea-fetch-10.5" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-10.5.xml"/>
-      <fetch config="ivy-idea-plugin.xml" />
+      <fetch config="${ivy-teamcity-idea-plugin}" />
 
       <antcall target="idea-prepare" />
  </target>
 
  <target name="idea-fetch-11" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-11.xml"/>
-      <fetch config="ivy-idea-plugin.xml" />
+      <fetch config="${ivy-teamcity-idea-plugin}" />
 
       <antcall target="idea-prepare" />
  </target>
 
  <target name="idea-fetch-11.1" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-11.1.xml"/>
-      <fetch config="ivy-idea-plugin.xml" />
+      <fetch config="${ivy-teamcity-idea-plugin}" />
       <fetch config="ivy-idea-kotlin.xml" />
 
       <antcall target="idea-prepare" />
@@ -50,7 +52,7 @@
 
  <target name="idea-fetch-trunk" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-trunk.xml"/>
-      <fetch config="ivy-idea-plugin.xml" />
+      <fetch config="${ivy-teamcity-idea-plugin}" />
       <fetch config="ivy-idea-kotlin.xml" />
 
       <antcall target="idea-prepare" />
