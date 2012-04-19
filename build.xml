@@ -24,7 +24,7 @@
     <delete dir="${basedir}/bin" failonerror="false" />
  </target>
 
- <property name="ivy-teamcity-idea-plugin" value="ivy-idea-plugin-7.0.x.xml" />
+ <property name="ivy-teamcity-idea-plugin" value="ivy-idea-plugin-trunk.xml" />
 
  <target name="idea-fetch-10.5" depends="initialize-ivy, idea-clean">
       <fetch config="ivy-idea-10.5.xml"/>
@@ -202,9 +202,7 @@
     <property name="props" value="${basedir}/bin/bin/idea.properties" />    
     <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
 
-    <copy file="${basedir}/run.bat" todir="${basedir}/bin" />
-    <copy file="${basedir}/fsnotifier.exe" todir="${basedir}/bin/bin" overwrite="true" />
-    
+    <copy file="${basedir}/run.bat" todir="${basedir}/bin" />    
   </target>
 
 </project>
