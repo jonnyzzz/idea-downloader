@@ -190,6 +190,9 @@
 -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
 -XX:+UseCompressedOops
 -XX:ReservedCodeCacheSize=128m
+-XX:SoftRefLRUPolicyMSPerMB=50
+-XX:+UseConcMarkSweepGC
+
 </concat>   
 
     <copy file="${basedir}/bin/bin/idea.exe.vmoptions" tofile="${basedir}/bin/bin/idea64.exe.vmoptions" overwrite="true"/>
