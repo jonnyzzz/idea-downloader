@@ -24,41 +24,48 @@
     <delete dir="${basedir}/bin" failonerror="false" />
  </target>
 
- <property name="ivy-teamcity-idea-plugin" value="ivy-idea-plugin-trunk.xml" />
 
- <target name="idea-fetch-10.5" depends="initialize-ivy, idea-clean">
+
+ <target name="idea-fetch-10.5" depends="idea-clean">
       <fetch config="ivy-idea-10.5.xml"/>
-      <fetch config="${ivy-teamcity-idea-plugin}" />
 
+      <antcall target="fetch-idea-plugin"/>
       <antcall target="idea-prepare" />
  </target>
 
- <target name="idea-fetch-11" depends="initialize-ivy, idea-clean">
+ <target name="idea-fetch-11" depends="idea-clean">
       <fetch config="ivy-idea-11.xml"/>
-      <fetch config="${ivy-teamcity-idea-plugin}" />
 
+      <antcall target="fetch-idea-plugin"/>
       <antcall target="idea-prepare" />
  </target>
 
- <target name="idea-fetch-11.1" depends="initialize-ivy, idea-clean">
+ <target name="idea-fetch-11.1" depends="idea-clean">
       <fetch config="ivy-idea-11.1.xml"/>
-      <fetch config="${ivy-teamcity-idea-plugin}" />
-      <fetch config="ivy-idea-kotlin.xml" />
 
+      <antcall target="fetch-idea-plugin"/>
+      <antcall target="fetch-kotlin"/>
       <antcall target="idea-prepare" />
       <antcall target="idea-kotlin" />
  </target>
 
 
- <target name="idea-fetch-trunk" depends="initialize-ivy, idea-clean">
+ <target name="idea-fetch-trunk" depends="idea-clean">
       <fetch config="ivy-idea-trunk.xml"/>
-      <fetch config="${ivy-teamcity-idea-plugin}" />
-      <fetch config="ivy-idea-kotlin.xml" />
 
+      <antcall target="fetch-idea-plugin"/>
+      <antcall target="fetch-kotlin"/>
       <antcall target="idea-prepare" />
       <antcall target="idea-kotlin" />
  </target>
 
+ <target name="fetch-idea-plugin">
+    <fetch config="ivy-idea-plugin-trunk.xml" />
+ </target>
+
+ <target name="fetch-kotlin">
+   <fetch config="ivy-idea-kotlin.xml" server="http://teamcity.jetbrains.com" ivyconf="ivyconf.teamcity.xml"/>
+ </target>
 
  <target name="idea-replace">
     <delete dir="${dest}.old" failonerror="false"/>
@@ -116,10 +123,13 @@
  </target> 
 
 
- <target name="initialize-ivy" depends="do-initialize-ivy"/>
 
- <target name="do-initialize-ivy">
-  
+ <macrodef name="fetch">
+   <attribute name="config" />
+   <attribute name="server" default="buildserver.labs.intellij.net" />
+   <attribute name="ivyconf" default="ivyconf.buildserver.xml" />
+   <sequential>
+
      <condition property="teamcity.auth.userId" value="labs\builduser">
        <not>
          <isset property="${teamcity.auth.userId}"/>
@@ -139,19 +149,14 @@
      </condition>
 
 
-     <ivy:configure file="${basedir}/ivyconf.xml"
-                    host="buildserver.labs.intellij.net"
+     <ivy:configure file="${basedir}/@{ivyconf}"
+                    host="@{server}"
                     realm="TeamCity"
                     username="${teamcity.auth.userId}"
                     passwd="${teamcity.auth.password}"/>
- </target>
 
 
- <macrodef name="fetch">
-   <attribute name="config" />
-   <sequential>
      <property name="ivy-conf" value="default" />
-
      <ivy:resolve file="${basedir}/@{config}" conf="${ivy-conf}" />
      <ivy:retrieve pattern="${basedir}/tools/[artifact].[ext]" conf="${ivy-conf}"/>
    </sequential>

@@ -2,7 +2,7 @@
             xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="Jetbrains" module="TeamCity"/>
   <dependencies>
-    <dependency org="org" name="bt1416" rev="latest.lastFinished">
+    <dependency org="org" name="bt345" rev="latest.lastSuccessful">
       <include name="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" ext="zip" matcher="exactOrRegexp"/>
     </dependency>
   </dependencies>
