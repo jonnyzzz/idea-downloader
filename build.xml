@@ -194,9 +194,7 @@
 -XX:+HeapDumpOnOutOfMemoryError
 -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
 -XX:+UseCompressedOops
--XX:ReservedCodeCacheSize=128m
--XX:SoftRefLRUPolicyMSPerMB=50
--XX:+UseConcMarkSweepGC
+-XX:ReservedCodeCacheSize=228m
 
 </concat>   
 
@@ -204,7 +202,7 @@
 
 
     <concat destfile="${basedir}/bin/bin/idea.properties" append="true">
-       ## patched by jonnyzz
+       ## patched by jonnyzzz
     </concat>
 
     <property name="props" value="${basedir}/bin/bin/idea.properties" />    
