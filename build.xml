@@ -129,26 +129,6 @@
    <attribute name="server" default="buildserver.labs.intellij.net" />
    <attribute name="ivyconf" default="ivyconf.buildserver.xml" />
    <sequential>
-
-     <condition property="teamcity.auth.userId" value="labs\builduser">
-       <not>
-         <isset property="${teamcity.auth.userId}"/>
-       </not>
-     </condition>
-
-     <condition property="teamcity.auth.password" value="***REMOVED***">
-       <not>
-         <isset property="${teamcity.auth.password}"/>
-       </not>
-     </condition>
-
-     <condition property="agent.work.dir" value=".."> <!-- Ivy cache will be put there -->
-       <not>
-         <isset property="${agent.work.dir}"/>
-       </not>
-     </condition>
-
-
      <ivy:configure file="${basedir}/@{ivyconf}"
                     host="@{server}"
                     realm="TeamCity"
