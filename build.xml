@@ -60,7 +60,7 @@
  </target>
 
  <target name="fetch-idea-plugin">
-    <fetch config="ivy-idea-plugin-trunk.xml" />
+    <fetch config="ivy-idea-plugin-7.1.x.xml" />
  </target>
 
  <target name="fetch-kotlin">
