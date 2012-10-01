@@ -13,7 +13,7 @@
   </taskdef>
 
  <target name="start">
-   <echo>Use 'idea' or 'idea-fetch[-trunk] idea-prepare idea-replace' to update idea 10.5 [trunk]</echo>
+   <echo>Use 'idea' or 'idea-fetch-trunk idea-replace' to update idea IDEA Leda.12</echo>
    <fail/>
  </target>
 
@@ -25,47 +25,30 @@
  </target>
 
 
-
- <target name="idea-fetch-10.5" depends="idea-clean">
-      <fetch config="ivy-idea-10.5.xml"/>
-
-      <antcall target="fetch-idea-plugin"/>
-      <antcall target="idea-prepare" />
- </target>
-
- <target name="idea-fetch-11" depends="idea-clean">
-      <fetch config="ivy-idea-11.xml"/>
-
-      <antcall target="fetch-idea-plugin"/>
-      <antcall target="idea-prepare" />
- </target>
-
- <target name="idea-fetch-11.1" depends="idea-clean">
-      <fetch config="ivy-idea-11.1.xml"/>
-
-      <antcall target="fetch-idea-plugin"/>
-      <antcall target="fetch-kotlin"/>
-      <antcall target="idea-prepare" />
-      <antcall target="idea-kotlin" />
- </target>
-
-
  <target name="idea-fetch-trunk" depends="idea-clean">
       <fetch config="ivy-idea-trunk.xml"/>
 
       <antcall target="fetch-idea-plugin"/>
       <antcall target="fetch-kotlin"/>
+      <antcall target="fetch-scala" />
       <antcall target="idea-prepare" />
       <antcall target="idea-kotlin" />
+      <antcall target="idea-scala" />
  </target>
 
  <target name="fetch-idea-plugin">
-    <fetch config="ivy-idea-plugin-7.1.x.xml" />
+    <!-- TODO: fetch plugin from current buildserver instance -->
+    <fetch config="ivy-idea-plugin-7.1.x.xml" server="http://buildserver.labs.intellij.net" ivyconf="ivyconf.buildserver.xml" />
  </target>
 
  <target name="fetch-kotlin">
    <fetch config="ivy-idea-kotlin.xml" server="http://teamcity.jetbrains.com" ivyconf="ivyconf.teamcity.xml"/>
  </target>
+
+ <target name="fetch-scala">
+   <fetch config="ivy-idea-scala.xml" server="http://buildserver.labs.intellij.net" ivyconf="ivyconf.buildserver.xml"/>
+ </target>
+
 
  <target name="idea-replace">
     <delete dir="${dest}.old" failonerror="false"/>
@@ -100,7 +83,6 @@
      <delete dir="${pluginHome}" failonerror="false" />
      <mkdir dir="${pluginHome}"/>
 
-
      <unzip dest="${pluginHome}/..">
        <fileset dir="${basedir}/tools/IDEA" includes="*.zip" />
      </unzip> 
@@ -122,6 +104,20 @@
      </unzip> 
  </target> 
 
+ <target name="idea-scala">
+     <property name="pluginHome" value="${basedir}/bin/plugins/Scala" />
+
+     <echo message="${pluginHome}" />
+
+     <delete dir="${pluginHome}" failonerror="false" />
+     <mkdir dir="${pluginHome}"/>
+
+     <unzip dest="${pluginHome}/..">
+       <fileset dir="${basedir}/tools">
+         <include name="scala-intellij-bin*.zip" />
+       </fileset>
+     </unzip> 
+ </target> 
 
 
  <macrodef name="fetch">

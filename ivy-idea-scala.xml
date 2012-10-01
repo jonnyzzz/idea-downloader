@@ -2,9 +2,8 @@
             xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="Jetbrains" module="TeamCity"/>
   <dependencies>
-    <dependency org="org" name="bt1445" rev="latest.lastSuccessful">
-      <include name="ideaIU-[0-9]+\.[0-9]+" ext="zip" matcher="exactOrRegexp"/>
-      <include name="idea.jar.unscramble/idea" ext="jar" matcher="exactOrRegexp"/>
+    <dependency org="org" name="bt2943" rev="latest.lastSuccessful">
+      <include name="scala-intellij-bin-.*" ext="zip" matcher="exactOrRegexp"/>
     </dependency>
   </dependencies>
 </ivy-module>
