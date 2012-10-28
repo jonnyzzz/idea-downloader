@@ -23,15 +23,20 @@
     <mkdir dir="${basedir}/tools"/>
     <delete dir="${basedir}/bin" failonerror="false" />
  </target>
- 
 
- <target name="idea-fetch-trunk">
-      <antcall target="idea-clean" />
+ <target name="idea-pre-fetch-trunk">
       <fetch config="ivy-idea-trunk.xml"/>
 
       <antcall target="fetch-idea-plugin"/>
       <antcall target="fetch-kotlin"/>
       <antcall target="fetch-scala" />
+ </target>
+
+ <target name="idea-fetch-trunk">
+      <antcall target="idea-clean" />
+
+      <antcall target="idea-pre-fetch-trunk" />
+
       <antcall target="idea-prepare" />
       <antcall target="idea-kotlin" />
       <antcall target="idea-scala" />
