@@ -23,9 +23,10 @@
     <mkdir dir="${basedir}/tools"/>
     <delete dir="${basedir}/bin" failonerror="false" />
  </target>
+ 
 
-
- <target name="idea-fetch-trunk" depends="idea-clean">
+ <target name="idea-fetch-trunk">
+      <antcall target="idea-clean" />
       <fetch config="ivy-idea-trunk.xml"/>
 
       <antcall target="fetch-idea-plugin"/>
