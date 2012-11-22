@@ -13,10 +13,11 @@
   </taskdef>
 
  <target name="start">
-   <echo>Use 'idea' or 'idea-fetch-trunk idea-replace' to update idea IDEA Leda.12</echo>
+   <echo>Use 'idea' or 'idea-fetch idea-replace' to update idea IDEA Leda.12</echo>
    <fail/>
  </target>
 
+ <target name="idea" depends="idea-fetch,idea-replace" />
 
  <target name="idea-clean">
     <delete dir="${basedir}/tools" failonerror="false" />
@@ -24,18 +25,21 @@
     <delete dir="${basedir}/bin" failonerror="false" />
  </target>
 
- <target name="idea-pre-fetch-trunk">
-      <fetch config="ivy-idea-trunk.xml"/>
+ <property name="idea-version" value="ivy-idea-leda.xml" />
+
+
+ <target name="idea-pre-fetch">
+      <fetch config="${idea-version}"/>
 
       <antcall target="fetch-idea-plugin"/>
       <antcall target="fetch-kotlin"/>
       <antcall target="fetch-scala" />
  </target>
 
- <target name="idea-fetch-trunk">
+ <target name="idea-fetch">
       <antcall target="idea-clean" />
 
-      <antcall target="idea-pre-fetch-trunk" />
+      <antcall target="idea-pre-fetch" />
 
       <antcall target="idea-prepare" />
       <antcall target="idea-kotlin" />
