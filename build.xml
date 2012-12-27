@@ -48,7 +48,7 @@
 
  <target name="fetch-idea-plugin">
     <!-- TODO: fetch plugin from current buildserver instance -->
-    <fetch config="ivy-idea-plugin-7.1.x.xml" server="http://buildserver.labs.intellij.net" ivyconf="ivyconf.buildserver.xml" />
+    <fetch config="ivy-idea-plugin-trunk.xml" server="http://buildserver.labs.intellij.net" ivyconf="ivyconf.buildserver.xml" />
  </target>
 
  <target name="fetch-kotlin">
@@ -94,7 +94,7 @@
      <mkdir dir="${pluginHome}"/>
 
      <unzip dest="${pluginHome}/..">
-       <fileset dir="${basedir}/tools/IDEA" includes="*.zip" />
+       <fileset dir="${basedir}/tools" includes="**/TeamCity-IDEAplugin*.zip" />
      </unzip> 
  </target> 
 

@@ -2,7 +2,7 @@
             xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="Jetbrains" module="TeamCity"/>
   <dependencies>
-    <dependency org="org" name="bt2943" rev="latest.lastSuccessful">
+    <dependency org="org" name="bt3551" rev="latest.lastSuccessful">
       <include name="scala-intellij-bin-.*" ext="zip" matcher="exactOrRegexp"/>
     </dependency>
   </dependencies>
