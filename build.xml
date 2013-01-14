@@ -17,7 +17,16 @@
    <fail/>
  </target>
 
- <target name="idea" depends="idea-fetch,idea-replace" />
+ <target name="use-idea-trunk">
+   <property name="idea-version" value="ivy-idea-trunk.xml" />
+ </target>
+
+ <target name="use-idea-leda">
+   <property name="idea-version" value="ivy-idea-leda.xml" />
+ </target>
+
+ <target name="idea"      depends="use-idea-trunk,idea-fetch,idea-replace" />
+ <target name="idea-leda" depends="use-idea-leda, idea-fetch,idea-replace" />
 
  <target name="idea-clean">
     <delete dir="${basedir}/tools" failonerror="false" />
@@ -25,10 +34,21 @@
     <delete dir="${basedir}/bin" failonerror="false" />
  </target>
 
- <property name="idea-version" value="ivy-idea-leda.xml" />
+ <!-- we call this script to fetch all desired dependeices, idea-leda and idea-trunk for now -->
+ <target name="idea-pre-fetch-auto">
+      <antcall>
+         <target name="use-idea-trunk"/>
+         <target name="idea-pre-fetch"/>
+      </antcall>
+      <antcall>
+         <target name="use-idea-leda"/>
+         <target name="idea-pre-fetch" />
+      </antcall>
+ </target>
 
-
+ <!-- this one is used to update IDEA from user command -->
  <target name="idea-pre-fetch">
+      <fail message="IDEA version is not selected"><condition><not><isset property="idea-version"/></not></condition></fail>   
       <fetch config="${idea-version}"/>
 
       <antcall target="fetch-idea-plugin"/>
