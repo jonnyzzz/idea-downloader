@@ -25,8 +25,14 @@
    <property name="idea-version" value="ivy-idea-leda.xml" />
  </target>
 
- <target name="idea"      depends="use-idea-trunk,idea-fetch,idea-replace" />
- <target name="idea-leda" depends="use-idea-leda, idea-fetch,idea-replace" />
+ <target name="use-idea-12.1">
+   <property name="idea-version" value="ivy-idea-leda.xml" />
+ </target>
+
+
+ <target name="idea-trunk"   depends="use-idea-trunk, idea-fetch,idea-replace" />
+ <target name="idea-leda"    depends="use-idea-leda,  idea-fetch,idea-replace" />
+ <target name="idea"         depends="use-idea-12.1,  idea-fetch,idea-replace" />
 
  <target name="idea-clean">
     <delete dir="${basedir}/tools" failonerror="false" />
@@ -38,6 +44,10 @@
  <target name="idea-pre-fetch-auto">
       <antcall>
          <target name="use-idea-trunk"/>
+         <target name="idea-pre-fetch"/>
+      </antcall>
+      <antcall>
+         <target name="use-idea-12.1"/>
          <target name="idea-pre-fetch"/>
       </antcall>
  </target>
