@@ -13,16 +13,12 @@
   </taskdef>
 
  <target name="start">
-   <echo>Use 'idea' or 'idea-fetch idea-replace' to update idea IDEA Leda.12</echo>
+   <echo>Use 'idea' or 'idea-fetch idea-replace' to update idea IDEA to 12.1</echo>
    <fail/>
  </target>
 
  <target name="use-idea-trunk">
    <property name="idea-version" value="ivy-idea-trunk.xml" />
- </target>
-
- <target name="use-idea-leda">
-   <property name="idea-version" value="ivy-idea-leda.xml" />
  </target>
 
  <target name="use-idea-12.1">
@@ -31,7 +27,6 @@
 
 
  <target name="idea-trunk"   depends="use-idea-trunk, idea-fetch,idea-replace" />
- <target name="idea-leda"    depends="use-idea-leda,  idea-fetch,idea-replace" />
  <target name="idea"         depends="use-idea-12.1,  idea-fetch,idea-replace" />
 
  <target name="idea-clean">
@@ -40,7 +35,7 @@
     <delete dir="${basedir}/bin" failonerror="false" />
  </target>
 
- <!-- we call this script to fetch all desired dependeices, idea-leda and idea-trunk for now -->
+ <!-- we call this script to fetch all desired dependeices -->
  <target name="idea-pre-fetch-auto">
       <antcall>
          <target name="use-idea-trunk"/>
