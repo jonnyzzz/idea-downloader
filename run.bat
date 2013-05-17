@@ -1,4 +1,4 @@
-set IDEA_JDK=C:\Java\jdk1.7.0_17
+set IDEA_JDK=C:\Java\jdk1.7.0_21
 cd bin
-idea.bat
+call idea.bat
 cd ..

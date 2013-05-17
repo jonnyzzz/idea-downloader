@@ -54,7 +54,6 @@
 
       <antcall target="fetch-idea-plugin"/>
       <antcall target="fetch-kotlin"/>
-      <antcall target="fetch-scala" />
  </target>
 
  <target name="idea-fetch">
@@ -64,7 +63,6 @@
 
       <antcall target="idea-prepare" />
       <antcall target="idea-kotlin" />
-      <antcall target="idea-scala" />
  </target>
 
  <target name="fetch-idea-plugin">
