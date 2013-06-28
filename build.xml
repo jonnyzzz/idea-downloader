@@ -26,8 +26,8 @@
  </target>
 
 
- <target name="idea-trunk"   depends="use-idea-trunk, idea-fetch,idea-replace" />
- <target name="idea"         depends="use-idea-12.1,  idea-fetch,idea-replace" />
+ <target name="idea"              depends="use-idea-trunk, idea-fetch,idea-replace" />
+ <target name="idea-12.1"         depends="use-idea-12.1,  idea-fetch,idea-replace" />
 
  <target name="idea-clean">
     <delete dir="${basedir}/tools" failonerror="false" />
