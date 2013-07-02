@@ -213,7 +213,20 @@
     <property name="props" value="${basedir}/bin/bin/idea.properties" />    
     <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
 
+
+    <copy file="${basedir}/bin/bin/idea.properties" tofile="${basedir}/bin/bin/idea.kotlin.properties"/>
+
+    <concat destfile="${basedir}/bin/bin/idea.kotlin.properties" append="true">
+       ## patched by jonnyzzz
+       idea.config.path=$${user.home}/.IntelliJIdea13k/config
+       idea.system.path=$${user.home}/.IntelliJIdea13k/system
+       idea.plugins.path=$${user.home}/.IntelliJIdea13k/config/plugins
+       idea.log.path=$${user.home}/.IntelliJIdea13k/system/log
+
+    </concat>
+
     <copy file="${basedir}/run.bat" todir="${basedir}/bin" />    
+    <copy file="${basedir}/krun.bat" todir="${basedir}/bin" />    
   </target>
 
 </project>
