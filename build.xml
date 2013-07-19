@@ -19,10 +19,12 @@
 
  <target name="use-idea-trunk">
    <property name="idea-version" value="ivy-idea-trunk.xml" />
+   <property name="idea-khome" value=".IntelliJIdea13k"/>
  </target>
 
  <target name="use-idea-12.1">
    <property name="idea-version" value="ivy-idea-12.1.xml" />
+   <property name="idea-khome" value=".IntelliJIdea12k"/>
  </target>
 
 
@@ -205,7 +207,6 @@
 
     <copy file="${basedir}/bin/bin/idea.exe.vmoptions" tofile="${basedir}/bin/bin/idea64.exe.vmoptions" overwrite="true"/>
 
-
     <concat destfile="${basedir}/bin/bin/idea.properties" append="true">
        ## patched by jonnyzzz
     </concat>
@@ -218,12 +219,14 @@
 
     <concat destfile="${basedir}/bin/bin/idea.kotlin.properties" append="true">
        ## patched by jonnyzzz
-       idea.config.path=$${user.home}/.IntelliJIdea13k/config
-       idea.system.path=$${user.home}/.IntelliJIdea13k/system
-       idea.plugins.path=$${user.home}/.IntelliJIdea13k/config/plugins
-       idea.log.path=$${user.home}/.IntelliJIdea13k/system/log
-
+       idea.config.path=$${user.home}/${idea-khome}/config
+       idea.system.path=$${user.home}/${idea-khome}/system
+       idea.plugins.path=$${user.home}/${idea-khome}/config/plugins
+       idea.log.path=$${user.home}/${idea-khome}/system/log
     </concat>
+
+    <copy file="${basedir}/bin/bin/idea.exe.vmoptions" tofile="${basedir}/bin/bin/idea.kotlin.vmoptions" overwrite="true"/>
+    <replaceregexp file="${basedir}/bin/bin/idea.kotlin.vmoptions" match="address=\d+" replace="address=5006" flags="g" byline="true"/>
 
     <copy file="${basedir}/run.bat" todir="${basedir}/bin" />    
     <copy file="${basedir}/krun.bat" todir="${basedir}/bin" />    
