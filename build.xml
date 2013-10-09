@@ -43,10 +43,6 @@
          <target name="use-idea-trunk"/>
          <target name="idea-pre-fetch"/>
       </antcall>
-      <antcall>
-         <target name="use-idea-12.1"/>
-         <target name="idea-pre-fetch"/>
-      </antcall>
  </target>
 
  <!-- this one is used to update IDEA from user command -->
