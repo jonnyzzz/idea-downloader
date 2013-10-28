@@ -225,6 +225,7 @@
     <replaceregexp file="${basedir}/bin/bin/idea.kotlin.vmoptions" match="address=\d+" replace="address=5006" flags="g" byline="true"/>
 
     <copy file="${basedir}/run.bat" todir="${basedir}/bin" />    
+    <copy file="${basedir}/runImpl.bat" todir="${basedir}/bin" />    
     <copy file="${basedir}/krun.bat" todir="${basedir}/bin" />    
   </target>
 
