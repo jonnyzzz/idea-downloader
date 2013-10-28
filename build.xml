@@ -106,6 +106,7 @@
 
  <target name="idea-replace">
     <property name="idea-home" location="${basedir}/../IDEA" />
+    <mkdir dir="${idea-home}"/>
 
     <delete dir="${idea-home}.old" failonerror="false"/>
     <mkdir dir="${idea-home}.old"/>
