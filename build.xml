@@ -1,6 +1,5 @@
 <project name="BuildServer" default="start" basedir="." xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
   <property environment="env"/>
-  <property name="dest" value="${basedir}/../IDEA" />
 
   <taskdef uri="antlib:fr.jayasoft.ivy.ant"
            resource="fr/jayasoft/ivy/ant/antlib.xml">
@@ -13,8 +12,12 @@
   </taskdef>
 
  <target name="start">
-   <echo>Use 'idea' or 'idea-fetch idea-replace' to update idea IDEA to 12.1</echo>
+   <echo>Use 'idea', 'idea-eap' or 'idea-12.1'</echo>
    <fail/>
+ </target>
+
+ <target name="use-idea-kotlin" depends="use-idea-eap">
+   <property name="idea-home" location="${basedir}/../idea.kotlin" />
  </target>
 
  <target name="use-idea-trunk">
@@ -33,9 +36,10 @@
  </target>
 
 
- <target name="idea"              depends="use-idea-trunk, idea-fetch,idea-replace" />
- <target name="idea-eap"          depends="use-idea-eap,   idea-fetch,idea-replace" />
- <target name="idea-12.1"         depends="use-idea-12.1,  idea-fetch,idea-replace" />
+ <target name="kotlin"            depends="use-idea-kotlin, idea-fetch,  fetch-kotlin, idea-kotlin, idea-replace" />
+ <target name="idea"              depends="use-idea-trunk,  idea-fetch,idea-replace" />
+ <target name="idea-eap"          depends="use-idea-eap,    idea-fetch,idea-replace" />
+ <target name="idea-12.1"         depends="use-idea-12.1,   idea-fetch,idea-replace" />
 
  <target name="idea-clean">
     <delete dir="${basedir}/tools" failonerror="false" />
@@ -53,6 +57,7 @@
          <target name="use-idea-eap"/>
          <target name="idea-pre-fetch"/>
       </antcall>
+      <antcall target="fetch-kotlin"/>
  </target>
 
  <!-- this one is used to update IDEA from user command -->
@@ -61,16 +66,12 @@
       <fetch config="${idea-version}"/>
 
       <antcall target="fetch-idea-plugin"/>
-      <antcall target="fetch-kotlin"/>
  </target>
 
  <target name="idea-fetch">
       <antcall target="idea-clean" />
-
       <antcall target="idea-pre-fetch" />
-
       <antcall target="idea-prepare" />
-      <antcall target="idea-kotlin" />
  </target>
 
  <target name="fetch-idea-plugin">
@@ -88,16 +89,18 @@
 
 
  <target name="idea-replace">
-    <delete dir="${dest}.old" failonerror="false"/>
-    <mkdir dir="${dest}.old"/>
+    <property name="idea-home" location="${basedir}/../IDEA" />
+
+    <delete dir="${idea-home}.old" failonerror="false"/>
+    <mkdir dir="${idea-home}.old"/>
    
-    <move todir="${dest}.old">
-      <fileset dir="${dest}" includes="**/*" />
+    <move todir="${idea-home}.old">
+      <fileset dir="${idea-home}" includes="**/*" />
     </move>
 
-    <mkdir dir="${dest}"/>
+    <mkdir dir="${idea-home}"/>
 
-    <move todir="${dest}"> 
+    <move todir="${idea-home}"> 
       <fileset dir="${basedir}/bin" includes="**/*" />
     </move>
  </target>

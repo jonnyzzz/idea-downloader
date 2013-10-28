@@ -1,3 +1,4 @@
 set IDEA_PROPERTIES=
 set IDEA_VM_OPTIONS=
-runImpl.bat
+set IDEA=idea
+call runImpl.bat
