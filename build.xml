@@ -17,14 +17,14 @@
    <fail/>
  </target>
 
- <target name="use-idea-kotlin-eap">
+ <target name="use-idea-kotlin-eap" depends="use-idea-kotlin-eap-impl, use-idea-kotlin"/>
+
+ <target name="use-idea-kotlin-eap-impl">
    <property name="kotlin-version" value="ivy-idea-kotlin-eap.xml" />
-   <antcall target="use-kotlin" />
  </target>
 
- <target name="use-idea-kotlin">
+ <target name="use-idea-kotlin" depends="use-idea-eap">
    <property name="idea-home" location="${basedir}/../idea.kotlin" />
-   <antcall target="use-idea-eap" />
  </target>
 
  <target name="use-idea-trunk">
@@ -44,7 +44,7 @@
 
 
  <target name="kotlin"            depends="use-idea-kotlin, idea-fetch,  fetch-kotlin, idea-kotlin, idea-replace" />
- <target name="kotlin-eap"        depends="use-idea-kotlin-eap, idea-kotlin" />
+ <target name="kotlin-eap"        depends="use-idea-kotlin-eap, kotlin" />
 
  <target name="idea"              depends="use-idea-trunk,  idea-fetch,idea-replace" />
  <target name="idea-eap"          depends="use-idea-eap,    idea-fetch,idea-replace" />
