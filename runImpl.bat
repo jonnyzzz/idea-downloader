@@ -1,4 +1,4 @@
-set IDEA_JDK=C:\Java\jdk1.7.0_40
+set IDEA_JDK=C:\Java\jdk1.7.0_45
 
 IF EXIST ivy-idea-trunk.xml SET this_is_idea_update_home=jonnyzzz
 
