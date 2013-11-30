@@ -2,15 +2,15 @@
     <import file="build.ivy.xml"/>
 
     <target name="update-idea" depends="idea-properties,
-                                        update-idea-recreate-dest,
-                                        update-idea-recreate-backup,
                                         update-idea-recreate-temp,
 
                                         update-idea-fetch,
                                         update-idea-unpack-mac,
                                         update-idea-unpack-win,
                                         update-idea-unscramble,
-                                        update-idea-patch-settings
+                                        update-idea-patch-settings,
+
+                                        update-idea-replace
   "/>
 
 
@@ -51,10 +51,14 @@
         <mkdir dir="${idea-dest}"/>
     </target>
 
-    <target name="update-idea-recreate-backup">
+    <target name="update-idea-recreate-backup" depends="update-idea-recreate-dest">
         <!-- backup current IDEA -->
         <delete dir="${idea-backup}" failonerror="false"/>
         <move file="${idea-dest}" todir="${idea-backup}/"/>
+    </target>
+
+    <target name="update-idea-replace" depends="update-idea-recreate-backup">
+        <move file="${idea-temp}/unzip" todir="${idea-dest}"/>
     </target>
 
     <target name="update-idea-recreate-temp">
