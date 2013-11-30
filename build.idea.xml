@@ -1,0 +1,153 @@
+<project name="BuildServer" default="nop" basedir=".">
+    <import file="build.ivy.xml"/>
+
+    <target name="update-idea" depends="idea-properties,
+                                        update-idea-recreate-dest,
+                                        update-idea-recreate-backup,
+                                        update-idea-recreate-temp,
+
+                                        update-idea-fetch,
+                                        update-idea-unpack-mac,
+                                        update-idea-unpack-win,
+                                        update-idea-unscramble,
+                                        update-idea-patch-settings
+  "/>
+
+
+    <condition property="idea-for-win" value="yeah">
+        <os family="windows"/>
+    </condition>
+    <condition property="idea-for-mac" value="cool">
+        <os family="mac"/>
+    </condition>
+
+    <!-- external parameters -->
+    <property name="idea-build-type" value="IDEA_Trunk_Installers"/>
+    <property name="idea-build-number" value="latest.lastSuccessful"/>
+    <property name="idea-version" value="trunk"/>
+    <property name="idea-debug-port" value="5005"/>
+
+    <!-- common paths -->
+    <property name="idea-ivy" value="${basedir}/ivy-idea-${idea-version}.xml"/>
+    <property name="idea-dest" value="${basedir}/apps/bin/${idea-version}"/>
+    <property name="idea-temp" value="${basedir}/apps/temp/${idea-version}"/>
+    <property name="idea-data" value="${basedir}/apps/data/${idea-version}"/>
+    <property name="idea-backup" value="${idea-dest}.old"/>
+
+    <target name="idea-properties" depends="idea-properties-mac, idea-properties-win"/>
+
+    <target name="idea-properties-mac" if="idea-for-win">
+       <property name="idea-ext" value="zip"/>
+       <property name="idea-vmo" value="idea.exe.vmoptions"/>
+    </target>
+
+    <target name="idea-properties-win" if="idea-for-mac">
+       <property name="idea-ext" value="sit"/>
+       <property name="idea-vmo" value="idea.vmoptions"/>
+    </target>
+
+    <target name="update-idea-recreate-dest">
+        <!-- recreate dir to avoid too much conditions below -->
+        <mkdir dir="${idea-dest}"/>
+    </target>
+
+    <target name="update-idea-recreate-backup">
+        <!-- backup current IDEA -->
+        <delete dir="${idea-backup}" failonerror="false"/>
+        <move file="${idea-dest}" todir="${idea-backup}/"/>
+    </target>
+
+    <target name="update-idea-recreate-temp">
+        <!-- recreate temp dir -->
+        <delete dir="${idea-temp}" failonerror="false"/>
+        <mkdir dir="${idea-temp}"/>
+    </target>
+
+    <target name="update-idea-fetch">
+        <echo file="${idea-temp}/ivy.xml"><![CDATA[
+            <ivy-module version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
+                <info organisation="Jetbrains" module="TeamCity"/>
+                <dependencies>
+                    <dependency org="org" name="${idea-build-type}" rev="${idea-build-number}">
+                        <include name="ideaIU-[0-9]+\.[0-9]+" ext="${idea-ext}" matcher="exactOrRegexp"/>
+                        <include name="idea.jar.unscramble/idea" ext="jar" matcher="exactOrRegexp"/>
+                    </dependency>
+                </dependencies>
+            </ivy-module>
+        ]]></echo>
+
+        <fetch-buildserver config="${idea-temp}/ivy.xml" dest="${idea-temp}/zip"/>
+    </target>
+
+    <target name="update-idea-unpack-win" if="idea-for-win">
+        <unzip dest="${idea-temp}/unzip">
+            <fileset dir="${idea-temp}/zip">
+                <include name="*.zip"/>
+            </fileset>
+        </unzip>
+    </target>
+
+    <target name="update-idea-unpack-mac" if="idea-for-mac">
+        <unzip dest="${idea-temp}/unzip">
+            <fileset dir="${idea-temp}/zip">
+                <include name="*.sit"/>
+            </fileset>
+            <cutdirsmapper dirs="1"/>
+        </unzip>
+    </target>
+
+    <target name="update-idea-unscramble">
+        <copy todir="${idea-temp}/unzip/lib" overwrite="true" flatten="true">
+            <fileset dir="${idea-temp}/zip">
+                <include name="idea.jar.unscramble.16/idea.jar" />
+                <include name="idea.jar.unscramble/idea.jar" />
+            </fileset>
+        </copy>
+    </target>
+
+
+    <target name="update-idea-patch-settings-win" if="idea-for-win">
+       <copy file="${idea-temp}/unzip/bin/idea64.exe.vmoptions" tofile="${idea-temp}/unzip/bin/${idea-vmo}" overwrite="true"/>
+    </target>
+
+    <target name="update-idea-patch-settings-mac" if="idea-for-mac">
+
+    </target>
+    <target name="update-idea-patch-settings" depends="idea-properties,
+                                                       update-idea-patch-settings-mac,
+                                                       update-idea-patch-settings-win,
+                                                       update-idea-patch-vmo,
+                                                       update-idea-patch-props"/>
+
+    <target name="update-idea-patch-vmo">
+        <property name="opts" value="${idea-temp}/unzip/bin/${idea-vmo}"/>
+
+        <replaceregexp file="${opts}" match="-Xmx\d+m" replace="-Xmx1424m" flags="g" byline="true"/>
+        <replaceregexp file="${opts}" match="-Xms\d+m" replace="-Xms512m" flags="g" byline="true"/>
+        <replaceregexp file="${opts}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
+        <replaceregexp file="${opts}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
+        <replaceregexp file="${opts}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
+
+        <concat destfile="${opts}" append="true">
+            -XX:+HeapDumpOnOutOfMemoryError
+            -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=${idea-debug-port}
+            -XX:+UseCompressedOops
+            -XX:ReservedCodeCacheSize=228m
+        </concat>
+    </target>
+
+    <target name="update-idea-patch-props">
+        <property name="props" value="${idea-temp}/unzip/bin/idea.properties"/>
+
+        <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
+        <concat destfile="${props}" append="true">
+            ## patched by jonnyzzz
+
+            idea.config.path=${idea-data}/config
+            idea.system.path=${idea-data}/system
+            idea.plugins.path=${idea-data}/plugins
+            idea.log.path=${idea-data}/logs
+        </concat>
+    </target>
+
+</project>

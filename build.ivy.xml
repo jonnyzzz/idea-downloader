@@ -1,0 +1,51 @@
+<project name="BuildServer" default="start" basedir="." xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+
+  <taskdef uri="antlib:fr.jayasoft.ivy.ant"
+           resource="fr/jayasoft/ivy/ant/antlib.xml">
+    <classpath>
+      <pathelement location="${basedir}/lib/ivy-2.0.jar"/>
+      <pathelement location="${basedir}/lib/commons-httpclient-3.0.1.jar"/>
+      <pathelement location="${basedir}/lib/commons-logging.jar"/>
+      <pathelement location="${basedir}/lib/commons-codec-1.3.jar"/>
+    </classpath>
+  </taskdef>
+
+ <property name="http.buildserver" value="http://buildserver.labs.intellij.net" />
+ <property name="http.teamcity" value="http://teamcity.jetbrains.com" />
+
+ <macrodef name="fetch-buildserver">
+ 	<attribute name="config" />
+ 	<attribute name="dest" />
+ 	<sequential>
+ 		<fetch config="@{config}" 
+ 			   dest="@{dest}"
+ 			   server="${http.buildserver}"
+ 			   ivyconf="ivyconf.buildserver.xml" />
+    </sequential>
+ </macrodef>
+
+
+ <macrodef name="fetch">
+   <attribute name="config" />
+   <attribute name="server" default="buildserver.labs.intellij.net" />
+   <attribute name="ivyconf" default="ivyconf.buildserver.xml" />
+   <attribute name="dest" default="${basedir}/tools" />
+   <sequential>
+     <ivy:configure file="${basedir}/@{ivyconf}"
+                    host="@{server}"
+                    realm="TeamCity"
+                    username="${teamcity.auth.userId}"
+                    passwd="${teamcity.auth.password}"/>
+
+
+     <property name="ivy-conf" value="default" />
+     <ivy:resolve file="@{config}" conf="${ivy-conf}" />
+     <ivy:retrieve pattern="@{dest}/[artifact].[ext]" conf="${ivy-conf}"/>
+   </sequential>
+ </macrodef>
+
+
+
+
+</project>
+
