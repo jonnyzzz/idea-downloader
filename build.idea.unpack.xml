@@ -16,12 +16,33 @@
     </target>
 
     <target name="update-idea-unpack-mac" if="idea-for-mac">
-        <unzip dest="${idea-unpack}">
-            <fileset dir="${idea-temp}/zip">
-                <include name="*.sit"/>
+        <delete dir="${idea-temp}/mount" failonerror="false"/>
+        <mkdir dir="${idea-temp}/mount"/>
+
+        <move tofile="idea.dmg">
+            <fileset dir="${idea-temp}/zip" includes="*.dmg"/>
+        </move>
+
+        <exec executable="hdiutil" dir="${idea-temp}">
+            <arg value="attach"/>
+            <arg value="-readonly"/>
+            <arg value="-mountpoint"/>
+            <arg path="${idea-temp}/mount"/>
+            <arg path="idea.dmg"/>
+        </exec>
+
+        <copy todir="${idea-unpack}" verbose="true">
+            <fileset dir="${idea-temp}/mount">
+                <include name="IntelliJ*/**"/>
             </fileset>
             <cutdirsmapper dirs="1"/>
-        </unzip>
+        </copy>
+
+        <exec executable="hdiutil" dir="${idea-temp}">
+            <arg value="detach"/>
+            <arg path="${idea-temp}/mount"/>
+        </exec>
+
     </target>
 
     <target name="update-idea-unscramble">

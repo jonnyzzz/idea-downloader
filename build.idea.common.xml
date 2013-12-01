@@ -33,7 +33,7 @@
     </target>
 
     <target name="idea-properties-win" if="idea-for-mac">
-        <property name="idea-ext" value="sit"/>
+        <property name="idea-ext" value="dmg"/>
         <property name="idea-vmo" value="idea.vmoptions"/>
     </target>
 
