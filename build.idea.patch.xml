@@ -24,6 +24,7 @@
                                                        update-idea-patch-settings-mac,
                                                        update-idea-patch-settings-win,
                                                        update-idea-patch-vmo,
+                                                       update-idea-patch-plist,
                                                        update-idea-patch-props"/>
 
     <target name="update-idea-patch-vmo">
@@ -41,6 +42,11 @@
             -XX:+UseCompressedOops
             -XX:ReservedCodeCacheSize=228m
         </concat>
+    </target>
+
+    <target name="update-idea-patch-plist" if="idea-for-mac">
+        <replaceregexp file="${idea-unpack}/Contents/Info.plist" match="-agentlib:yjp[^\s]+" replace="" flags="g" byline="true"/>
+        <replaceregexp file="${idea-unpack}/Contents/Info.plist" match="&lt;string&gt;1.6\*&lt;/string&gt;" replace="&lt;string&gt;1.7*&lt;/string&gt;" flags="g" byline="true"/>
     </target>
 
     <target name="update-idea-patch-props">
