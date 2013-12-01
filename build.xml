@@ -52,7 +52,7 @@
 
 
  <target name="kotlin">
-     <idea dest="trunk"
+     <idea dest="kotlin"
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
@@ -61,7 +61,7 @@
  </target>
 
  <target name="kotlin-eap">
-     <idea dest="trunk"
+     <idea dest="kotlin"
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
@@ -81,5 +81,22 @@
      <antcall target="kotlin-eap"/>
   </target>
 
+
+  <target name="run-trunk">
+      <exec dir="${bin}/trunk" osfamily="windows" executable="cmd">
+          <arg value="/c"/>
+          <arg value="idea.bat"/>
+          <env key="JAVA_HOME" value="C:\Java\jdk1.7.0_45"/>
+      </exec>
+  </target>
+
+
+  <target name="run-kt">
+      <exec dir="${bin}/kotlin" osfamily="windows" executable="cmd">
+          <arg value="/c"/>
+          <arg value="idea.bat"/>
+          <env key="JAVA_HOME" value="C:\Java\jdk1.7.0_45"/>
+      </exec>
+  </target>
 
 </project>
