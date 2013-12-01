@@ -10,7 +10,9 @@
     <target name="update-idea-recreate-backup" depends="update-idea-recreate-dest">
         <!-- backup current IDEA -->
         <delete dir="${idea-backup}" failonerror="false"/>
-        <move file="${idea-dest}" todir="${idea-backup}/"/>
+        <move todir="${idea-backup}/">
+           <fileset dir="${idea-dest}" includes="**/*"/>
+        </move>
     </target>
 
     <target name="update-idea-replace" unless="idea-fetch-only">
