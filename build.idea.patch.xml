@@ -1,0 +1,71 @@
+<project name="BuildServer" default="nop" basedir=".">
+    <import file="build.idea.common.xml"/>
+
+    <target name="update-idea-patch" depends="idea-properties, update-idea-patch-settings"/>
+
+
+
+
+    <target name="idea-properties" depends="idea-properties-mac, idea-properties-win"/>
+
+
+    <target name="idea-properties-mac" if="idea-for-win">
+        <property name="idea-ext" value="zip"/>
+        <property name="idea-vmo" value="idea.exe.vmoptions"/>
+    </target>
+
+    <target name="idea-properties-win" if="idea-for-mac">
+        <property name="idea-ext" value="sit"/>
+        <property name="idea-vmo" value="idea.vmoptions"/>
+    </target>
+
+
+
+
+    <target name="update-idea-patch-settings-win" if="idea-for-win">
+        <copy file="${idea-unpack}/bin/idea64.exe.vmoptions" tofile="${idea-unpack}/bin/${idea-vmo}" overwrite="true"/>
+    </target>
+
+    <target name="update-idea-patch-settings-mac" if="idea-for-mac">
+
+    </target>
+    <target name="update-idea-patch-settings" depends="idea-properties,
+                                                       update-idea-patch-settings-mac,
+                                                       update-idea-patch-settings-win,
+                                                       update-idea-patch-vmo,
+                                                       update-idea-patch-props"/>
+
+    <target name="update-idea-patch-vmo">
+        <property name="opts" value="${idea-unpack}/bin/${idea-vmo}"/>
+
+        <replaceregexp file="${opts}" match="-Xmx\d+m" replace="-Xmx1424m" flags="g" byline="true"/>
+        <replaceregexp file="${opts}" match="-Xms\d+m" replace="-Xms512m" flags="g" byline="true"/>
+        <replaceregexp file="${opts}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
+        <replaceregexp file="${opts}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
+        <replaceregexp file="${opts}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
+
+        <concat destfile="${opts}" append="true">
+            -XX:+HeapDumpOnOutOfMemoryError
+            -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=${idea-debug-port}
+            -XX:+UseCompressedOops
+            -XX:ReservedCodeCacheSize=228m
+        </concat>
+    </target>
+
+    <target name="update-idea-patch-props">
+        <property name="props" value="${idea-unpack}/bin/idea.properties"/>
+
+        <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
+        <concat destfile="${props}" append="true">
+            ## patched by jonnyzzz
+
+            idea.config.path=${idea-data}/config
+            idea.system.path=${idea-data}/system
+            idea.plugins.path=${idea-data}/plugins
+            idea.log.path=${idea-data}/logs
+        </concat>
+    </target>
+
+
+
+</project>

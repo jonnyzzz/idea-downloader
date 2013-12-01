@@ -1,0 +1,32 @@
+<project name="BuildServer" default="nop" basedir=".">
+    <import file="build.idea.common.xml"/>
+
+    <target name="update-idea-unpack" depends="update-idea-unpack-mac, update-idea-unpack-win, update-idea-unscramble"/>
+
+    <target name="update-idea-unpack-win" if="idea-for-win">
+        <unzip dest="${idea-unpack}">
+            <fileset dir="${idea-temp}/zip">
+                <include name="*.zip"/>
+            </fileset>
+        </unzip>
+    </target>
+
+    <target name="update-idea-unpack-mac" if="idea-for-mac">
+        <unzip dest="${idea-unpack}">
+            <fileset dir="${idea-temp}/zip">
+                <include name="*.sit"/>
+            </fileset>
+            <cutdirsmapper dirs="1"/>
+        </unzip>
+    </target>
+
+    <target name="update-idea-unscramble">
+        <copy todir="${idea-unpack}/lib" overwrite="true" flatten="true">
+            <fileset dir="${idea-temp}/zip">
+                <include name="idea.jar.unscramble.16/idea.jar" />
+                <include name="idea.jar.unscramble/idea.jar" />
+            </fileset>
+        </copy>
+    </target>
+
+</project>

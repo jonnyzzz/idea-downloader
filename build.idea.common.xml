@@ -1,0 +1,32 @@
+<project name="BuildServer" default="nop" basedir=".">
+
+    <condition property="idea-for-win" value="yeah">
+        <os family="windows"/>
+    </condition>
+    <condition property="idea-for-mac" value="cool">
+        <os family="mac"/>
+    </condition>
+
+    <!-- external parameters -->
+    <property name="idea-build-type" value="IDEA_Trunk_Installers"/>
+    <property name="idea-build-number" value="latest.lastSuccessful"/>
+    <property name="idea-version" value="trunk"/>
+    <property name="idea-debug-port" value="5005"/>
+
+    <!-- common paths -->
+    <property name="idea-dest" value="${basedir}/apps/bin/${idea-version}"/>
+    <property name="idea-temp" value="${basedir}/apps/temp/${idea-version}"/>
+    <property name="idea-data" value="${basedir}/apps/data/${idea-version}"/>
+    <property name="idea-backup" value="${idea-dest}.old"/>
+    <property name="idea-unpack" value="${idea-temp}/unzip"/>
+
+
+    <target name="update-idea-recreate-temp">
+        <!-- recreate temp dir -->
+        <delete dir="${idea-temp}" failonerror="false"/>
+        <mkdir dir="${idea-temp}"/>
+    </target>
+
+    <target name="nop"/>
+
+</project>

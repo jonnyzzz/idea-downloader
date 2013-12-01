@@ -1,0 +1,22 @@
+<project name="BuildServer" default="nop" basedir=".">
+    <import file="build.idea.common.xml"/>
+    <import file="build.ivy.xml"/>
+
+    <target name="update-idea-fetch" depends="update-idea-recreate-temp">
+        <echo file="${idea-temp}/ivy.xml"><![CDATA[
+            <ivy-module version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
+                <info organisation="Jetbrains" module="TeamCity"/>
+                <dependencies>
+                    <dependency org="org" name="${idea-build-type}" rev="${idea-build-number}">
+                        <include name="ideaIU-[0-9]+\.[0-9]+" ext="${idea-ext}" matcher="exactOrRegexp"/>
+                        <include name="idea.jar.unscramble/idea" ext="jar" matcher="exactOrRegexp"/>
+                    </dependency>
+                </dependencies>
+            </ivy-module>
+        ]]></echo>
+
+        <fetch-buildserver config="${idea-temp}/ivy.xml" dest="${idea-temp}/zip"/>
+    </target>
+
+
+</project>
