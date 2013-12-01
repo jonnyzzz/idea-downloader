@@ -1,7 +1,11 @@
 <project name="BuildServer" default="update-idea-unpack" basedir=".">
     <import file="build.idea.common.xml"/>
 
-    <target name="update-idea-unpack" unless="idea-fetch-only" depends="update-idea-unpack-mac, update-idea-unpack-win, update-idea-unscramble, update-idea-delete-zip"/>
+    <target name="update-idea-unpack" unless="idea-fetch-only">
+        <antcall target="update-idea-unpack-impl"/>
+    </target>
+
+    <target name="update-idea-unpack-impl" depends="update-idea-unpack-mac, update-idea-unpack-win, update-idea-unscramble, update-idea-delete-zip"/>
 
     <target name="update-idea-unpack-win" if="idea-for-win">
         <unzip dest="${idea-unpack}">

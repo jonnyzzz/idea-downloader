@@ -19,6 +19,8 @@
  </macrodef>
 
  <target name="idea">
+     <property name="idea-fetch-only" value="true"/>
+
      <idea dest="trunk"
            build-type="IDEA_Trunk_Installers"
            build-number="latest.lastSuccessful">

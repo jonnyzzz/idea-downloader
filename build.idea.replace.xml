@@ -13,7 +13,11 @@
         <move file="${idea-dest}" todir="${idea-backup}/"/>
     </target>
 
-    <target name="update-idea-replace" unless="idea-fetch-only" depends="update-idea-recreate-backup">
+    <target name="update-idea-replace" unless="idea-fetch-only">
+        <antcall target="update-idea-replace-impl"/>
+    </target>
+
+    <target name="update-idea-replace-impl" depends="update-idea-recreate-backup">
         <move todir="${idea-dest}">
           <fileset dir="${idea-unpack}" includes="**/*"/>
         </move>

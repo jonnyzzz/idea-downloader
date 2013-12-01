@@ -3,6 +3,10 @@
     <import file="build.idea.plugin.common.xml"/>
 
     <target name="update-idea-plugin-unpack" unless="idea-fetch-only">
+        <antcall target="update-idea-plugin-unpack-impl"/>
+    </target>
+
+    <target name="update-idea-plugin-unpack-impl">
         <delete dir="${idea-unpack}/plugins/${idea-plugin-build-type}" failonerror="false" />
         <unzip dest="${idea-unpack}/plugins/">
             <fileset dir="${idea-plugin-temp}/zip" includes="*.zip"/>
