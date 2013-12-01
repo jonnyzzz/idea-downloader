@@ -1,0 +1,13 @@
+<project name="BuildServer" default="update-idea-plugin-unpack" basedir=".">
+    <import file="build.idea.common.xml"/>
+    <import file="build.idea.plugin.common.xml"/>
+
+    <target name="update-idea-plugin-unpack">
+        <delete dir="${idea-unpack}/plugins/${idea-plugin-build-type}" failonerror="false" />
+        <unzip dest="${idea-unpack}/plugins/">
+            <fileset dir="${idea-plugin-temp}/zip" includes="*.zip"/>
+        </unzip>
+        <delete dir="${idea-plugin-temp}"/>
+    </target>
+
+</project>

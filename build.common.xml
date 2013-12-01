@@ -1,0 +1,7 @@
+<project basedir="." default="nop">
+
+    <!-- common defs -->
+    <property name="http.buildserver" value="http://buildserver.labs.intellij.net"/>
+    <property name="http.teamcity" value="http://teamcity.jetbrains.com"/>
+
+</project>

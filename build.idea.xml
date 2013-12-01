@@ -1,15 +1,73 @@
 <project name="BuildServer" default="nop" basedir=".">
-    <import file="build.idea.common.xml"/>
-    <import file="build.idea.fetch.xml"/>
-    <import file="build.idea.patch.xml"/>
-    <import file="build.idea.replace.xml"/>
-    <import file="build.idea.unpack.xml"/>
+    <import file="build.common.xml"/>
 
-    <target name="update-idea" depends="update-idea-fetch,
-                                        update-idea-unpack,
-                                        update-idea-patch,
-                                        update-idea-replace
-  "/>
+    <target name="sample">
+        <idea build-number="134.175.lastSuccessful">
+            <plugin build-type="TC_Trunk_DistParts_PluginIntelliJPluginDistributor" build-filename="TeamCity-IDEAplugin"/>
+        </idea>
+    </target>
 
+
+
+    <macrodef name="idea">
+        <attribute name="build-type" default="IDEA_Trunk_Installers"/>
+        <attribute name="build-number" default="latest.lastSuccessful"/>
+        <attribute name="dest" default="trunk"/>
+        <attribute name="debug-port" default="5005"/>
+        <element name="plugins" implicit="true" optional="true"/>
+        <sequential>
+            <propertyfile file="idea-fetch.properties">
+                <entry key="idea-build-type" value="@{build-type}"/>
+                <entry key="idea-build-number" value="@{build-number}"/>
+                <entry key="idea-version" value="@{dest}"/>
+                <entry key="idea-debug-port" value="@{debug-port}"/>
+            </propertyfile>
+
+            <ant antfile="build.idea.fetch.xml">
+                <property file="idea-fetch.properties"/>
+            </ant>
+            <ant antfile="build.idea.unpack.xml">
+                <property file="idea-fetch.properties"/>
+            </ant>
+            <ant antfile="build.idea.patch.xml">
+                <property file="idea-fetch.properties"/>
+            </ant>
+
+            <plugins/>
+
+            <ant antfile="build.idea.replace.xml">
+                <property file="idea-fetch.properties"/>
+            </ant>
+
+            <delete file="idea-fetch.properties"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="plugin">
+        <attribute name="build-type"/>
+        <attribute name="build-number" default="latest.lastSuccessful"/>
+        <attribute name="build-server" default="${http.buildserver}"/>
+        <attribute name="build-filename" default=".*"/>
+        <sequential>
+
+            <propertyfile file="idea-fetch-plugin.properties">
+                <entry key="idea-plugin-build-type" value="@{build-type}"/>
+                <entry key="idea-plugin-build-number" value="@{build-number}"/>
+                <entry key="idea-plugin-build-server" value="@{build-server}"/>
+                <entry key="idea-plugin-filename" value="@{build-filename}"/>
+            </propertyfile>
+
+            <ant antfile="build.idea.plugin.fetch.xml">
+                <property file="idea-fetch.properties"/>
+                <property file="idea-fetch-plugin.properties"/>
+            </ant>
+            <ant antfile="build.idea.plugin.unpack.xml">
+                <property file="idea-fetch.properties"/>
+                <property file="idea-fetch-plugin.properties"/>
+            </ant>
+
+            <delete file="idea-fetch-plugin.properties"/>
+        </sequential>
+    </macrodef>
 
 </project>

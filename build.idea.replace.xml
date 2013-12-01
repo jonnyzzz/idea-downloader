@@ -1,4 +1,4 @@
-<project name="BuildServer" default="nop" basedir=".">
+<project name="BuildServer" default="update-idea-replace" basedir=".">
     <import file="build.idea.common.xml"/>
 
 
@@ -14,7 +14,9 @@
     </target>
 
     <target name="update-idea-replace" depends="update-idea-recreate-backup">
-        <move file="${idea-unpack}" todir="${idea-dest}"/>
+        <move todir="${idea-dest}">
+          <fileset dir="${idea-unpack}" includes="**/*"/>
+        </move>
     </target>
 
 </project>

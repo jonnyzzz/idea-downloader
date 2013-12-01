@@ -1,4 +1,5 @@
 <project name="BuildServer" default="nop" basedir=".">
+    <import file="build.common.xml"/>
 
     <condition property="idea-for-win" value="yeah">
         <os family="windows"/>
@@ -21,12 +22,22 @@
     <property name="idea-unpack" value="${idea-temp}/unzip"/>
 
 
-    <target name="update-idea-recreate-temp">
-        <!-- recreate temp dir -->
-        <delete dir="${idea-temp}" failonerror="false"/>
-        <mkdir dir="${idea-temp}"/>
-    </target>
 
     <target name="nop"/>
+
+
+    <target name="idea-properties" depends="idea-properties-mac, idea-properties-win"/>
+
+
+    <target name="idea-properties-mac" if="idea-for-win">
+        <property name="idea-ext" value="zip"/>
+        <property name="idea-vmo" value="idea.exe.vmoptions"/>
+    </target>
+
+    <target name="idea-properties-win" if="idea-for-mac">
+        <property name="idea-ext" value="sit"/>
+        <property name="idea-vmo" value="idea.vmoptions"/>
+    </target>
+
 
 </project>

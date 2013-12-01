@@ -1,0 +1,29 @@
+<project name="BuildServer" default="update-idea-plugin-fetch" basedir=".">
+    <import file="build.idea.common.xml"/>
+    <import file="build.idea.plugin.common.xml"/>
+    <import file="build.ivy.xml"/>
+
+
+    <target name="update-idea-recreate-plugin-temp">
+        <!-- recreate temp dir -->
+        <delete dir="${idea-plugin-temp}" failonerror="false"/>
+        <mkdir dir="${idea-plugin-temp}"/>
+    </target>
+
+    <target name="update-idea-plugin-fetch" depends="update-idea-recreate-plugin-temp">
+        <echo file="${idea-plugin-temp}/ivy.xml"><![CDATA[
+            <ivy-module version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
+              <info organisation="Jetbrains" module="TeamCity"/>
+              <dependencies>
+                <dependency org="org" name="${idea-plugin-build-type}" rev="${idea-plugin-build-number}">
+                  <include name="${idea-plugin-filename}" ext="zip" matcher="exactOrRegexp"/>
+                </dependency>
+              </dependencies>
+            </ivy-module>
+        ]]></echo>
+
+        <fetch server="${idea-plugin-build-server}" config="${idea-plugin-temp}/ivy.xml" dest="${idea-plugin-temp}/zip"/>
+    </target>
+
+
+</project>

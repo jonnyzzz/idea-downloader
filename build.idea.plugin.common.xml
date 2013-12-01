@@ -1,0 +1,15 @@
+<project name="BuildServer" default="nop" basedir=".">
+    <import file="build.idea.common.xml"/>
+
+    <!-- parameters -->
+    <property name="idea-plugin-build-type" value="bt"/>
+    <property name="idea-plugin-build-number" value="latest.lastSuccessful"/>
+    <property name="idea-plugin-build-server" value="???"/>
+    <property name="idea-plugin-filename" value=".*"/>
+
+
+    <!-- internals -->
+    <property name="idea-plugin-temp" value="${idea-temp}/plugins/${idea-plugin-build-type}-${idea-plugin-build-number}"/>
+    <property name="idea-plugin-unpack" value="${idea-plugin-temp}/unpack"/>
+
+</project>

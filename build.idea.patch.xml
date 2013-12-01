@@ -1,23 +1,10 @@
-<project name="BuildServer" default="nop" basedir=".">
+<project name="BuildServer" default="update-idea-patch" basedir=".">
     <import file="build.idea.common.xml"/>
 
     <target name="update-idea-patch" depends="idea-properties, update-idea-patch-settings"/>
 
 
 
-
-    <target name="idea-properties" depends="idea-properties-mac, idea-properties-win"/>
-
-
-    <target name="idea-properties-mac" if="idea-for-win">
-        <property name="idea-ext" value="zip"/>
-        <property name="idea-vmo" value="idea.exe.vmoptions"/>
-    </target>
-
-    <target name="idea-properties-win" if="idea-for-mac">
-        <property name="idea-ext" value="sit"/>
-        <property name="idea-vmo" value="idea.vmoptions"/>
-    </target>
 
 
 

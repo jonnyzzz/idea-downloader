@@ -1,7 +1,7 @@
-<project name="BuildServer" default="nop" basedir=".">
+<project name="BuildServer" default="update-idea-unpack" basedir=".">
     <import file="build.idea.common.xml"/>
 
-    <target name="update-idea-unpack" depends="update-idea-unpack-mac, update-idea-unpack-win, update-idea-unscramble"/>
+    <target name="update-idea-unpack" depends="update-idea-unpack-mac, update-idea-unpack-win, update-idea-unscramble, update-idea-delete-zip"/>
 
     <target name="update-idea-unpack-win" if="idea-for-win">
         <unzip dest="${idea-unpack}">
@@ -27,6 +27,10 @@
                 <include name="idea.jar.unscramble/idea.jar" />
             </fileset>
         </copy>
+    </target>
+
+    <target name="update-idea-delete-zip">
+        <delete dir="${idea-temp}/zip"/>
     </target>
 
 </project>
