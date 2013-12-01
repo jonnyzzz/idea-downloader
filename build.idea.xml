@@ -14,6 +14,7 @@
         <attribute name="debug-port" default="5005"/>
         <element name="plugins" implicit="true" optional="true"/>
         <sequential>
+            <mkdir dir="${temp}"/>
             <propertyfile file="${temp}/idea-fetch.properties">
                 <entry key="idea-build-type" value="@{build-type}"/>
                 <entry key="idea-build-number" value="@{build-number}"/>

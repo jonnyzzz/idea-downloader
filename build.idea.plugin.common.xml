@@ -9,7 +9,8 @@
 
 
     <!-- internals -->
-    <property name="idea-plugin-temp" value="${idea-temp}/plugins/${idea-plugin-build-type}-${idea-plugin-build-number}"/>
-    <property name="idea-plugin-unpack" value="${idea-plugin-temp}/unpack"/>
+    <property name="idea-plugin"        location="${idea-temp}/plugins"/>
+    <property name="idea-plugin-temp"   location="${idea-plugin}/${idea-plugin-build-type}-${idea-plugin-build-number}"/>
+    <property name="idea-plugin-unpack" location="${idea-plugin-temp}/unpack"/>
 
 </project>

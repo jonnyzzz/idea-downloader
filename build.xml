@@ -53,6 +53,7 @@
 
  <target name="kotlin">
      <idea dest="kotlin"
+           debug-port="5006"
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
@@ -62,6 +63,7 @@
 
  <target name="kotlin-eap">
      <idea dest="kotlin"
+           debug-port="5006"
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>

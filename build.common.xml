@@ -4,6 +4,6 @@
     <property name="http.buildserver" value="http://buildserver.labs.intellij.net"/>
     <property name="http.teamcity" value="http://teamcity.jetbrains.com"/>
 
-    <property name="bin"  value="${basedir}/apps/bin"/>
-    <property name="temp" value="${basedir}/apps/temp"/>
+    <property name="bin"  location="${basedir}/apps/bin"/>
+    <property name="temp" location="${basedir}/apps/temp"/>
 </project>

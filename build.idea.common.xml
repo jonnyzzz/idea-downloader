@@ -15,11 +15,11 @@
     <property name="idea-debug-port" value="5005"/>
 
     <!-- common paths -->
-    <property name="idea-dest" value="${bin}/${idea-version}.app"/>
-    <property name="idea-temp" value="${temp}/${idea-version}"/>
-    <property name="idea-data" value="${basedir}/apps/data/${idea-version}"/>
-    <property name="idea-backup" value="${basedir}/apps/old/${idea-version}"/>
-    <property name="idea-unpack" value="${idea-temp}/unzip"/>
+    <property name="idea-dest" location="${bin}/${idea-version}.app"/>
+    <property name="idea-temp" location="${temp}/${idea-version}"/>
+    <property name="idea-data" location="${basedir}/apps/data/${idea-version}"/>
+    <property name="idea-backup" location="${basedir}/apps/old/${idea-version}"/>
+    <property name="idea-unpack" location="${idea-temp}/unzip"/>
 
     <target name="nop"/>
 

@@ -12,6 +12,7 @@
             <fileset dir="${idea-plugin-temp}/zip" includes="*.zip"/>
         </unzip>
         <delete dir="${idea-plugin-temp}"/>
+        <delete dir="${idea-plugin}"/>
     </target>
 
 </project>

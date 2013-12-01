@@ -23,6 +23,7 @@
         <move todir="${idea-dest}">
           <fileset dir="${idea-unpack}" includes="**/*"/>
         </move>
+        <delete dir="${idea-unpack}"/>
     </target>
 
 </project>

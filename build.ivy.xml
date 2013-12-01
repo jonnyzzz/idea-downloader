@@ -18,6 +18,7 @@
         <attribute name="server"/>
         <attribute name="dest"/>
         <sequential>
+            <mkdir dir="${temp}"/>
 
             <echo file="${temp}/ivy.settings.xml"><![CDATA[
                 <ivysettings>
@@ -44,6 +45,7 @@
             <property name="ivy-conf" value="default"/>
             <ivy:resolve file="@{config}" conf="${ivy-conf}"/>
             <ivy:retrieve pattern="@{dest}/[artifact].[ext]" conf="${ivy-conf}"/>
+            <delete file="${temp}/ivy.settings.xml"/>
         </sequential>
     </macrodef>
 

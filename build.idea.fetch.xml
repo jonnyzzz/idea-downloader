@@ -23,6 +23,7 @@
         ]]></echo>
 
         <fetch server="${http.buildserver}" config="${idea-temp}/ivy.xml" dest="${idea-temp}/zip"/>
+        <delete file="${idea-temp}/ivy.xml"/>
     </target>
 
 

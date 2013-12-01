@@ -31,12 +31,19 @@
             <arg path="${idea-temp}/idea.dmg"/>
         </exec>
 
-        <copy todir="${idea-unpack}">
-            <fileset dir="${idea-temp}/mount">
+        <mkdir dir="${idea-temp}/mount.copy"/>
+        <exec executable="bash">
+            <arg line="-c 'cp -R ${idea-temp}/mount/IntelliJ* ${idea-temp}/mount.copy'"/>
+        </exec>
+
+        <move todir="${idea-unpack}">
+            <fileset dir="${idea-temp}/mount.copy">
                 <include name="IntelliJ*/**"/>
             </fileset>
             <cutdirsmapper dirs="1"/>
-        </copy>
+        </move>
+
+        <delete dir="${idea-temp}/mount.copy"/>
 
         <exec executable="hdiutil" dir="${idea-temp}">
             <arg value="detach"/>
@@ -44,18 +51,7 @@
         </exec>
 
         <delete file="${idea-temp}/idea.dmg"/>
-
-        <!-- the thing is ANT does not support executable attributes copy,
-             but we need to drop one extra folder,
-             so for now we re-set exec permission
-             for some files -->
-        <chmod perm="u+x">
-            <fileset dir="${idea-unpack}">
-                <include name="bin/**"/>
-                <include name="Contents/MacOS/**"/>
-            </fileset>
-        </chmod>
-
+        <delete dir="${idea-temp}/mount"/>
     </target>
 
     <target name="update-idea-unscramble">
