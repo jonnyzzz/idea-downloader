@@ -45,6 +45,17 @@
 
         <delete file="${idea-temp}/idea.dmg"/>
 
+        <!-- the thing is ANT does not support executable attributes copy,
+             but we need to drop one extra folder,
+             so for now we re-set exec permission
+             for some files -->
+        <chmod perm="u+x">
+            <fileset dir="${idea-unpack}">
+                <include name="bin/**"/>
+                <include name="Contents/MacOS/**"/>
+            </fileset>
+        </chmod>
+
     </target>
 
     <target name="update-idea-unscramble">
