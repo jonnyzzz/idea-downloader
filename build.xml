@@ -81,28 +81,27 @@
      <antcall target="kotlin-eap"/>
   </target>
 
+  <macrodef name="run-app">
+      <attribute name="dest"/>
+      <sequential>
+          <exec dir="${bin}/@{dest}.app" osfamily="windows" executable="cmd">
+              <arg value="/c"/>
+              <arg value="idea.bat"/>
+              <env key="JAVA_HOME" value="C:\Java\jdk1.7.0_45"/>
+          </exec>
+
+          <exec dir="${bin}" osfamily="mac" executable="open">
+              <arg path="${bin}/@{dest}.app"/>
+          </exec>
+      </sequential>
+  </macrodef>
 
   <target name="run-trunk">
-      <exec dir="${bin}/trunk.app" osfamily="windows" executable="cmd">
-          <arg value="/c"/>
-          <arg value="idea.bat"/>
-          <env key="JAVA_HOME" value="C:\Java\jdk1.7.0_45"/>
-      </exec>
-
-      <exec dir="${bin}" osfamily="mac" executable="open">
-          <arg path="${bin}/trunk.app"/>
-      </exec>
-ena  </target>
+      <run-app dest="trunk"/>
+  </target>
 
   <target name="run-kt">
-      <exec dir="${bin}/kotlin.app" osfamily="windows" executable="cmd">
-          <arg value="/c"/>
-          <arg value="idea.bat"/>
-          <env key="JAVA_HOME" value="C:\Java\jdk1.7.0_45"/>
-      </exec>
-      <exec dir="${bin}" osfamily="mac" executable="open">
-          <arg path="${bin}/kotlin.app"/>
-      </exec>
+      <run-app dest="kotlin"/>
   </target>
 
 </project>
