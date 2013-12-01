@@ -1,4 +1,4 @@
-<project name="BuildServer" default="start" basedir="." xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+<project name="idea-downloader-ivy" default="start" basedir="." xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
 
     <import file="build.common.xml"/>
 

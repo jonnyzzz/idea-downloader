@@ -1,4 +1,4 @@
-<project name="BuildServer" default="nop" basedir=".">
+<project name="idea-downloader-idea-plugin-common" default="nop" basedir=".">
     <import file="build.idea.common.xml"/>
 
     <!-- parameters -->

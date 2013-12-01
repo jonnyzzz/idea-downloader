@@ -1,4 +1,4 @@
-<project name="BuildServer" default="update-idea-replace" basedir=".">
+<project name="idea-downloader-idea-replace" default="update-idea-replace" basedir=".">
     <import file="build.idea.common.xml"/>
 
 

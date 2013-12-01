@@ -1,4 +1,4 @@
-<project name="BuildServer" default="start" basedir=".">
+<project name="idea-downloader" default="start" basedir=".">
   <property environment="env"/>
 
  <target name="start">

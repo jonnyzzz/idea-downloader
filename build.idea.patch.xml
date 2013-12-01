@@ -1,4 +1,4 @@
-<project name="BuildServer" default="update-idea-patch" basedir=".">
+<project name="idea-downloader-idea-patch" default="update-idea-patch" basedir=".">
     <import file="build.idea.common.xml"/>
 
     <target name="update-idea-patch" unless="idea-fetch-only">

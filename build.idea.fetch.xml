@@ -1,4 +1,4 @@
-<project name="BuildServer" default="update-idea-fetch" basedir=".">
+<project name="idea-downloader-idea-fetch" default="update-idea-fetch" basedir=".">
     <import file="build.idea.common.xml"/>
     <import file="build.ivy.xml"/>
 

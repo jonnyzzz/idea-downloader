@@ -1,4 +1,4 @@
-<project name="BuildServer" default="update-idea-unpack" basedir=".">
+<project name="idea-downloader-idea-unpack" default="update-idea-unpack" basedir=".">
     <import file="build.idea.common.xml"/>
 
     <target name="update-idea-unpack" unless="idea-fetch-only">

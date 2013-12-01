@@ -1,4 +1,4 @@
-<project basedir="." default="nop">
+<project name="idea-downloader-common" basedir="." default="nop">
 
     <!-- common defs -->
     <property name="http.buildserver" value="http://buildserver.labs.intellij.net"/>

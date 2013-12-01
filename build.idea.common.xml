@@ -1,4 +1,4 @@
-<project name="BuildServer" default="nop" basedir=".">
+<project name="idea-downloader-idea-common" default="nop" basedir=".">
     <import file="build.common.xml"/>
 
     <condition property="idea-for-win" value="yeah">

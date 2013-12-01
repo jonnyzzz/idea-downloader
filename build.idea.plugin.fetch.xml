@@ -1,4 +1,4 @@
-<project name="BuildServer" default="update-idea-plugin-fetch" basedir=".">
+<project name="idea-downloader-idea-plugin-fetch" default="update-idea-plugin-fetch" basedir=".">
     <import file="build.idea.common.xml"/>
     <import file="build.idea.plugin.common.xml"/>
     <import file="build.ivy.xml"/>
