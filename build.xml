@@ -5,6 +5,11 @@
    <echo>Use 'idea', 'idea-eap'        =>  run  </echo>
    <echo>Use 'idea-13', 'idea-13-eap'  =>  run  </echo>
    <echo>Use 'kotlin', 'kotlin-eap'    => krun  </echo>
+   <echo></echo>
+   <echo>For idea and kotlin you may override versions via</echo>
+   <echo>   -Didea.build=134.222 </echo>
+   <echo>  -Dkotlin.build=0.6.333 </echo>
+   <echo/>
    <fail/>
  </target>
 
@@ -18,10 +23,13 @@
      </sequential>
  </macrodef>
 
+
+
  <target name="idea">
+     <property name="idea.build" value="latest.lastSuccessful" />
      <idea dest="trunk"
            build-type="IDEA_Trunk_Installers"
-           build-number="latest.lastSuccessful">
+           build-number="${idea.build}">
          <teamcity-plugin/>
      </idea>
  </target>
@@ -35,9 +43,10 @@
  </target>
 
  <target name="idea-13">
+     <property name="idea.build" value="latest.lastSuccessful" />
      <idea dest="trunk"
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
-           build-number="latest.lastSuccessful">
+           build-number="${idea.build}">
          <teamcity-plugin/>
      </idea>
  </target>
@@ -52,12 +61,14 @@
 
 
  <target name="kotlin">
+     <property name="idea.build" value="EAP.tcbuildtag" />
+     <property name="kotlin.build" value="latest.lastSuccessful" />
      <idea dest="kotlin"
            debug-port="5006"
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
-           build-number="EAP.tcbuildtag">
+           build-number="${idea.build}">
          <teamcity-plugin/>
-         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="latest.lastSuccessful"/>
+         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="${kotlin.build}"/>
      </idea>
  </target>
 
@@ -67,7 +78,7 @@
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
-         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="EAP.tcbuildtag"/>
+         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="M6.1.tcbuildtag"/>
      </idea>
  </target>
 
@@ -86,7 +97,7 @@
   <macrodef name="run-app">
       <attribute name="dest"/>
       <sequential>
-          <exec dir="${bin}/@{dest}.app" osfamily="windows" executable="cmd">
+          <exec dir="${bin}/@{dest}.app/bin" osfamily="windows" executable="cmd">
               <arg value="/c"/>
               <arg value="idea.bat"/>
               <env key="JAVA_HOME" value="C:\Java\jdk1.7.0_45"/>
