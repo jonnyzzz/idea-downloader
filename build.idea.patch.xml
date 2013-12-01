@@ -1,7 +1,7 @@
 <project name="BuildServer" default="update-idea-patch" basedir=".">
     <import file="build.idea.common.xml"/>
 
-    <target name="update-idea-patch" depends="idea-properties, update-idea-patch-settings"/>
+    <target name="update-idea-patch" unless="idea-fetch-only" depends="idea-properties, update-idea-patch-settings"/>
 
 
 

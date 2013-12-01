@@ -1,5 +1,7 @@
 <project name="BuildServer" default="start" basedir="." xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
 
+    <import file="build.common.xml"/>
+
     <taskdef uri="antlib:fr.jayasoft.ivy.ant"
              resource="fr/jayasoft/ivy/ant/antlib.xml">
         <classpath>
@@ -17,7 +19,7 @@
         <attribute name="dest"/>
         <sequential>
 
-            <echo file="ivy.settings.xml"><![CDATA[
+            <echo file="${temp}/ivy.settings.xml"><![CDATA[
                 <ivysettings>
                   <property name='ivy.checksums' value=''/>
                   <caches defaultCacheDir="${ivy.basedir}/.ivy/cache" checkUpToDate="true"/>
@@ -37,7 +39,7 @@
             ]]></echo>
 
 
-            <ivy:configure file="ivy.settings.xml" host="@{server}" realm="TeamCity" />
+            <ivy:configure file="${temp}/ivy.settings.xml" host="@{server}" realm="TeamCity" />
 
             <property name="ivy-conf" value="default"/>
             <ivy:resolve file="@{config}" conf="${ivy-conf}"/>

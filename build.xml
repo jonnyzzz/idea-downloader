@@ -1,284 +1,85 @@
-<project name="BuildServer" default="start" basedir="." xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+<project name="BuildServer" default="start" basedir=".">
   <property environment="env"/>
-
-  <taskdef uri="antlib:fr.jayasoft.ivy.ant"
-           resource="fr/jayasoft/ivy/ant/antlib.xml">
-    <classpath>
-      <pathelement location="${basedir}/lib/ivy-2.0.jar"/>
-      <pathelement location="${basedir}/lib/commons-httpclient-3.0.1.jar"/>
-      <pathelement location="${basedir}/lib/commons-logging.jar"/>
-      <pathelement location="${basedir}/lib/commons-codec-1.3.jar"/>
-    </classpath>
-  </taskdef>
 
  <target name="start">
    <echo>Use 'idea', 'idea-eap'        =>  run  </echo>
    <echo>Use 'idea-13', 'idea-13-eap'  =>  run  </echo>
-   <echo>Use 'idea-12.1'               =>  run  </echo>
    <echo>Use 'kotlin', 'kotlin-eap'    => krun  </echo>
    <fail/>
  </target>
 
- <target name="use-idea-kotlin-eap" depends="use-idea-kotlin-eap-impl, use-idea-kotlin"/>
 
- <target name="use-idea-kotlin-eap-impl">
-   <property name="kotlin-version" value="ivy-idea-kotlin-eap.xml" />
+ <import file="build.common.xml"/>
+ <import file="build.idea.xml"/>
+
+ <macrodef name="teamcity-plugin">
+     <sequential>
+         <plugin build-type="TC_Trunk_DistParts_PluginIntelliJPluginDistributor" build-filename="TeamCity-IDEAplugin"/>
+     </sequential>
+ </macrodef>
+
+ <target name="idea">
+     <idea dest="trunk"
+           build-type="IDEA_Trunk_Installers"
+           build-number="latest.lastSuccessful">
+         <teamcity-plugin/>
+     </idea>
  </target>
 
- <target name="use-idea-kotlin" depends="use-idea-13-eap">
-   <property name="idea-home" location="${basedir}/../idea.kotlin" />
+ <target name="idea-eap">
+     <idea dest="trunk"
+           build-type="IDEA_Trunk_Installers"
+           build-number="EAP.tcbuildtag">
+         <teamcity-plugin/>
+     </idea>
  </target>
 
- <target name="use-idea-trunk">
-   <property name="idea-version" value="ivy-idea-trunk.xml" />
-   <property name="idea-khome" value=".IntelliJIdea13k"/>
+ <target name="idea-13">
+     <idea dest="trunk"
+           build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
+           build-number="latest.lastSuccessful">
+         <teamcity-plugin/>
+     </idea>
  </target>
 
- <target name="use-idea-13">
-   <property name="idea-version" value="ivy-idea-13.xml" />
-   <property name="idea-khome" value=".IntelliJIdea13k"/>
- </target>
-
- <target name="use-idea-13-eap">
-   <property name="idea-version" value="ivy-idea-13-eap.xml" />
-   <property name="idea-khome" value=".IntelliJIdea13k"/>
- </target>
-
- <target name="use-idea-eap">
-   <property name="idea-version" value="ivy-idea-trunk-eap.xml" />
-   <property name="idea-khome" value=".IntelliJIdea13k"/>
- </target>
-
- <target name="use-idea-12.1">
-   <property name="idea-version" value="ivy-idea-12.1.xml" />
-   <property name="idea-khome" value=".IntelliJIdea12k"/>
+ <target name="idea-13-eap">
+     <idea dest="trunk"
+           build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
+           build-number="EAP.tcbuildtag">
+         <teamcity-plugin/>
+     </idea>
  </target>
 
 
- <target name="kotlin"            depends="use-idea-kotlin, idea-fetch,  fetch-kotlin, idea-kotlin, idea-replace" />
- <target name="kotlin-eap"        depends="use-idea-kotlin-eap, kotlin" />
-
- <target name="idea"              depends="use-idea-trunk,  idea-fetch,idea-replace" />
- <target name="idea-13"           depends="use-idea-13,     idea-fetch,idea-replace" />
- <target name="idea-13-eap"       depends="use-idea-13-eap, idea-fetch,idea-replace" />
- <target name="idea-eap"          depends="use-idea-eap,    idea-fetch,idea-replace" />
- <target name="idea-12.1"         depends="use-idea-12.1,   idea-fetch,idea-replace" />
-
- <target name="idea-clean">
-    <delete dir="${basedir}/tools" failonerror="false" />
-    <mkdir dir="${basedir}/tools"/>
-    <delete dir="${basedir}/bin" failonerror="false" />
+ <target name="kotlin">
+     <idea dest="trunk"
+           build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
+           build-number="EAP.tcbuildtag">
+         <teamcity-plugin/>
+         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="latest.lastSuccessful"/>
+     </idea>
  </target>
+
+ <target name="kotlin-eap">
+     <idea dest="trunk"
+           build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
+           build-number="EAP.tcbuildtag">
+         <teamcity-plugin/>
+         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="EAP.tcbuildtag"/>
+     </idea>
+ </target>
+
 
  <!-- we call this script to fetch all desired dependeices -->
  <target name="idea-pre-fetch-auto">
-      <antcall>
-         <target name="use-idea-trunk"/>
-         <target name="idea-pre-fetch"/>
-      </antcall>
-      <antcall>
-         <target name="use-idea-13"/>
-         <target name="idea-pre-fetch"/>
-      </antcall>
-      <antcall>
-         <target name="use-idea-eap"/>
-         <target name="idea-pre-fetch"/>
-      </antcall>
-      <antcall>
-         <target name="fetch-kotlin"/> 
-      </antcall>
-      <antcall>
-         <target name="use-idea-kotlin-eap"/>
-         <target name="fetch-kotlin" />
-      </antcall>
-      <antcall>
-         <target name="use-idea-13-eap"/>
-         <target name="idea-pre-fetch"/>
-      </antcall>
- </target>
+     <property name="idea-fetch-only" value="true"/>
 
- <!-- this one is used to update IDEA from user command -->
- <target name="idea-pre-fetch">
-      <fail message="IDEA version is not selected"><condition><not><isset property="idea-version"/></not></condition></fail>   
-      <fetch config="${idea-version}"/>
-
-      <antcall target="fetch-idea-plugin"/>
- </target>
-
- <target name="idea-fetch">
-      <antcall target="idea-clean" />
-      <antcall target="idea-pre-fetch" />
-      <antcall target="idea-prepare" />
- </target>
-
- <target name="fetch-idea-plugin">
-    <!-- TODO: fetch plugin from current buildserver instance -->
-    <fetch config="ivy-idea-plugin-trunk.xml" server="http://buildserver.labs.intellij.net" ivyconf="ivyconf.buildserver.xml" />
- </target>
-
- <target name="fetch-kotlin">
-   <property name="kotlin-version" value="ivy-idea-kotlin.xml" />
-   <fetch config="${kotlin-version}" server="http://teamcity.jetbrains.com" ivyconf="ivyconf.teamcity.xml"/>
- </target>
-
- <target name="fetch-scala">
-   <fetch config="ivy-idea-scala.xml" server="http://buildserver.labs.intellij.net" ivyconf="ivyconf.buildserver.xml"/>
- </target>
-
-
- <target name="idea-replace">
-    <property name="idea-home" location="${basedir}/../IDEA" />
-    <mkdir dir="${idea-home}"/>
-
-    <delete dir="${idea-home}.old" failonerror="false"/>
-    <mkdir dir="${idea-home}.old"/>
-   
-    <move todir="${idea-home}.old">
-      <fileset dir="${idea-home}" includes="**/*" />
-    </move>
-
-    <mkdir dir="${idea-home}"/>
-
-    <move todir="${idea-home}"> 
-      <fileset dir="${basedir}/bin" includes="**/*" />
-    </move>
- </target>
-
-
- <!-- impl -->
-
- <target name="idea-prepare"> 
-      <antcall target="gather"/>
-      <antcall target="patch"/>
-      <antcall target="idea-plugin"/>
- </target>
-
-
- <target name="idea-plugin">
-     <property name="pluginHome" value="${basedir}/bin/plugins/TeamCityIntegration" />
-
-     <echo message="${pluginHome}" />
-
-     <delete dir="${pluginHome}" failonerror="false" />
-     <mkdir dir="${pluginHome}"/>
-
-     <unzip dest="${pluginHome}/..">
-       <fileset dir="${basedir}/tools" includes="**/TeamCity-IDEAplugin*.zip" />
-     </unzip> 
- </target> 
-
- <target name="idea-kotlin">
-     <property name="pluginHome" value="${basedir}/bin/plugins/Kotlin" />
-
-     <echo message="${pluginHome}" />
-
-     <delete dir="${pluginHome}" failonerror="false" />
-     <mkdir dir="${pluginHome}"/>
-
-     <unzip dest="${pluginHome}/..">
-       <fileset dir="${basedir}/tools">
-         <include name="KotlinPlugin/*.zip" />
-         <include name="kotlin*.zip" />
-       </fileset>
-     </unzip> 
- </target> 
-
- <target name="idea-scala">
-     <property name="pluginHome" value="${basedir}/bin/plugins/Scala" />
-
-     <echo message="${pluginHome}" />
-
-     <delete dir="${pluginHome}" failonerror="false" />
-     <mkdir dir="${pluginHome}"/>
-
-     <unzip dest="${pluginHome}/..">
-       <fileset dir="${basedir}/tools">
-         <include name="scala-intellij-bin*.zip" />
-       </fileset>
-     </unzip> 
- </target> 
-
-
- <macrodef name="fetch">
-   <attribute name="config" />
-   <attribute name="server" default="buildserver.labs.intellij.net" />
-   <attribute name="ivyconf" default="ivyconf.buildserver.xml" />
-   <sequential>
-     <ivy:configure file="${basedir}/@{ivyconf}"
-                    host="@{server}"
-                    realm="TeamCity"
-                    username="${teamcity.auth.userId}"
-                    passwd="${teamcity.auth.password}"/>
-
-
-     <property name="ivy-conf" value="default" />
-     <ivy:resolve file="${basedir}/@{config}" conf="${ivy-conf}" />
-     <ivy:retrieve pattern="${basedir}/tools/[artifact].[ext]" conf="${ivy-conf}"/>
-   </sequential>
- </macrodef>
-
-
-  <target name="gather">
-    <delete dir="${basedir}/bin" failonerror="false" />
-    <mkdir dir="${basedir}/bin"/>
-
-    <unzip dest="${basedir}/bin">
-      <fileset dir="${basedir}/tools" includes="idea*.zip"/>
-    </unzip>
-
-    <copy todir="${basedir}/bin/lib" overwrite="true" flatten="true">
-      <fileset dir="${basedir}/tools">
-        <include name="idea.jar.unscramble.16/idea.jar" />
-        <include name="idea.jar.unscramble/idea.jar" />
-      </fileset>
-    </copy>
+     <antcall target="idea"/>
+     <antcall target="idea-13"/>
+     <antcall target="idea-13-eap"/>
+     <antcall target="kotlin"/>
+     <antcall target="kotlin-eap"/>
   </target>
 
-  <target name="patch">
-    <copy file="${basedir}/bin/bin/idea64.exe.vmoptions" tofile="${basedir}/bin/bin/idea.exe.vmoptions" overwrite="true"/>
- 
-   <property name="opts" value="${basedir}/bin/bin/idea.exe.vmoptions"/>
-    
-    <replaceregexp file="${opts}" match="-Xmx\d+m" replace="-Xmx1424m" flags="g" byline="true"/>
-    <replaceregexp file="${opts}" match="-Xms\d+m" replace="-Xms512m" flags="g" byline="true"/>
-    <replaceregexp file="${opts}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
-    <replaceregexp file="${opts}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
-    <replaceregexp file="${opts}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
-   
-    <concat destfile="${basedir}/bin/bin/idea.exe.vmoptions" append="true">
--XX:+HeapDumpOnOutOfMemoryError
--Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
--XX:+UseCompressedOops
--XX:ReservedCodeCacheSize=228m
-
-</concat>   
-
-    <copy file="${basedir}/bin/bin/idea.exe.vmoptions" tofile="${basedir}/bin/bin/idea64.exe.vmoptions" overwrite="true"/>
-
-    <concat destfile="${basedir}/bin/bin/idea.properties" append="true">
-       ## patched by jonnyzzz
-    </concat>
-
-    <property name="props" value="${basedir}/bin/bin/idea.properties" />    
-    <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
-
-
-    <copy file="${basedir}/bin/bin/idea.properties" tofile="${basedir}/bin/bin/idea.kotlin.properties"/>
-
-    <concat destfile="${basedir}/bin/bin/idea.kotlin.properties" append="true">
-       ## patched by jonnyzzz
-       idea.config.path=$${user.home}/${idea-khome}/config
-       idea.system.path=$${user.home}/${idea-khome}/system
-       idea.plugins.path=$${user.home}/${idea-khome}/config/plugins
-       idea.log.path=$${user.home}/${idea-khome}/system/log
-    </concat>
-
-    <copy file="${basedir}/bin/bin/idea.exe.vmoptions" tofile="${basedir}/bin/bin/idea.kotlin.vmoptions" overwrite="true"/>
-    <replaceregexp file="${basedir}/bin/bin/idea.kotlin.vmoptions" match="address=\d+" replace="address=5006" flags="g" byline="true"/>
-
-    <copy file="${basedir}/run.bat" todir="${basedir}/bin" />    
-    <copy file="${basedir}/runImpl.bat" todir="${basedir}/bin" />    
-    <copy file="${basedir}/krun.bat" todir="${basedir}/bin" />    
-  </target>
 
 </project>

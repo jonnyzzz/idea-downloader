@@ -16,7 +16,7 @@
 
     <!-- common paths -->
     <property name="idea-dest" value="${basedir}/apps/bin/${idea-version}"/>
-    <property name="idea-temp" value="${basedir}/apps/temp/${idea-version}"/>
+    <property name="idea-temp" value="${temp}/${idea-version}"/>
     <property name="idea-data" value="${basedir}/apps/data/${idea-version}"/>
     <property name="idea-backup" value="${idea-dest}.old"/>
     <property name="idea-unpack" value="${idea-temp}/unzip"/>

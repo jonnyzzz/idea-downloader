@@ -7,8 +7,6 @@
         </idea>
     </target>
 
-
-
     <macrodef name="idea">
         <attribute name="build-type" default="IDEA_Trunk_Installers"/>
         <attribute name="build-number" default="latest.lastSuccessful"/>
@@ -16,7 +14,7 @@
         <attribute name="debug-port" default="5005"/>
         <element name="plugins" implicit="true" optional="true"/>
         <sequential>
-            <propertyfile file="idea-fetch.properties">
+            <propertyfile file="${temp}/idea-fetch.properties">
                 <entry key="idea-build-type" value="@{build-type}"/>
                 <entry key="idea-build-number" value="@{build-number}"/>
                 <entry key="idea-version" value="@{dest}"/>
@@ -24,22 +22,22 @@
             </propertyfile>
 
             <ant antfile="build.idea.fetch.xml">
-                <property file="idea-fetch.properties"/>
+                <property file="${temp}/idea-fetch.properties"/>
             </ant>
             <ant antfile="build.idea.unpack.xml">
-                <property file="idea-fetch.properties"/>
+                <property file="${temp}/idea-fetch.properties"/>
             </ant>
             <ant antfile="build.idea.patch.xml">
-                <property file="idea-fetch.properties"/>
+                <property file="${temp}/idea-fetch.properties"/>
             </ant>
 
             <plugins/>
 
             <ant antfile="build.idea.replace.xml">
-                <property file="idea-fetch.properties"/>
+                <property file="${temp}/idea-fetch.properties"/>
             </ant>
 
-            <delete file="idea-fetch.properties"/>
+            <delete file="${temp}/idea-fetch.properties"/>
         </sequential>
     </macrodef>
 
@@ -50,7 +48,7 @@
         <attribute name="build-filename" default=".*"/>
         <sequential>
 
-            <propertyfile file="idea-fetch-plugin.properties">
+            <propertyfile file="${temp}/idea-fetch-plugin.properties">
                 <entry key="idea-plugin-build-type" value="@{build-type}"/>
                 <entry key="idea-plugin-build-number" value="@{build-number}"/>
                 <entry key="idea-plugin-build-server" value="@{build-server}"/>
@@ -58,15 +56,15 @@
             </propertyfile>
 
             <ant antfile="build.idea.plugin.fetch.xml">
-                <property file="idea-fetch.properties"/>
-                <property file="idea-fetch-plugin.properties"/>
+                <property file="${temp}/idea-fetch.properties"/>
+                <property file="${temp}/idea-fetch-plugin.properties"/>
             </ant>
             <ant antfile="build.idea.plugin.unpack.xml">
-                <property file="idea-fetch.properties"/>
-                <property file="idea-fetch-plugin.properties"/>
+                <property file="${temp}/idea-fetch.properties"/>
+                <property file="${temp}/idea-fetch-plugin.properties"/>
             </ant>
 
-            <delete file="idea-fetch-plugin.properties"/>
+            <delete file="${temp}/idea-fetch-plugin.properties"/>
         </sequential>
     </macrodef>
 
