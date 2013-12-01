@@ -83,19 +83,25 @@
 
 
   <target name="run-trunk">
-      <exec dir="${bin}/trunk" osfamily="windows" executable="cmd">
+      <exec dir="${bin}/trunk.app" osfamily="windows" executable="cmd">
           <arg value="/c"/>
           <arg value="idea.bat"/>
           <env key="JAVA_HOME" value="C:\Java\jdk1.7.0_45"/>
       </exec>
-  </target>
 
+      <exec dir="${bin}" osfamily="mac" executable="open">
+          <arg path="${bin}/trunk.app"/>
+      </exec>
+ena  </target>
 
   <target name="run-kt">
-      <exec dir="${bin}/kotlin" osfamily="windows" executable="cmd">
+      <exec dir="${bin}/kotlin.app" osfamily="windows" executable="cmd">
           <arg value="/c"/>
           <arg value="idea.bat"/>
           <env key="JAVA_HOME" value="C:\Java\jdk1.7.0_45"/>
+      </exec>
+      <exec dir="${bin}" osfamily="mac" executable="open">
+          <arg path="${bin}/kotlin.app"/>
       </exec>
   </target>
 
