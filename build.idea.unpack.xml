@@ -31,7 +31,7 @@
             <arg path="${idea-temp}/idea.dmg"/>
         </exec>
 
-        <copy todir="${idea-unpack}" verbose="true">
+        <copy todir="${idea-unpack}">
             <fileset dir="${idea-temp}/mount">
                 <include name="IntelliJ*/**"/>
             </fileset>
