@@ -19,7 +19,7 @@
         <delete dir="${idea-temp}/mount" failonerror="false"/>
         <mkdir dir="${idea-temp}/mount"/>
 
-        <move tofile="idea.dmg">
+        <move tofile="${idea-temp}/idea.dmg">
             <fileset dir="${idea-temp}/zip" includes="*.dmg"/>
         </move>
 
@@ -28,7 +28,7 @@
             <arg value="-readonly"/>
             <arg value="-mountpoint"/>
             <arg path="${idea-temp}/mount"/>
-            <arg path="idea.dmg"/>
+            <arg path="${idea-temp}/idea.dmg"/>
         </exec>
 
         <copy todir="${idea-unpack}" verbose="true">
@@ -42,6 +42,8 @@
             <arg value="detach"/>
             <arg path="${idea-temp}/mount"/>
         </exec>
+
+        <delete file="${idea-temp}/idea.dmg"/>
 
     </target>
 
