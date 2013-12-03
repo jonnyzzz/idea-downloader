@@ -1,5 +1,7 @@
 <project name="idea-downloader" default="start" basedir=".">
-  <property environment="env"/>
+
+
+ <property environment="env"/>
 
  <target name="start">
    <echo>Use 'idea', 'idea-eap'        =>  run  </echo>

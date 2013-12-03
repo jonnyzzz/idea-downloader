@@ -1,9 +1,14 @@
 <project name="idea-downloader-common" basedir="." default="nop">
+    <target name="nop"/>
 
     <!-- common defs -->
     <property name="http.buildserver" value="http://buildserver.labs.intellij.net"/>
     <property name="http.teamcity" value="http://teamcity.jetbrains.com"/>
 
-    <property name="bin"  location="${basedir}/apps/bin"/>
-    <property name="temp" location="${basedir}/apps/temp"/>
+    <property name="bin"    location="${basedir}/apps/bin"/>
+    <property name="temp"   location="${basedir}/apps/temp"/>
+    <property name="data"   location="${basedir}/apps/data"/>
+    <property name="backup" location="${basedir}/apps/old"/>
+
+
 </project>
