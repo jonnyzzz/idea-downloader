@@ -12,7 +12,7 @@
    <echo>   -Didea.build=134.222 </echo>
    <echo>  -Dkotlin.build=0.6.333 </echo>
    <echo/>
-   <echo>Use 'run-trunk' or 'run-kt' to start IDEA </echo>
+   <echo>Use 'run' or 'run-kt' to start IDEA </echo>
    <echo/> 
    <fail/>
  </target>
@@ -119,7 +119,7 @@
       </sequential>
   </macrodef>
 
-  <target name="run-trunk">
+  <target name="run">
       <run-app dest="trunk"/>
   </target>
 
