@@ -53,16 +53,24 @@
         <property name="props" value="${idea-unpack}/bin/idea.properties"/>
 
         <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
+
+        <propertyfile file="${idea-temp}/properties.patch">
+            <entry key="idea.config.path" value="${idea-data}/config" />
+            <entry key="idea.system.path" value="${idea-data}/system" />
+            <entry key="idea.plugins.path" value="${idea-data}/plugins" />
+            <entry key="idea.log.path" value="${idea-data}/logs" />
+        </propertyfile>
+
         <concat destfile="${props}" append="true">
             ## patched by jonnyzzz
 
-            idea.config.path=${idea-data}/config
-            idea.system.path=${idea-data}/system
-            idea.plugins.path=${idea-data}/plugins
-            idea.log.path=${idea-data}/logs
         </concat>
+
+        <concat destfile="${props}" append="true">
+            <fileset dir="${idea-temp}" includes="properties.patch" />
+        </concat>
+
+        <delete file="${idea-temp}/properties.patch" />
     </target>
-
-
 
 </project>
