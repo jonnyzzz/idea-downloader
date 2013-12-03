@@ -21,14 +21,6 @@
  <import file="build.common.xml"/>
  <import file="build.idea.xml"/>
 
- <macrodef name="teamcity-plugin">
-     <sequential>
-         <plugin build-type="TC_Trunk_DistParts_PluginIntelliJPluginDistributor" build-filename="TeamCity-IDEAplugin"/>
-     </sequential>
- </macrodef>
-
-
-
  <target name="idea">
      <property name="idea.build" value="latest.lastSuccessful" />
      <idea dest="trunk"
@@ -67,12 +59,13 @@
  <target name="kotlin">
      <property name="idea.build" value="EAP.tcbuildtag" />
      <property name="kotlin.build" value="latest.lastSuccessful" />
+
      <idea dest="kotlin"
            debug-port="5006"
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
            build-number="${idea.build}">
          <teamcity-plugin/>
-         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="${kotlin.build}"/>
+         <kotlin-plugin build-number="${kotlin.build}"/>
      </idea>
  </target>
 
@@ -82,10 +75,23 @@
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
-         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="M6.1.tcbuildtag"/>
+         <kotlin-plugin build-number="M6.1.tcbuildtag"/>
      </idea>
  </target>
 
+
+ <macrodef name="teamcity-plugin">
+     <sequential>
+         <plugin build-type="TC_Trunk_DistParts_PluginIntelliJPluginDistributor" build-filename="TeamCity-IDEAplugin"/>
+     </sequential>
+ </macrodef>
+
+ <macrodef name="kotlin-plugin">
+     <attribute name="build-number"/>
+     <sequential>
+         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="@{build-number}"/>     
+     </sequential>
+ </macrodef>
 
  <!-- we call this script to fetch all desired dependeices -->
  <target name="idea-pre-fetch-auto">
