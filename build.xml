@@ -93,9 +93,12 @@
      </sequential>
  </macrodef>
 
+ <target name="fetch-only">
+    <property name="idea-fetch-only" value="true"/>
+ </target>
+
  <!-- we call this script to fetch all desired dependeices -->
- <target name="idea-pre-fetch-auto">
-     <property name="idea-fetch-only" value="true"/>
+ <target name="idea-pre-fetch-auto" depends="fetch-only">
 
      <antcall target="idea"/>
      <antcall target="idea-13"/>
