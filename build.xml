@@ -6,14 +6,15 @@
  <target name="start">
    <echo>Use 'idea', 'idea-eap'        =>  run  </echo>
    <echo>Use 'idea-13', 'idea-13-eap'  =>  run  </echo>
-   <echo>Use 'kotlin', 'kotlin-eap'    => krun  </echo>
+   <echo>Use 'kotlin', 'kotlin-eap'    =>  run-kt  </echo>
    <echo/>
    <echo>For idea and kotlin you may override versions via</echo>
    <echo>   -Didea.build=134.222 </echo>
-   <echo>  -Dkotlin.build=0.6.333 </echo>
+   <echo>   -Dkotlin.build=0.6.333 </echo>
    <echo/>
    <echo>Use 'run' or 'run-kt' to start IDEA </echo>
    <echo/> 
+   <echo>Call 'fetch-only' task before to make the script only download files to cache</echo>
    <fail/>
  </target>
 
