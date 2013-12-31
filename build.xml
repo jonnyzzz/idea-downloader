@@ -2,6 +2,8 @@
 
 
  <property environment="env"/>
+ <property file="${basedir}/build.properties" />
+ <property name="IDEA_JAVA_HOME" location="${java.home}" />
 
  <target name="start">
    <echo>Use 'idea', 'idea-eap'        =>  run  </echo>
@@ -11,14 +13,17 @@
    <echo>For idea and kotlin you may override versions via</echo>
    <echo>   -Didea.build=134.222 </echo>
    <echo>   -Dkotlin.build=0.6.333 </echo>
+   <echo>   -DIDEA_JAVA_HOME=PATH_TO_JAVA</echo>
    <echo/>
    <echo>Use 'run' or 'run-kt' to start IDEA </echo>
    <echo/> 
    <echo>Call 'fetch-only' task before to make the script only download files to cache</echo>
+   <echo/>
+   <echo>Use 'build.properties' file to set all installation-specific properties, e.g. IDEA_JAVA_HOME for windows</echo>
    <fail/>
  </target>
 
-
+ 
  <import file="build.common.xml"/>
  <import file="build.idea.xml"/>
 
@@ -114,7 +119,7 @@
           <exec dir="${bin}/@{dest}.app/bin" osfamily="windows" executable="cmd">
               <arg value="/c"/>
               <arg value="idea.bat"/>
-              <env key="JAVA_HOME" value="C:\Java\jdk1.7.0_45"/>
+              <env key="JAVA_HOME" value="${IDEA_JAVA_HOME}"/>
           </exec>
 
           <exec dir="${bin}" osfamily="mac" executable="open">
