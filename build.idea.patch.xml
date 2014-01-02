@@ -46,7 +46,7 @@
 
     <target name="update-idea-patch-plist" if="idea-for-mac">
         <replaceregexp file="${idea-unpack}/Contents/Info.plist" match="-agentlib:yjp[^\s]+" replace="" flags="g" byline="true"/>
-        <replaceregexp file="${idea-unpack}/Contents/Info.plist" match="&lt;string&gt;1.6\*&lt;/string&gt;" replace="&lt;string&gt;1.7*&lt;/string&gt;" flags="g" byline="true"/>
+        <replaceregexp file="${idea-unpack}/Contents/Info.plist" match="&lt;string&gt;1.[6789]\*&lt;/string&gt;" replace="&lt;string&gt;${idea-mac-jdk-version}*&lt;/string&gt;" flags="g" byline="true"/>
     </target>
 
     <target name="update-idea-patch-props">
