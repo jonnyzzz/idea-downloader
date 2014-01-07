@@ -1,5 +1,7 @@
 @echo off
 
+svn up
+
 echo. >> last-fatch-log.txt
 echo. >> last-fatch-log.txt
 echo Started fetch >> last-fatch-log.txt
