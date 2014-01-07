@@ -13,8 +13,49 @@
         <attribute name="dest" default="trunk"/>
         <attribute name="debug-port" default="5005"/>
         <element name="plugins" implicit="true" optional="true"/>
+
+        <sequential>
+           <idea-impl
+                 build-type="@{build-type}"
+                 build-number="@{build-number}"
+                 dest="@{dest}"
+                 debug-port="@{debug-port}"
+                 idea-fetch="idea"
+                 idea-product-properties="product.idea.properties"
+           ><plugins-impl><plugins/></plugins-impl></idea-impl>
+        </sequential>
+    </macrodef>
+
+   <macrodef name="pycharm">
+        <attribute name="build-type"/>
+        <attribute name="build-number"/>
+        <attribute name="dest"/>
+        <attribute name="debug-port"/>
+        <element name="plugins" implicit="true" optional="true"/>
+
+        <sequential>
+           <idea-impl
+                 build-type="@{build-type}"
+                 build-number="@{build-number}"
+                 dest="@{dest}"
+                 debug-port="@{debug-port}"
+                 idea-fetch="pycharm"
+                 idea-product-properties="product.py.properties"
+           ><plugins-impl><plugins/></plugins-impl></idea-impl>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="idea-impl">
+        <attribute name="build-type" default="IDEA_Trunk_Installers"/>
+        <attribute name="build-number" default="latest.lastSuccessful"/>
+        <attribute name="dest" default="trunk"/>
+	<attribute name="debug-port" default="5005"/>
+        <attribute name="idea-product-properties" />
+        <attribute name="idea-fetch" />
+        <element name="plugins-impl" />
         <sequential>
             <mkdir dir="${temp}"/>
+            <copy file="${basedir}/@{idea-product-properties}" tofile="${temp}/idea-fetch.properties" overwrite="true"/>
             <propertyfile file="${temp}/idea-fetch.properties">
                 <entry key="idea-build-type" value="@{build-type}"/>
                 <entry key="idea-build-number" value="@{build-number}"/>
@@ -22,7 +63,7 @@
                 <entry key="idea-debug-port" value="@{debug-port}"/>
             </propertyfile>
 
-            <ant antfile="build.idea.fetch.xml">
+	    <ant antfile="build.@{idea-fetch}.fetch.xml">
                 <property file="${temp}/idea-fetch.properties"/>
             </ant>
             <ant antfile="build.idea.unpack.xml">
@@ -32,7 +73,7 @@
                 <property file="${temp}/idea-fetch.properties"/>
             </ant>
 
-            <plugins/>
+            <plugins-impl/>
 
             <ant antfile="build.idea.replace.xml">
                 <property file="${temp}/idea-fetch.properties"/>

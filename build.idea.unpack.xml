@@ -33,12 +33,12 @@
 
         <mkdir dir="${idea-temp}/mount.copy"/>
         <exec executable="bash">
-            <arg line="-c 'cp -R ${idea-temp}/mount/IntelliJ* ${idea-temp}/mount.copy'"/>
+            <arg line="-c 'cp -R ${idea-temp}/mount/${idea-product-dir-mask} ${idea-temp}/mount.copy'"/>
         </exec>
 
         <move todir="${idea-unpack}">
             <fileset dir="${idea-temp}/mount.copy">
-                <include name="IntelliJ*/**"/>
+                <include name="${idea-product-dir-mask}/**"/>
             </fileset>
             <cutdirsmapper dirs="1"/>
         </move>

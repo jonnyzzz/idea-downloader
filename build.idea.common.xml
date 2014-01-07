@@ -20,6 +20,8 @@
     <property name="idea-data" location="${data}/${idea-version}"/>
     <property name="idea-backup" location="${backup}/${idea-version}"/>
 
+    <!-- product properties -->
+    <property name="idea-product-dir-mask" value="IntelliJ*" />
 
     <property name="idea-unpack" location="${idea-temp}/unzip"/>
 
