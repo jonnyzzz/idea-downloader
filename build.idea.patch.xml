@@ -30,8 +30,8 @@
     <target name="update-idea-patch-vmo">
         <property name="opts" value="${idea-unpack}/bin/${idea-vmo}"/>
 
-        <replaceregexp file="${opts}" match="-Xmx\d+m" replace="-Xmx1424m" flags="g" byline="true"/>
-        <replaceregexp file="${opts}" match="-Xms\d+m" replace="-Xms512m" flags="g" byline="true"/>
+        <replaceregexp file="${opts}" match="-Xmx\d+m" replace="-Xmx${idea-xmx}" flags="g" byline="true"/>
+        <replaceregexp file="${opts}" match="-Xms\d+m" replace="-Xms${idea-xms}" flags="g" byline="true"/>
         <replaceregexp file="${opts}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
         <replaceregexp file="${opts}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
         <replaceregexp file="${opts}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
