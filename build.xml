@@ -135,12 +135,17 @@
      <antcall target="py" />
   </target>
 
+  <target name="spawn">
+     <property name="idea-exe-spawn" value="true" />
+  </target>
+
   <macrodef name="run-app">
       <attribute name="dest"/>
       <sequential>
-          <exec dir="${bin}/@{dest}.app/bin" osfamily="windows" executable="cmd">
+          <property name="idea-exe-spawn" value="false" />
+          <exec dir="${bin}/@{dest}.app/bin" osfamily="windows" executable="cmd" spawn="${idea-exe-spawn}">
               <arg value="/c"/>
-              <arg value="idea.bat"/>
+              <arg value="jonnyzzz.bat"/>
               <env key="JAVA_HOME" value="${IDEA_JAVA_HOME}"/>
           </exec>
 

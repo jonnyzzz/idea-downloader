@@ -24,6 +24,9 @@
     <!-- defaults -->
     <property name="idea-xmx" value="1424m" />
     <property name="idea-xms" value="512m" />
+    <property name="idea-exe-vmoptions" value="idea.exe.vmoptions" />
+    <property name="idea-exe-vmoptions64" value="idea64.exe.vmoptions" />
+    <property name="idea-bat" value="idea.bat" />
 
 
 
@@ -32,12 +35,12 @@
 
     <target name="idea-properties-mac" if="idea-for-win">
         <property name="idea-ext" value="zip"/>
-        <property name="idea-vmo" value="idea.exe.vmoptions"/>
+        <property name="idea-vmo" value="${idea-exe-vmoptions}"/>
     </target>
 
     <target name="idea-properties-win" if="idea-for-mac">
         <property name="idea-ext" value="dmg"/>
-        <property name="idea-vmo" value="idea.vmoptions"/>
+        <property name="idea-vmo" value="${idea-exe-vmoptions}"/>
     </target>
 
 

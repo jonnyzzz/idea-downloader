@@ -14,8 +14,11 @@
 
 
     <target name="update-idea-patch-settings-win" if="idea-for-win">
-        <copy file="${idea-unpack}/bin/idea64.exe.vmoptions" tofile="${idea-unpack}/bin/${idea-vmo}" overwrite="true"/>
+        <copy file="${idea-unpack}/bin/${idea-exe-vmoptions64}" tofile="${idea-unpack}/bin/${idea-vmo}" overwrite="true" failonerror="false"/>
+
+        <echo file="${idea-unpack}/bin/jonnyzzz.bat">@call ${idea-bat} %*</echo>
     </target>
+
 
     <target name="update-idea-patch-settings-mac" if="idea-for-mac">
 
