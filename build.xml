@@ -50,7 +50,7 @@
 
  <target name="idea">
      <property name="idea.build" value="latest.lastSuccessful" />
-     <idea dest="trunk"
+     <idea dest="idea"
            build-type="IDEA_Trunk_Installers"
            build-number="${idea.build}">
          <teamcity-plugin/>
@@ -58,7 +58,7 @@
  </target>
 
  <target name="idea-eap">
-     <idea dest="trunk"
+     <idea dest="idea"
            build-type="IDEA_Trunk_Installers"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
@@ -67,7 +67,7 @@
 
  <target name="idea-13">
      <property name="idea.build" value="latest.lastSuccessful" />
-     <idea dest="trunk"
+     <idea dest="idea"
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
            build-number="${idea.build}">
          <teamcity-plugin/>
@@ -75,7 +75,7 @@
  </target>
 
  <target name="idea-13-eap">
-     <idea dest="trunk"
+     <idea dest="idea"
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
@@ -157,7 +157,7 @@
   </macrodef>
 
   <target name="run">
-      <run-app dest="trunk"/>
+      <run-app dest="idea"/>
   </target>
 
   <target name="run-kt">
