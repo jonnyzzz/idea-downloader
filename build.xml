@@ -133,6 +133,7 @@
      <antcall target="kotlin"/>
      <antcall target="kotlin-eap"/>
      <antcall target="py" />
+     <antcall target="py-eap" />
   </target>
 
   <target name="spawn">
