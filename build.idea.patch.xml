@@ -19,6 +19,9 @@
         <echo file="${idea-unpack}/bin/jonnyzzz.bat">@call ${idea-bat} %*</echo>
     </target>
 
+    <target name="update-idea-patch64-settings-win" if="idea-for-win">
+        <copy file="${idea-unpack}/bin/${idea-vmo}" tofile="${idea-unpack}/bin/${idea-exe-vmoptions64}" overwrite="true"/>
+    </target>
 
     <target name="update-idea-patch-settings-mac" if="idea-for-mac">
 
@@ -27,24 +30,27 @@
                                                        update-idea-patch-settings-mac,
                                                        update-idea-patch-settings-win,
                                                        update-idea-patch-vmo,
+                                                       update-idea-patch64-settings-win,
                                                        update-idea-patch-plist,
                                                        update-idea-patch-props"/>
 
     <target name="update-idea-patch-vmo">
-        <property name="opts" value="${idea-unpack}/bin/${idea-vmo}"/>
+        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-Xmx\d+m" replace="-Xmx${idea-xmx}" flags="g" byline="true"/>
+        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-Xms\d+m" replace="-Xms${idea-xms}" flags="g" byline="true"/>
+        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
+        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
+        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
+        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-agentlib:yjp[^\s]+" replace="" flags="g" byline="true"/>
 
-        <replaceregexp file="${opts}" match="-Xmx\d+m" replace="-Xmx${idea-xmx}" flags="g" byline="true"/>
-        <replaceregexp file="${opts}" match="-Xms\d+m" replace="-Xms${idea-xms}" flags="g" byline="true"/>
-        <replaceregexp file="${opts}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
-        <replaceregexp file="${opts}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
-        <replaceregexp file="${opts}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
-
-        <concat destfile="${opts}" append="true">
+        <concat destfile="${idea-unpack}/bin/${idea-vmo}" append="true">
             -XX:+HeapDumpOnOutOfMemoryError
             -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=${idea-debug-port}
             -XX:+UseCompressedOops
             -XX:ReservedCodeCacheSize=228m
         </concat>
+        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="[\r\n]+" replace="${line.separator}" flags="g" byline="false"/>
+        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="^\s+" replace="" flags="g" byline="true"/>
+
     </target>
 
     <target name="update-idea-patch-plist" if="idea-for-mac">
