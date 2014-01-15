@@ -102,7 +102,7 @@
            build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
-         <kotlin-plugin build-number="M6.1.tcbuildtag"/>
+         <kotlin-plugin build-number="M6.2.tcbuildtag"/>
      </idea>
  </target>
 
