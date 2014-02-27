@@ -40,7 +40,7 @@
 
     <target name="idea-properties-win" if="idea-for-mac">
         <property name="idea-ext" value="dmg"/>
-        <property name="idea-vmo" value="${idea-exe-vmoptions}"/>
+        <property name="idea-vmo" value="${idea-mac-vmoptions}"/>
     </target>
 
 
