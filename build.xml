@@ -125,7 +125,7 @@
  <macrodef name="teamcity-plugin">
      <sequential>
          <!-- trunk: TC_Trunk_DistParts_PluginIntelliJPluginDistributor -->
-         <plugin build-type="TC_Gaya80x_DistParts_PluginIntelliJPluginDistributor" build-filename="TeamCity-IDEAplugin"/>
+         <plugin build-type="TC_Gaya81x_DistParts_PluginIntelliJPluginDistributor" build-filename="TeamCity-IDEAplugin"/>
      </sequential>
  </macrodef>
 
