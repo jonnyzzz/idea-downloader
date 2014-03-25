@@ -9,12 +9,12 @@
  <property name="idea-mac-jdk-version" value="1.8" />
 
  <target name="start">
-   <echo>Use 'idea', 'idea-eap'        =>  run     </echo>
-   <echo>Use 'idea-13', 'idea-13-eap'  =>  run     </echo>
-   <echo>Use 'up'                      =>  run-up  </echo>
-   <echo>Use 'kotlin', 'kotlin-eap'    =>  run-kt  </echo>
-   <echo>Use 'py', 'py-eap'            =>  run-py  </echo>
-   <echo>Use 'py', 'py-eap'            =>  run-py  </echo>
+   <echo>Use 'idea', 'idea-eap'            =>  run     </echo>
+   <echo>Use 'idea-13.1', 'idea-13.1-eap'  =>  run     </echo>
+   <echo>Use 'idea-13', 'idea-13-eap'      =>  run     </echo>
+   <echo>Use 'up'                          =>  run-up  </echo>
+   <echo>Use 'kotlin', 'kotlin-eap'        =>  run-kt  </echo>
+   <echo>Use 'py', 'py-eap'                =>  run-py  </echo>
    <echo/>
    <echo>For idea and kotlin you may override versions via</echo>
    <echo>   -Didea.build=134.222     </echo>
@@ -67,6 +67,23 @@
      </idea>
  </target>
 
+ <target name="idea-13.1">
+     <property name="idea.build" value="latest.lastSuccessful" />
+     <idea dest="idea"
+           build-type="ijplatform_IjPlatform135_IdeaTrunk_Installers"
+           build-number="${idea.build}">
+         <teamcity-plugin/>
+     </idea>
+ </target>
+
+ <target name="idea-13.1-eap">
+     <idea dest="idea"
+           build-type="ijplatform_IjPlatform135_IdeaTrunk_Installers"
+           build-number="EAP.tcbuildtag">
+         <teamcity-plugin/>
+     </idea>
+ </target>
+
  <target name="idea-13">
      <property name="idea.build" value="latest.lastSuccessful" />
      <idea dest="idea"
@@ -103,7 +120,7 @@
 
      <idea dest="kotlin"
            debug-port="5006"
-           build-type="IDEA_Trunk_Installers"
+           build-type="ijplatform_IjPlatform135_IdeaTrunk_Installers"
            build-number="${idea.build}">
          <teamcity-plugin/>
          <kotlin-plugin build-number="${kotlin.build}"/>
@@ -114,10 +131,10 @@
      <property name="idea.build" value="latest.lastSuccessful" />
      <idea dest="kotlin"
            debug-port="5006"
-           build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
+           build-type="ijplatform_IjPlatform135_IdeaTrunk_Installers"
            build-number="${idea.build}">
          <teamcity-plugin/>
-         <kotlin-plugin build-number="M6.2.tcbuildtag"/>
+         <kotlin-plugin build-number="M7.tcbuildtag"/>
      </idea>
  </target>
 
@@ -144,6 +161,8 @@
  <target name="idea-pre-fetch-auto" depends="fetch-only">
 
      <antcall target="idea"/>
+     <antcall target="idea-13.1"/>
+     <antcall target="idea-13.1-eap"/>
      <antcall target="idea-13"/>
      <antcall target="idea-13-eap"/>
      <antcall target="kotlin"/>
