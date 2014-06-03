@@ -55,14 +55,14 @@
     <property name="py.build" value="latest.lastSuccessful" />
     <pycharm dest="py"
 	  debug-port="5007"
-	  build-type="ijplatform_IjPlatform13_PyCharmTrunk_Installers"
+	  build-type="bt824"
 	  build-number="${py.build}" />
  </target> 
 
  <target name="py-eap">
     <pycharm dest="py"
           debug-port="5007"
-          build-type="ijplatform_IjPlatform13_PyCharmTrunk_Installers"
+          build-type="bt824"
           build-number="EAP.tcbuildtag" />
  </target>
 
