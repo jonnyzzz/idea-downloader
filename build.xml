@@ -12,7 +12,6 @@
    <echo>Use 'idea', 'idea-eap'            =>  run     </echo>
    <echo>Use 'idea-13.1', 'idea-13.1-eap'  =>  run     </echo>
    <echo>Use 'idea-13', 'idea-13-eap'      =>  run     </echo>
-   <echo>Use 'up'                          =>  run-up  </echo>
    <echo>Use 'kotlin', 'kotlin-eap'        =>  run-kt  </echo>
    <echo>Use 'py', 'py-eap'                =>  run-py  </echo>
    <echo>Use 'cpp', 'cpp-eap'              =>  run-cpp </echo>
@@ -118,19 +117,6 @@
      </idea>
  </target>
 
-<target name="up">
-     <property name="idea.build" value="latest.lastSuccessful" />
-     <property name="kotlin.build" value="bootstrap.tcbuildtag" />
-     
-     <idea dest="up"
-           debug-port="5009"
-           build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
-           build-number="${idea.build}">
-         <teamcity-plugin/>
-         <kotlin-plugin build-number="${kotlin.build}"/>
-     </idea>
-</target>
-
  <target name="kotlin">
      <property name="idea.build" value="latest.lastSuccessful" />
      <property name="kotlin.build" value="latest.lastSuccessful" />
@@ -186,7 +172,6 @@
      <antcall target="kotlin-eap"/>
      <antcall target="py" />
      <antcall target="py-eap" />
-     <antcall target="up" />
      <antcall target="cpp" />
      <antcall target="cpp-eap" /> 
   </target>
@@ -215,10 +200,6 @@
       <run-app dest="idea"/>
   </target>
  
-  <target name="run-up">
-      <run-app dest="up"/>
-  </target>
-
   <target name="run-kt">
       <run-app dest="kotlin"/>
   </target>
