@@ -15,11 +15,13 @@
    <echo>Use 'up'                          =>  run-up  </echo>
    <echo>Use 'kotlin', 'kotlin-eap'        =>  run-kt  </echo>
    <echo>Use 'py', 'py-eap'                =>  run-py  </echo>
+   <echo>Use 'cpp', 'cpp-eap'              =>  run-cpp </echo>
    <echo/>
    <echo>For idea and kotlin you may override versions via</echo>
    <echo>   -Didea.build=134.222     </echo>
    <echo>   -Dkotlin.build=0.6.333   </echo>
    <echo>   -Dpy.build=...           </echo>
+   <echo>   -Dcpp.build=...          </echo>
    <echo>   -DIDEA_JAVA_HOME=PATH_TO_JAVA  path to Java on Windows </echo>
    <echo>   -Didea-mac-jdk-version=1.8     MacOS JDK version</echo>
    <echo/>
@@ -34,6 +36,21 @@
  
  <import file="build.common.xml"/>
  <import file="build.idea.xml"/>
+
+ <target name="cpp">
+    <property name="cpp.build" value="latest.lastSuccessful" />
+    <cpp dest="cpp"
+	  debug-port="5008"
+	  build-type="CPP_IDE_Installers"
+	  build-number="${cpp.build}" />
+ </target> 
+
+ <target name="cpp-eap">
+    <cpp dest="cpp"
+          debug-port="5008"
+          build-type="CPP_IDE_Installers"
+          build-number="PEAP.tcbuildtag" />
+ </target>
 
  <target name="py">
     <property name="py.build" value="latest.lastSuccessful" />
@@ -170,6 +187,8 @@
      <antcall target="py" />
      <antcall target="py-eap" />
      <antcall target="up" />
+     <antcall target="cpp" />
+     <antcall target="cpp-eap" /> 
   </target>
 
   <target name="spawn">
@@ -203,6 +222,10 @@
   <target name="run-kt">
       <run-app dest="kotlin"/>
   </target>
+
+  <target name="run-cpp">
+      <run-app dest="cpp" />
+  </target>    
 
   <target name="run-py">
       <run-app dest="py" />

@@ -26,6 +26,25 @@
         </sequential>
     </macrodef>
 
+   <macrodef name="cpp">
+        <attribute name="build-type"/>
+        <attribute name="build-number"/>
+        <attribute name="dest"/>
+        <attribute name="debug-port"/>
+        <element name="plugins" implicit="true" optional="true"/>
+
+        <sequential>
+           <idea-impl
+                 build-type="@{build-type}"
+                 build-number="@{build-number}"
+                 dest="@{dest}"
+                 debug-port="@{debug-port}"
+                 idea-fetch="cpp"
+                 idea-product-properties="product.cpp.properties"
+           ><plugins-impl><plugins/></plugins-impl></idea-impl>
+        </sequential>
+    </macrodef>
+
    <macrodef name="pycharm">
         <attribute name="build-type"/>
         <attribute name="build-number"/>
