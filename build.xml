@@ -119,7 +119,7 @@
 
  <target name="kotlin">
      <property name="idea.build" value="latest.lastSuccessful" />
-     <property name="kotlin.build" value="latest.lastSuccessful" />
+     <property name="kotlin.build" value="bootstrap.tcbuildtag" />
 
      <idea dest="kotlin"
            debug-port="5006"
@@ -138,6 +138,27 @@
            build-number="${idea.build}">
          <teamcity-plugin/>
          <kotlin-plugin build-number="M7.tcbuildtag"/>
+     </idea>
+ </target>
+
+ <target name="kotlin-M7">
+     <idea dest="kotlin"
+           debug-port="5006"
+           build-type="ijplatform_IjPlatform135_Idea131and1311_Installers"
+           build-number="13.1.3.tcbuildtag">
+         <teamcity-plugin/>
+         <kotlin-plugin build-number="M7.tcbuildtag"/>
+     </idea>
+ </target>
+
+ <target name="kotlin-M6.2">
+     <property name="idea.build" value="latest.lastSuccessful" />
+     <idea dest="kotlin"
+           debug-port="5006"
+           build-type="ijplatform_IjPlatform13_IdeaTrunk_Installers"
+           build-number="${idea.build}">
+         <teamcity-plugin/>
+         <kotlin-plugin build-number="M6.2.tcbuildtag"/>
      </idea>
  </target>
 
@@ -170,6 +191,7 @@
      <antcall target="idea-13-eap"/>
      <antcall target="kotlin"/>
      <antcall target="kotlin-eap"/>
+     <antcall target="kotlin-M7"/>
      <antcall target="py" />
      <antcall target="py-eap" />
      <antcall target="cpp" />
