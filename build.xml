@@ -9,12 +9,14 @@
  <property name="idea-mac-jdk-version" value="1.8" />
 
  <target name="start">
-   <echo>Use 'idea', 'idea-eap'            =>  run     </echo>
-   <echo>Use 'idea-13.1', 'idea-13.1-eap'  =>  run     </echo>
-   <echo>Use 'idea-13', 'idea-13-eap'      =>  run     </echo>
-   <echo>Use 'kotlin', 'kotlin-eap'        =>  run-kt  </echo>
-   <echo>Use 'py', 'py-eap'                =>  run-py  </echo>
-   <echo>Use 'cpp', 'cpp-eap'              =>  run-cpp </echo>
+   <echo>Use 'idea', 'idea-eap'             =>  run     </echo>
+   <echo>Use 'idea-13.1', 'idea-13.1-eap'   =>  run     </echo>
+   <echo>Use 'idea-13', 'idea-13-eap'       =>  run     </echo>
+   <echo>Use 'kotlin'  --- bootstrap build              </echo>
+   <echo>    'kotlin-M8',                               </echo>
+   <echo>    'kotlin-M7', 'kotlin-M6.2'     =>  run-kt  </echo>
+   <echo>Use 'py', 'py-eap'                 =>  run-py  </echo>
+   <echo>Use 'cpp', 'cpp-eap'               =>  run-cpp </echo>
    <echo/>
    <echo>For idea and kotlin you may override versions via</echo>
    <echo>   -Didea.build=134.222     </echo>
@@ -57,7 +59,7 @@
 	  debug-port="5007"
 	  build-type="bt824"
 	  build-number="${py.build}" />
- </target> 
+ </target8 
 
  <target name="py-eap">
     <pycharm dest="py"
@@ -129,15 +131,14 @@
          <kotlin-plugin build-number="${kotlin.build}"/>
      </idea>
  </target>
-
- <target name="kotlin-eap">
-     <property name="idea.build" value="latest.lastSuccessful" />
+ 
+<target name="kotlin-M8">
      <idea dest="kotlin"
            debug-port="5006"
-           build-type="ijplatform_IjPlatform135_IdeaTrunk_Installers"
-           build-number="${idea.build}">
+           build-type="ijplatform_IjPlatform135_Idea131and1311_Installers"
+           build-number="13.1.3.tcbuildtag">
          <teamcity-plugin/>
-         <kotlin-plugin build-number="M7.tcbuildtag"/>
+         <kotlin-plugin build-number="M8.tcbuildtag"/>
      </idea>
  </target>
 
