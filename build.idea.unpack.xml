@@ -2,7 +2,7 @@
     <import file="build.idea.common.xml"/>
 
     <target name="update-idea-unpack" unless="idea-fetch-only">
-        <antcall target="update-idea-unpack-impl"/>
+       <antcall target="update-idea-unpack-impl"/>
     </target>
 
     <target name="update-idea-unpack-impl" depends="update-idea-unpack-mac, update-idea-unpack-win, update-idea-unscramble, update-idea-delete-zip"/>
@@ -55,7 +55,12 @@
     </target>
 
     <target name="update-idea-unscramble">
-        <copy todir="${idea-unpack}/lib" overwrite="true" flatten="true">
+      <!-- we need to re-evaluate ${idea-patch-home} for the task. So Ant fork is here -->  
+      <ant antfile="build.idea.unpack.xml" target="update-idea-unscramble-impl"/>
+    </target>
+   
+    <target name="update-idea-unscramble-impl" depends="idea-properties">
+        <copy todir="${idea-patch-home}/lib" overwrite="true" flatten="true">
             <fileset dir="${idea-temp}/zip">
                 <include name="idea.jar.unscramble.16/idea.jar" />
                 <include name="idea.jar.unscramble/idea.jar" />

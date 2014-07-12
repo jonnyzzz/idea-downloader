@@ -6,9 +6,9 @@
         <antcall target="update-idea-plugin-unpack-impl"/>
     </target>
 
-    <target name="update-idea-plugin-unpack-impl">
-        <delete dir="${idea-unpack}/plugins/${idea-plugin-build-type}" failonerror="false" />
-        <unzip dest="${idea-unpack}/plugins/">
+    <target name="update-idea-plugin-unpack-impl" depends="idea-properties">
+        <delete dir="${idea-patch-home}/plugins/${idea-plugin-build-type}" failonerror="false" />
+        <unzip dest="${idea-patch-home}/plugins/">
             <fileset dir="${idea-plugin-temp}/zip" includes="*.zip"/>
         </unzip>
         <delete dir="${idea-plugin-temp}"/>

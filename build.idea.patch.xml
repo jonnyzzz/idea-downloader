@@ -1,6 +1,6 @@
 <project name="idea-downloader-idea-patch" default="update-idea-patch" basedir=".">
     <import file="build.idea.common.xml"/>
-
+    
     <target name="update-idea-patch" unless="idea-fetch-only">
         <antcall target="update-idea-patch-impl"/>
     </target>
@@ -14,13 +14,13 @@
 
 
     <target name="update-idea-patch-settings-win" if="idea-for-win">
-        <copy file="${idea-unpack}/bin/${idea-exe-vmoptions64}" tofile="${idea-unpack}/bin/${idea-vmo}" overwrite="true" failonerror="false"/>
+        <copy file="${idea-patch-home}/bin/${idea-exe-vmoptions64}" tofile="${idea-patch-home}/bin/${idea-vmo}" overwrite="true" failonerror="false"/>
 
-        <echo file="${idea-unpack}/bin/jonnyzzz.bat">@call ${idea-bat} %*</echo>
+        <echo file="${idea-patch-home}/bin/jonnyzzz.bat">@call ${idea-bat} %*</echo>
     </target>
 
     <target name="update-idea-patch64-settings-win" if="idea-for-win">
-        <copy file="${idea-unpack}/bin/${idea-vmo}" tofile="${idea-unpack}/bin/${idea-exe-vmoptions64}" overwrite="true"/>
+        <copy file="${idea-patch-home}/bin/${idea-vmo}" tofile="${idea-patch-home}/bin/${idea-exe-vmoptions64}" overwrite="true"/>
     </target>
 
     <target name="update-idea-patch-settings-mac" if="idea-for-mac">
@@ -35,31 +35,31 @@
                                                        update-idea-patch-props"/>
 
     <target name="update-idea-patch-vmo">
-        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-Xmx\d+m" replace="-Xmx${idea-xmx}" flags="g" byline="true"/>
-        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-Xms\d+m" replace="-Xms${idea-xms}" flags="g" byline="true"/>
-        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
-        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
-        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
-        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="-agentlib:yjp[^\s]+" replace="" flags="g" byline="true"/>
+        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-Xmx\d+m" replace="-Xmx${idea-xmx}" flags="g" byline="true"/>
+        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-Xms\d+m" replace="-Xms${idea-xms}" flags="g" byline="true"/>
+        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
+        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
+        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
+        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-agentlib:yjp[^\s]+" replace="" flags="g" byline="true"/>
 
-        <concat destfile="${idea-unpack}/bin/${idea-vmo}" append="true">
+        <concat destfile="${idea-patch-home}/bin/${idea-vmo}" append="true">
             -XX:+HeapDumpOnOutOfMemoryError
             -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=${idea-debug-port}
             -XX:+UseCompressedOops
             -XX:ReservedCodeCacheSize=228m
         </concat>
-        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="[\r\n]+" replace="${line.separator}" flags="g" byline="false"/>
-        <replaceregexp file="${idea-unpack}/bin/${idea-vmo}" match="^\s+" replace="" flags="g" byline="true"/>
+        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="[\r\n]+" replace="${line.separator}" flags="g" byline="false"/>
+        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="^\s+" replace="" flags="g" byline="true"/>
 
     </target>
 
     <target name="update-idea-patch-plist" if="idea-for-mac">
-        <replaceregexp file="${idea-unpack}/Contents/Info.plist" match="-agentlib:yjp[^\s]+" replace="" flags="g" byline="true"/>
-        <replaceregexp file="${idea-unpack}/Contents/Info.plist" match="&lt;string&gt;1.[6789]\*&lt;/string&gt;" replace="&lt;string&gt;${idea-mac-jdk-version}*&lt;/string&gt;" flags="g" byline="true"/>
+        <replaceregexp file="${idea-patch-home}/Contents/Info.plist" match="-agentlib:yjp[^\s]+" replace="" flags="g" byline="true"/>
+        <replaceregexp file="${idea-patch-home}/Contents/Info.plist" match="&lt;string&gt;1.[6789]\*&lt;/string&gt;" replace="&lt;string&gt;${idea-mac-jdk-version}*&lt;/string&gt;" flags="g" byline="true"/>
     </target>
 
     <target name="update-idea-patch-props">
-        <property name="props" value="${idea-unpack}/bin/idea.properties"/>
+        <property name="props" value="${idea-patch-home}/bin/idea.properties"/>
 
         <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
 

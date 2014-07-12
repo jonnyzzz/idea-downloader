@@ -30,18 +30,28 @@
 
 
 
-    <target name="idea-properties" depends="idea-properties-mac, idea-properties-win"/>
+    <target name="idea-properties" depends="idea-properties-mac, idea-properties-win, idea-properties-dump"/>
 
 
-    <target name="idea-properties-mac" if="idea-for-win">
+    <target name="idea-properties-win" if="idea-for-win">
         <property name="idea-ext" value="zip"/>
         <property name="idea-vmo" value="${idea-exe-vmoptions}"/>
+        <property name="idea-patch-home" value="${idea-unpack}" />
     </target>
 
-    <target name="idea-properties-win" if="idea-for-mac">
+    <target name="idea-properties-mac" if="idea-for-mac">
         <property name="idea-ext" value="dmg"/>
         <property name="idea-vmo" value="${idea-mac-vmoptions}"/>
+        <!-- support for new IntelliJ IDEA products layout -->
+        <echo>AAA  ${idea-unpack}/Contents/lib/idea.jar</echo>
+        <condition property="idea-patch-home" value="${idea-unpack}/Contents" else="${idea-unpack}">
+           <available file="${idea-unpack}/Contents/lib/idea.jar"/>
+        </condition>
     </target>
 
+    <target name="idea-properties-dump"> 
+       <echo>Idea unpack home: ${idea-unpack}</echo>
+       <echo>Idea patch home : ${idea-patch-home}</echo>
+    </target>
 
 </project>
