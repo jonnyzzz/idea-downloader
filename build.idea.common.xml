@@ -27,8 +27,11 @@
     <property name="idea-exe-vmoptions" value="idea.exe.vmoptions" />
     <property name="idea-exe-vmoptions64" value="idea64.exe.vmoptions" />
     <property name="idea-bat" value="idea.bat" />
+    <property name="idea-unscrambled" value="true" />
 
-
+    <condition property="idea.disable.unscrambled" value="yeah">
+       <not><equals arg1="true" arg2="${idea-unscrambled}" /></not>
+    </condition>
 
     <target name="idea-properties" depends="idea-properties-mac, idea-properties-win, idea-properties-dump"/>
 
@@ -43,7 +46,6 @@
         <property name="idea-ext" value="dmg"/>
         <property name="idea-vmo" value="${idea-mac-vmoptions}"/>
         <!-- support for new IntelliJ IDEA products layout -->
-        <echo>AAA  ${idea-unpack}/Contents/lib/idea.jar</echo>
         <condition property="idea-patch-home" value="${idea-unpack}/Contents" else="${idea-unpack}">
            <available file="${idea-unpack}/Contents/lib/idea.jar"/>
         </condition>

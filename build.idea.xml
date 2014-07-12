@@ -12,6 +12,7 @@
         <attribute name="build-number" default="latest.lastSuccessful"/>
         <attribute name="dest" default="trunk"/>
         <attribute name="debug-port" default="5005"/>
+        <attribute name="unscrambled" default="true"/>
         <element name="plugins" implicit="true" optional="true"/>
 
         <sequential>
@@ -22,6 +23,7 @@
                  debug-port="@{debug-port}"
                  idea-fetch="idea"
                  idea-product-properties="product.idea.properties"
+                 unscrambled="@{unscrambled}"
            ><plugins-impl><plugins/></plugins-impl></idea-impl>
         </sequential>
     </macrodef>
@@ -71,6 +73,7 @@
 	<attribute name="debug-port" default="5005"/>
         <attribute name="idea-product-properties" />
         <attribute name="idea-fetch" />
+        <attribute name="unscrambled" default="true" />
         <element name="plugins-impl" />
         <sequential>
             <mkdir dir="${temp}"/>
@@ -80,6 +83,7 @@
                 <entry key="idea-build-number" value="@{build-number}"/>
                 <entry key="idea-version" value="@{dest}"/>
                 <entry key="idea-debug-port" value="@{debug-port}"/>
+                <entry key="idea-unscrambled" value="@{unscrambled}" />
             </propertyfile>
 
 	    <ant antfile="build.@{idea-fetch}.fetch.xml">

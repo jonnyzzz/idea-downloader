@@ -54,12 +54,13 @@
         <delete dir="${idea-temp}/mount"/>
     </target>
 
-    <target name="update-idea-unscramble">
+    <target name="update-idea-unscramble" unless="idea.disable.unscrambled">
       <!-- we need to re-evaluate ${idea-patch-home} for the task. So Ant fork is here -->  
       <ant antfile="build.idea.unpack.xml" target="update-idea-unscramble-impl"/>
     </target>
    
     <target name="update-idea-unscramble-impl" depends="idea-properties">
+        <echo>Replacing idea.jar with unscrambled one</echo>
         <copy todir="${idea-patch-home}/lib" overwrite="true" flatten="true">
             <fileset dir="${idea-temp}/zip">
                 <include name="idea.jar.unscramble.16/idea.jar" />
