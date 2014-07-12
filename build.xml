@@ -191,8 +191,8 @@
      <antcall target="idea-13"/>
      <antcall target="idea-13-eap"/>
      <antcall target="kotlin"/>
-     <antcall target="kotlin-eap"/>
      <antcall target="kotlin-M7"/>
+     <antcall target="kotlin-M8"/>
      <antcall target="py" />
      <antcall target="py-eap" />
      <antcall target="cpp" />
