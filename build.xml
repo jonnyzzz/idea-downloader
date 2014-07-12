@@ -59,7 +59,7 @@
 	  debug-port="5007"
 	  build-type="bt824"
 	  build-number="${py.build}" />
- </target8 
+ </target> 
 
  <target name="py-eap">
     <pycharm dest="py"
