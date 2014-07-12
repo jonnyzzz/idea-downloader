@@ -79,7 +79,7 @@
 
  <target name="idea-eap">
      <idea dest="idea"
-           build-type="IDEA_Trunk_Installers"
+           build-type="ijplatform_master_IdeaTrunkEap_Installers"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
      </idea>
@@ -120,12 +120,12 @@
  </target>
 
  <target name="kotlin">
-     <property name="idea.build" value="latest.lastSuccessful" />
+     <property name="idea.build" value="EAP.tcbuildtag" />
      <property name="kotlin.build" value="bootstrap.tcbuildtag" />
 
      <idea dest="kotlin"
            debug-port="5006"
-           build-type="ijplatform_IjPlatform135_IdeaTrunk_Installers"
+           build-type="ijplatform_master_IdeaTrunkEap_Installers"
            build-number="${idea.build}">
          <teamcity-plugin/>
          <kotlin-plugin build-number="${kotlin.build}"/>
@@ -135,8 +135,8 @@
 <target name="kotlin-M8">
      <idea dest="kotlin"
            debug-port="5006"
-           build-type="ijplatform_IjPlatform135_Idea131and1311_Installers"
-           build-number="13.1.3.tcbuildtag">
+           build-type="ijplatform_master_IdeaTrunkEap_Installers"
+           build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
          <kotlin-plugin build-number="M8.tcbuildtag"/>
      </idea>
