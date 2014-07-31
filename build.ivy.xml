@@ -17,8 +17,13 @@
         <attribute name="config"/>
         <attribute name="server"/>
         <attribute name="dest"/>
+        <attribute name="branch" default=""/>
         <sequential>
             <mkdir dir="${temp}"/>
+            
+            <condition property="branch-actual" value="?branch=@{branch}" else="">
+               <not><equals arg1="" arg2="@{branch}" /></not>
+            </condition>
 
             <echo file="${temp}/ivy.settings.xml"><![CDATA[
                 <ivysettings>
@@ -29,8 +34,8 @@
                   </statuses>
                   <resolvers>
                     <url name='teamcity-rep' alwaysCheckExactRevision='yes' checkmodified="true">
-                      <ivy pattern='@{server}/guestAuth/repository/download/[module]/[revision]/teamcity-ivy.xml' />
-                      <artifact pattern='@{server}/guestAuth/repository/download/[module]/[revision]/[artifact](.[ext])' />
+                      <ivy pattern='@{server}/guestAuth/repository/download/[module]/[revision]/teamcity-ivy.xml${branch-actual}' />
+                      <artifact pattern='@{server}/guestAuth/repository/download/[module]/[revision]/[artifact](.[ext])${branch-actual}' />
                     </url>
                   </resolvers>
                   <modules>

@@ -119,13 +119,29 @@
      </idea>
  </target>
 
+
+ <property name="kotlin-idea-build-type" value="IDEA_Trunk_Installers" />
+
  <target name="kotlin">
-     <property name="idea.build" value="EAP.tcbuildtag" />
+     <property name="idea.build" value="latest.lastSuccessful" />
      <property name="kotlin.build" value="bootstrap.tcbuildtag" />
 
      <idea dest="kotlin"
            debug-port="5006"
-           build-type="ijplatform_master_IdeaTrunkEap_Installers"
+           build-type="${kotlin-idea-build-type}"
+           build-number="${idea.build}">
+         <teamcity-plugin/>
+         <kotlin-plugin build-number="${kotlin.build}"/>
+     </idea>
+ </target>
+
+<target name="kotlin-trunk">
+     <property name="idea.build" value="latest.lastSuccessful" />
+     <property name="kotlin.build" value="latest.lastSuccessful" />
+
+     <idea dest="kotlin"
+           debug-port="5006"
+           build-type="${kotlin-idea-build-type}"
            build-number="${idea.build}">
          <teamcity-plugin/>
          <kotlin-plugin build-number="${kotlin.build}"/>
@@ -136,9 +152,10 @@
      <idea dest="kotlin"
            debug-port="5006"
            build-type="ijplatform_master_IdeaTrunkEap_Installers"
-           build-number="EAP.tcbuildtag">
+           build-number="EAP.tcbuildtag"
+           unscrambled="false" >
          <teamcity-plugin/>
-         <kotlin-plugin build-number="M8.tcbuildtag"/>
+         <kotlin-plugin build-number="M8_update_1.tcbuildtag" build-branch="idea14_M8"/>
      </idea>
  </target>
 
@@ -174,8 +191,9 @@
 
  <macrodef name="kotlin-plugin">
      <attribute name="build-number"/>
+     <attribute name="build-branch" default="" />
      <sequential>
-         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="@{build-number}"/>     
+         <plugin build-type="bt345" build-filename="([Kk]otlin[pP]lugin/)?[kK]otlin-[pP]lugin.*" build-server="${http.teamcity}" build-number="@{build-number}" build-branch="@{build-branch}"/>     
      </sequential>
  </macrodef>
 

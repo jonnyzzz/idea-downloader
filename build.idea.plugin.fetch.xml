@@ -22,7 +22,7 @@
             </ivy-module>
         ]]></echo>
 
-        <fetch server="${idea-plugin-build-server}" config="${idea-plugin-temp}/ivy.xml" dest="${idea-plugin-temp}/zip"/>
+        <fetch server="${idea-plugin-build-server}" config="${idea-plugin-temp}/ivy.xml" branch="${idea-plugin-build-branch}" dest="${idea-plugin-temp}/zip"/>
     </target>
 
 

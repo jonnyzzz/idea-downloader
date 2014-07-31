@@ -6,11 +6,11 @@
     <property name="idea-plugin-build-number" value="latest.lastSuccessful"/>
     <property name="idea-plugin-build-server" value="???"/>
     <property name="idea-plugin-filename" value=".*"/>
-
+    <property name="idea-plugin-build-branch" value="" />
 
     <!-- internals -->
     <property name="idea-plugin"        location="${idea-temp}/plugins"/>
     <property name="idea-plugin-temp"   location="${idea-plugin}/${idea-plugin-build-type}-${idea-plugin-build-number}"/>
     <property name="idea-plugin-unpack" location="${idea-plugin-temp}/unpack"/>
-
+    
 </project>

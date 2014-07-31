@@ -111,6 +111,7 @@
         <attribute name="build-number" default="latest.lastSuccessful"/>
         <attribute name="build-server" default="${http.buildserver}"/>
         <attribute name="build-filename" default=".*"/>
+        <attribute name="build-branch" default="" />
         <sequential>
 
             <propertyfile file="${temp}/idea-fetch-plugin.properties">
@@ -118,6 +119,7 @@
                 <entry key="idea-plugin-build-number" value="@{build-number}"/>
                 <entry key="idea-plugin-build-server" value="@{build-server}"/>
                 <entry key="idea-plugin-filename" value="@{build-filename}"/>
+                <entry key="idea-plugin-build-branch" value="@{build-branch}" />
             </propertyfile>
 
             <ant antfile="build.idea.plugin.fetch.xml">
