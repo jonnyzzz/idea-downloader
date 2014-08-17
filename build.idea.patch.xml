@@ -26,11 +26,22 @@
     <target name="update-idea-patch-settings-mac" if="idea-for-mac">
 
     </target>
+
+    <target name="update-idea-patch-settings-linux" if="idea-for-linux">
+        <copy file="${idea-patch-home}/bin/${idea-vmo64}" tofile="${idea-patch-home}/bin/${idea-vmo}" overwrite="true" failonerror="false"/>
+    </target>
+
+    <target name="update-idea-patch64-settings-linux" if="idea-for-linux">
+        <copy file="${idea-patch-home}/bin/${idea-vmo}" tofile="${idea-patch-home}/bin/${idea-vmo64}" overwrite="true" failonerror="false"/>
+    </target>
+
     <target name="update-idea-patch-settings" depends="idea-properties,
                                                        update-idea-patch-settings-mac,
                                                        update-idea-patch-settings-win,
+                                                       update-idea-patch-settings-linux,
                                                        update-idea-patch-vmo,
                                                        update-idea-patch64-settings-win,
+                                                       update-idea-patch64-settings-linux,
                                                        update-idea-patch-plist,
                                                        update-idea-patch-props"/>
 

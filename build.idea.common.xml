@@ -7,6 +7,17 @@
     <condition property="idea-for-mac" value="cool">
         <os family="mac"/>
     </condition>
+    <condition property="idea-for-linux" value="nice">
+        <and>
+          <os family="unix"/>
+          <not><isset property="idea-for-mac" /></not>
+        </and> 
+    </condition>
+
+    <!-- dump/test we detected OS in the right way -->
+    <echo>idea-windows: ${idea-for-win} </echo>
+    <echo>idea-mac:     ${idea-for-mac} </echo>
+    <echo>idea-linux:   ${idea-for-linux} </echo>
 
     <!-- external parameters -->
     <property name="idea-build-type" value="IDEA_Trunk_Installers"/>
@@ -33,7 +44,7 @@
        <not><equals arg1="true" arg2="${idea-unscrambled}" /></not>
     </condition>
 
-    <target name="idea-properties" depends="idea-properties-mac, idea-properties-win, idea-properties-dump"/>
+    <target name="idea-properties" depends="idea-properties-mac, idea-properties-win, idea-properties-linux, idea-properties-dump"/>
 
 
     <target name="idea-properties-win" if="idea-for-win">
@@ -51,7 +62,15 @@
         </condition>
     </target>
 
-    <target name="idea-properties-dump"> 
+    <target name="idea-properties-linux" if="idea-for-linux">
+        <!-- Waiting for TW-37515 fix to be deployed on buildserver, then extension should be changed to .tar.gz-->
+        <property name="idea-ext" value="gz"/>
+        <property name="idea-vmo" value="idea.vmoptions"/>
+        <property name="idea-vmo64" value="idea64.vmoptions"/>
+        <property name="idea-patch-home" value="${idea-unpack}" />
+    </target>
+
+    <target name="idea-properties-dump">
        <echo>Idea unpack home: ${idea-unpack}</echo>
        <echo>Idea patch home : ${idea-patch-home}</echo>
     </target>
