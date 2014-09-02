@@ -1,0 +1,6 @@
+.DS_Store
+.ant_targets
+.ivy/
+.svn/
+apps/
+
