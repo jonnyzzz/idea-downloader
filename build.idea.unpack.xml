@@ -27,6 +27,18 @@
             </fileset>
             <cutdirsmapper dirs="1"/>
         </untar>
+        <echo file="${idea-unpack}/bin/start.sh" append="false"><![CDATA[#!/bin/sh
+script=$0
+cd `dirname $script`
+test -f idea.sh && (./idea.sh && exit $?)
+test -f pycharm.sh && (./pycharm.sh && exit $?)]]></echo>
+
+        <chmod perm="+x">
+            <fileset dir="${idea-unpack}/bin">
+                <include name="*.sh"/>
+                <include name="fsnotif*"/>
+            </fileset>
+        </chmod>
     </target>
 
     <target name="update-idea-unpack-mac" if="idea-for-mac">
