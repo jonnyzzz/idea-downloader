@@ -1,6 +1,6 @@
 @echo off
 
-svn up
+git pull readonly master
 
 echo. >> last-fatch-log.txt
 echo. >> last-fatch-log.txt
