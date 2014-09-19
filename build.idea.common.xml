@@ -65,8 +65,8 @@
     <target name="idea-properties-linux" if="idea-for-linux">
         <!-- Waiting for TW-37515 fix to be deployed on buildserver, then extension should be changed to .tar.gz-->
         <property name="idea-ext" value="gz"/>
-        <property name="idea-vmo" value="idea.vmoptions"/>
-        <property name="idea-vmo64" value="idea64.vmoptions"/>
+        <property name="idea-vmo" value="${idea-lin-vmoptions}"/>
+        <property name="idea-vmo64" value="${idea-lin-vmoptions64}"/>
         <property name="idea-patch-home" value="${idea-unpack}" />
     </target>
 

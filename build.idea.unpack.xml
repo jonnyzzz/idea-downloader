@@ -21,24 +21,19 @@
 
     <target name="update-idea-unpack-linux" if="idea-for-linux">
         <mkdir dir="${idea-unpack}"/>
-        <untar dest="${idea-unpack}" compression="gzip" stripabsolutepathspec="">
-            <fileset dir="${idea-temp}/zip">
-                <include name="*.tar.gz"/>
-            </fileset>
-            <cutdirsmapper dirs="1"/>
-        </untar>
-        <echo file="${idea-unpack}/bin/start.sh" append="false"><![CDATA[#!/bin/sh
-script=$0
-cd `dirname $script`
-test -f idea.sh && (./idea.sh && exit $?)
-test -f pycharm.sh && (./pycharm.sh && exit $?)]]></echo>
+        <move tofile="${idea-temp}/idea.tar.gz">
+            <first>
+                <fileset dir="${idea-temp}/zip" includes="*.tar.gz"/>
+            </first>
+        </move>
 
-        <chmod perm="+x">
-            <fileset dir="${idea-unpack}/bin">
-                <include name="*.sh"/>
-                <include name="fsnotif*"/>
-            </fileset>
-        </chmod>
+        <exec executable="tar" dir="${idea-unpack}">
+            <arg value="xf"/>
+            <arg value="${idea-temp}/idea.tar.gz"/>
+            <arg value="--strip-components=1"/>
+        </exec>
+
+        <delete file="${idea-temp}/idea.tar.gz"/>
     </target>
 
     <target name="update-idea-unpack-mac" if="idea-for-mac">
