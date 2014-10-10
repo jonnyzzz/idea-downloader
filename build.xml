@@ -201,7 +201,7 @@
     <property name="idea-fetch-only" value="true"/>
  </target>
 
- <!-- we call this script to fetch all desired dependeices -->
+ <!-- we call this script to fetch all desired dependencies -->
  <target name="idea-pre-fetch-auto" depends="fetch-only">
 
      <antcall target="idea"/>
@@ -234,6 +234,10 @@
 
           <exec dir="${bin}" osfamily="mac" executable="open">
               <arg path="${bin}/@{dest}.app"/>
+          </exec>
+
+          <exec dir="${bin}" os="Linux" executable="bash">
+              <arg path="${bin}/@{dest}.app/bin/start.sh"/>
           </exec>
       </sequential>
   </macrodef>

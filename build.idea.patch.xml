@@ -29,6 +29,15 @@
 
     <target name="update-idea-patch-settings-linux" if="idea-for-linux">
         <copy file="${idea-patch-home}/bin/${idea-vmo64}" tofile="${idea-patch-home}/bin/${idea-vmo}" overwrite="true" failonerror="false"/>
+
+        <echo file="${idea-unpack}/bin/start.sh" append="false"><![CDATA[#!/bin/sh
+script=$0
+cd `dirname $script`
+./${idea-sh} $*
+]]></echo>
+        <chmod perm="+x">
+            <file file="${idea-unpack}/bin/start.sh"/>
+        </chmod>
     </target>
 
     <target name="update-idea-patch64-settings-linux" if="idea-for-linux">
