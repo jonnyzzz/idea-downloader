@@ -58,7 +58,7 @@
         <property name="idea-vmo" value="${idea-mac-vmoptions}"/>
         <!-- support for new IntelliJ IDEA products layout -->
         <condition property="idea-patch-home" value="${idea-unpack}/Contents" else="${idea-unpack}">
-           <available file="${idea-unpack}/Contents/lib/idea.jar"/>
+           <available type="dir" file="${idea-unpack}/Contents/lib"/>
         </condition>
     </target>
 
