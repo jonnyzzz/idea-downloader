@@ -49,8 +49,8 @@
  <target name="cpp-eap">
     <cpp dest="cpp"
           debug-port="5008"
-          build-type="CPP_IDE_Installers"
-          build-number="PEAP.tcbuildtag" />
+          build-type="CLion_EAP_Installers"
+          build-number="EAP.tcbuildtag" />
  </target>
 
  <target name="py">
