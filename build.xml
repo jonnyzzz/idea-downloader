@@ -10,6 +10,7 @@
 
  <target name="start">
    <echo>Use 'idea', 'idea-eap'             =>  run     </echo>
+   <echo>Use 'idea-14', 'idea-14-eap'       =>  run     </echo>
    <echo>Use 'idea-13.1', 'idea-13.1-eap'   =>  run     </echo>
    <echo>Use 'idea-13', 'idea-13-eap'       =>  run     </echo>
    <echo>Use 'kotlin'  --- bootstrap build              </echo>
@@ -84,6 +85,23 @@
          <teamcity-plugin/>
      </idea>
  </target>
+ 
+ <target name="idea-14">
+     <property name="idea.build" value="latest.lastSuccessful" />
+     <idea dest="idea"
+           build-type="ijplatform_IjPlatformMaster_IdeaTrunk_Installers"
+           build-number="${idea.build}">
+         <teamcity-plugin/>
+     </idea>
+ </target>
+
+ <target name="idea-14-eap">
+     <idea dest="idea"
+           build-type="ijplatform_IjPlatformMaster_Idea14_InstallersForEapRelease"
+           build-number="EAP.tcbuildtag">
+         <teamcity-plugin/>
+     </idea>
+ </target>
 
  <target name="idea-13.1">
      <property name="idea.build" value="latest.lastSuccessful" />
@@ -120,7 +138,7 @@
  </target>
 
 
- <property name="kotlin-idea-build-type" value="IDEA_Trunk_Installers" />
+ <property name="kotlin-idea-build-type" value="ijplatform_IjPlatformMaster_IdeaTrunk_Installers" />
 
  <target name="kotlin">
      <property name="idea.build" value="latest.lastSuccessful" />
@@ -151,7 +169,7 @@
  <target name="kotlin-M9">
      <idea dest="kotlin"
            debug-port="5006"
-           build-type="ijplatform_master_IdeaTrunkEap_Installers"
+           build-type="ijplatform_IjPlatformMaster_Idea14_InstallersForEapRelease"
            build-number="EAP.tcbuildtag"
            unscrambled="false" >
          <teamcity-plugin/>
