@@ -13,6 +13,7 @@
    <echo>Use 'idea-14', 'idea-14-eap'       =>  run     </echo>
    <echo>Use 'idea-13.1', 'idea-13.1-eap'   =>  run     </echo>
    <echo>Use 'idea-13', 'idea-13-eap'       =>  run     </echo>
+   <echo>Use 'ws', 'ws-9'                   =>  run-ws  </echo>
    <echo>Use 'kotlin'  --- bootstrap build              </echo>
    <echo>    'kotlin-M9', 'kotlin-M8',                  </echo>
    <echo>    'kotlin-M7', 'kotlin-M6.2'     =>  run-kt  </echo>
@@ -52,6 +53,22 @@
           debug-port="5008"
           build-type="CLion_EAP_Installers"
           build-number="EAP.tcbuildtag" />
+ </target>
+
+ <target name="ws">
+    <property name="ws.build" value="latest.lastSuccessful" />
+    <webstorm dest="ws"
+	  debug-port="5011"
+	  build-type="bt3948"
+	  build-number="${ws.build}" />
+ </target> 
+
+ <target name="ws-9">
+    <property name="ws.build" value="9.0.1.tcbuildtag" />
+    <webstorm dest="ws"
+	  debug-port="5011"
+	  build-type="ijplatform_IjPlatform139_WebStorm9_Installers"
+	  build-number="${ws.build}" />
  </target>
 
  <target name="py">
@@ -245,6 +262,7 @@
      <antcall target="py-eap" />
      <antcall target="cpp" />
      <antcall target="cpp-eap" /> 
+     <antcall target="ws" />
   </target>
 
   <target name="spawn">
@@ -275,6 +293,10 @@
       <run-app dest="idea"/>
   </target>
  
+  <target name="run-ws">
+      <run-app dest="ws"/>
+  </target>
+
   <target name="run-kt">
       <run-app dest="kotlin"/>
   </target>

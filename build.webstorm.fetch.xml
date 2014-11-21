@@ -1,0 +1,29 @@
+<project name="idea-downloader-idea-fetch" default="update-idea-fetch" basedir=".">
+    <import file="build.idea.common.xml"/>
+    <import file="build.ivy.xml"/>
+
+    <target name="update-idea-recreate-temp">
+        <!-- recreate temp dir -->
+        <delete dir="${idea-temp}" failonerror="false"/>
+        <mkdir dir="${idea-temp}"/>
+    </target>
+
+
+    <target name="update-idea-fetch" depends="idea-properties, update-idea-recreate-temp">
+        <echo file="${idea-temp}/ivy.xml"><![CDATA[
+            <ivy-module version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://incubator.apache.org/ivy/schemas/ivy.xsd">
+                <info organisation="Jetbrains" module="TeamCity"/>
+                <dependencies>
+                    <dependency org="org" name="${idea-build-type}" rev="${idea-build-number}">
+                        <include name="WebStorm(-EAP)?-[0-9]+(\.[0-9]+)+" ext="${idea-ext}" matcher="exactOrRegexp"/>
+                    </dependency>
+                </dependencies>
+            </ivy-module>
+        ]]></echo>
+
+        <fetch server="${http.buildserver}" config="${idea-temp}/ivy.xml" dest="${idea-temp}/zip"/>
+        <delete file="${idea-temp}/ivy.xml"/>
+    </target>
+
+
+</project>
