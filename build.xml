@@ -15,6 +15,8 @@
    <echo>Use 'idea-13', 'idea-13-eap'       =>  run     </echo>
    <echo>Use 'ws', 'ws-9'                   =>  run-ws  </echo>
    <echo>Use 'kotlin'  --- bootstrap build              </echo>
+   <echo>    'kotlin-trunk                              </echo>
+   <echo>    'kotlin-M10'                               </echo>
    <echo>    'kotlin-M9', 'kotlin-M8',                  </echo>
    <echo>    'kotlin-M7', 'kotlin-M6.2'     =>  run-kt  </echo>
    <echo>Use 'py', 'py-eap'                 =>  run-py  </echo>
@@ -183,6 +185,17 @@
      </idea>
  </target>
 
+ <target name="kotlin-M10">
+     <idea dest="kotlin"
+           debug-port="5006"
+           build-type="ijplatform_IjPlatformMaster_Idea14_InstallersForEapRelease"
+           build-number="EAP.tcbuildtag"
+           unscrambled="false" >
+         <teamcity-plugin/>
+         <kotlin-plugin build-number="M10.tcbuildtag"/>
+     </idea>
+ </target>
+ 
  <target name="kotlin-M9">
      <idea dest="kotlin"
            debug-port="5006"
