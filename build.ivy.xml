@@ -2,6 +2,9 @@
 
     <import file="build.common.xml"/>
 
+    <!-- default value -->
+    <property name="ivy.use.caches.only" value="false" />
+
     <taskdef uri="antlib:fr.jayasoft.ivy.ant"
              resource="fr/jayasoft/ivy/ant/antlib.xml">
         <classpath>
@@ -48,6 +51,7 @@
             <ivy:configure file="${temp}/ivy.settings.xml" host="@{server}" realm="TeamCity" />
 
             <property name="ivy-conf" value="default"/>
+            <echo>Ivy useCachesOnly=${ivy.use.caches.only}</echo>
             <ivy:resolve file="@{config}" conf="${ivy-conf}" useCacheOnly="${ivy.use.caches.only}" />
             <ivy:retrieve pattern="@{dest}/[artifact].[ext]" conf="${ivy-conf}"/>
             <delete file="${temp}/ivy.settings.xml"/>

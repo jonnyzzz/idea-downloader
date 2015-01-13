@@ -10,6 +10,4 @@
     <property name="data"   location="${basedir}/apps/data"/>
     <property name="backup" location="${basedir}/apps/old"/>
 
-    <property name="ivy.use.caches.only" value="false" />
-
 </project>
