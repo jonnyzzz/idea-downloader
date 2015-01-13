@@ -262,21 +262,43 @@
 
  <!-- we call this script to fetch all desired dependencies -->
  <target name="idea-pre-fetch-auto" depends="fetch-only">
-
-     <antcall target="idea"/>
-     <antcall target="idea-13.1"/>
-     <antcall target="idea-13.1-eap"/>
-     <antcall target="idea-13"/>
-     <antcall target="idea-13-eap"/>
-     <antcall target="kotlin"/>
-     <antcall target="kotlin-M7"/>
-     <antcall target="kotlin-M8"/>
-     <antcall target="py" />
-     <antcall target="py-eap" />
-     <antcall target="cpp" />
-     <antcall target="cpp-eap" /> 
-     <antcall target="ws" />
+     <antcall2 target="idea"/>
+     <antcall2 target="idea-13.1"/>
+     <antcall2 target="idea-13.1-eap"/>
+     <antcall2 target="idea-13"/>
+     <antcall2 target="idea-13-eap"/>
+     <antcall2 target="kotlin"/>
+     <antcall2 target="kotlin-M7"/>
+     <antcall2 target="kotlin-M8"/>
+     <antcall2 target="kotlin-M9"/>
+     <antcall2 target="kotlin-M10"/>
+     <antcall2 target="py" />
+     <antcall2 target="py-eap" />
+     <antcall2 target="cpp" />
+     <antcall2 target="cpp-eap" /> 
+     <antcall2 target="ws" />
   </target>
+
+  <macrodef name="antcall2">
+    <attribute name="target" />
+    <sequential>
+       <java
+         classname="org.apache.tools.ant.launch.Launcher"
+         fork="true"
+         failonerror="true"
+         taskname="antcall-@{target}">
+        
+         <classpath>
+           <pathelement location="${ant.home}/lib/ant-launcher.jar"/>
+        </classpath>
+        <arg value="-buildfile"/>
+        <arg file="build.xml"/>
+
+        <arg value="fetch-only"/>
+        <arg value="@{target}"/>
+      </java>
+    </sequential>
+  </macrodef>
 
   <target name="spawn">
      <property name="idea-exe-spawn" value="true" />
