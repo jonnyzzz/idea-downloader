@@ -269,8 +269,6 @@
      <antcall2 target="idea"/>
      <antcall2 target="idea-13.1"/>
      <antcall2 target="idea-13.1-eap"/>
-     <antcall2 target="idea-13"/>
-     <antcall2 target="idea-13-eap"/>
      <antcall2 target="kotlin"/>
      <antcall2 target="kotlin-M7"/>
      <antcall2 target="kotlin-M8"/>
