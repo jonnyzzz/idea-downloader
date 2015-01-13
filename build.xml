@@ -260,6 +260,10 @@
     <property name="idea-fetch-only" value="true"/>
  </target>
 
+ <target name="offline">
+    <property name="ivy.use.caches.only" value="true" />
+ </target>
+
  <!-- we call this script to fetch all desired dependencies -->
  <target name="idea-pre-fetch-auto" depends="fetch-only">
      <antcall2 target="idea"/>
