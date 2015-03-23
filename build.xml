@@ -297,6 +297,7 @@
  <!-- we call this script to fetch all desired dependencies -->
  <target name="idea-pre-fetch-auto" depends="fetch-only">
      <antcall2 target="idea"/>
+     <antcall2 target="idea-14.1"/>
      <antcall2 target="kotlin-M10"/>
      <antcall2 target="py-eap" />
      <antcall2 target="cpp-eap" /> 
