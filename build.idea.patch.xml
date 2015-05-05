@@ -117,27 +117,14 @@ cd `dirname $script`
     </target>
 
     <target name="update-idea-patch-props">
-        <property name="props" value="${idea-properties-path}"/>
+        <propertyfile file="${idea-properties-path}" comment="patched by jonnyzzz">
+          <entry key="idea.dynamic.classpath" value="true" />
 
-        <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
-
-        <propertyfile file="${idea-temp}/properties.patch">
-            <entry key="idea.config.path" value="${idea-data}/config" />
-            <entry key="idea.system.path" value="${idea-data}/system" />
-            <entry key="idea.plugins.path" value="${idea-data}/plugins" />
-            <entry key="idea.log.path" value="${idea-data}/logs" />
+          <entry key="idea.config.path" value="${idea-data}${file.separator}config" />
+          <entry key="idea.system.path" value="${idea-data}${file.separator}system" />
+          <entry key="idea.plugins.path" value="${idea-data}${file.separator}plugins" />
+          <entry key="idea.log.path" value="${idea-data}${file.separator}logs" />
         </propertyfile>
-
-        <concat destfile="${props}" append="true">
-            ## patched by jonnyzzz
-
-        </concat>
-
-        <concat destfile="${props}" append="true">
-            <fileset dir="${idea-temp}" includes="properties.patch" />
-        </concat>
-
-        <delete file="${idea-temp}/properties.patch" />
     </target>
 
 </project>
