@@ -8,19 +8,53 @@
     <target name="update-idea-patch-impl"  depends="idea-properties, update-idea-patch-settings"/>
 
 
+    <target name="update-idea-patch-detect-vmo" depends="update-idea-patch-detect-vmo-win,update-idea-patch-detect-vmo-mac,update-idea-patch-detect-vmo-linux">
+       <echo>Actual vmoptions : ${idea-vmo-path}</echo>
+       <echo>                 : ${idea-vmo-patch64}</echo>
+       <echo>Actual properties: ${idea-properties-path}</echo>                          
+    </target>
 
+    <macrodef name="update-idea-patch-detect-vmo-def">
+      <attribute name="infix"/>
+      <sequential>
+        <condition property="idea-vmo-path" value="${idea-patch-home}/bin/${idea-vmo}" 
+                                             else="${idea-patch-home}/bin/@{infix}/${idea-vmo}">
+          <not><available file="${idea-patch-home}/bin/@{infix}/${idea-vmo}" /></not>
+        </condition>
 
+        <condition property="idea-vmo-path64" value="${idea-patch-home}/bin/${idea-vmo64}" 
+                                               else="${idea-patch-home}/bin/@{infix}/${idea-vmo64}">
+          <not><available file="${idea-patch-home}/bin/@{infix}/${idea-vmo}" /></not>
+        </condition>
 
+        <condition property="idea-properties-path" value="${idea-patch-home}/bin/${idea-properties}" 
+                                                    else="${idea-patch-home}/bin/@{infix}/${idea-properties}">
+          <not><available file="${idea-patch-home}/bin/@{infix}/${idea-properties}" /></not>
+        </condition>
+      </sequential>
+    </macrodef>
+
+    <target name="update-idea-patch-detect-vmo-win" if="idea-for-win">
+      <update-idea-patch-detect-vmo-def infix="win" />
+    </target>
+
+    <target name="update-idea-patch-detect-vmo-mac" if="idea-for-mac">
+      <update-idea-patch-detect-vmo-def infix="mac" />
+    </target>
+
+    <target name="update-idea-patch-detect-vmo-linux" if="idea-for-linux">
+      <update-idea-patch-detect-vmo-def infix="linux" />
+    </target>
 
 
     <target name="update-idea-patch-settings-win" if="idea-for-win">
-        <copy file="${idea-patch-home}/bin/${idea-exe-vmoptions64}" tofile="${idea-patch-home}/bin/${idea-vmo}" overwrite="true" failonerror="false"/>
+        <copy file="${idea-vmo-path64}" tofile="${idea-vmo-path}" overwrite="true" failonerror="false"/>
 
         <echo file="${idea-patch-home}/bin/jonnyzzz.bat">@call ${idea-bat} %*</echo>
     </target>
 
     <target name="update-idea-patch64-settings-win" if="idea-for-win">
-        <copy file="${idea-patch-home}/bin/${idea-vmo}" tofile="${idea-patch-home}/bin/${idea-exe-vmoptions64}" overwrite="true"/>
+        <copy file="${idea-vmo-path}" tofile="${idea-vmo-path64}" overwrite="true"/>
     </target>
 
     <target name="update-idea-patch-settings-mac" if="idea-for-mac">
@@ -28,7 +62,7 @@
     </target>
 
     <target name="update-idea-patch-settings-linux" if="idea-for-linux">
-        <copy file="${idea-patch-home}/bin/${idea-vmo64}" tofile="${idea-patch-home}/bin/${idea-vmo}" overwrite="true" failonerror="false"/>
+        <copy file="${idea-vmo-path64}" tofile="${idea-vmo-path}" overwrite="true" failonerror="false"/>
 
         <echo file="${idea-unpack}/bin/start.sh" append="false"><![CDATA[#!/bin/sh
 script=$0
@@ -41,10 +75,11 @@ cd `dirname $script`
     </target>
 
     <target name="update-idea-patch64-settings-linux" if="idea-for-linux">
-        <copy file="${idea-patch-home}/bin/${idea-vmo}" tofile="${idea-patch-home}/bin/${idea-vmo64}" overwrite="true" failonerror="false"/>
+        <copy file="${idea-vmo-path}" tofile="${idea-vmo-path64}" overwrite="true" failonerror="false"/>
     </target>
 
     <target name="update-idea-patch-settings" depends="idea-properties,
+                                                       update-idea-patch-detect-vmo,
                                                        update-idea-patch-settings-mac,
                                                        update-idea-patch-settings-win,
                                                        update-idea-patch-settings-linux,
@@ -55,21 +90,21 @@ cd `dirname $script`
                                                        update-idea-patch-props"/>
 
     <target name="update-idea-patch-vmo">
-        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-Xmx\d+m" replace="-Xmx${idea-xmx}" flags="g" byline="true"/>
-        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-Xms\d+m" replace="-Xms${idea-xms}" flags="g" byline="true"/>
-        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
-        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
-        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
-        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="-agentlib:yjp[^\s]+" replace="" flags="g" byline="true"/>
+        <replaceregexp file="${idea-vmo-path}" match="-Xmx\d+m" replace="-Xmx${idea-xmx}" flags="g" byline="true"/>
+        <replaceregexp file="${idea-vmo-path}" match="-Xms\d+m" replace="-Xms${idea-xms}" flags="g" byline="true"/>
+        <replaceregexp file="${idea-vmo-path}" match="-XX:\+HeapDumpOnOutOfMemoryError" replace="" flags="g" byline="true" />
+        <replaceregexp file="${idea-vmo-path}" match="-XX:ReservedCodeCacheSize=\d+m" replace="" flags="g" byline="true" />
+        <replaceregexp file="${idea-vmo-path}" match="-XX:MaxPermSize=\d+m" replace="-XX:MaxPermSize=400m" flags="g" byline="true"/>
+        <replaceregexp file="${idea-vmo-path}" match="-agentlib:yjp[^\s]+" replace="" flags="g" byline="true"/>
 
-        <concat destfile="${idea-patch-home}/bin/${idea-vmo}" append="true">
+        <concat destfile="${idea-vmo-path}" append="true">
             -XX:+HeapDumpOnOutOfMemoryError
             -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=${idea-debug-port}
             -XX:+UseCompressedOops
             -XX:ReservedCodeCacheSize=228m
         </concat>
-        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="[\r\n]+" replace="${line.separator}" flags="g" byline="false"/>
-        <replaceregexp file="${idea-patch-home}/bin/${idea-vmo}" match="^\s+" replace="" flags="g" byline="true"/>
+        <replaceregexp file="${idea-vmo-path}" match="[\r\n]+" replace="${line.separator}" flags="g" byline="false"/>
+        <replaceregexp file="${idea-vmo-path}" match="^\s+" replace="" flags="g" byline="true"/>
 
     </target>
 
@@ -82,7 +117,7 @@ cd `dirname $script`
     </target>
 
     <target name="update-idea-patch-props">
-        <property name="props" value="${idea-patch-home}/bin/idea.properties"/>
+        <property name="props" value="${idea-properties-path}"/>
 
         <replaceregexp file="${props}" match="idea\.dynamic\.classpath=.*" replace="idea.dynamic.classpath=true" flags="g" byline="true"/>
 

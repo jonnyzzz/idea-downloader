@@ -35,6 +35,7 @@
     <!-- defaults -->
     <property name="idea-xmx" value="1424m" />
     <property name="idea-xms" value="512m" />
+    <property name="idea-properties" value="idea.properties" />
     <property name="idea-exe-vmoptions" value="idea.exe.vmoptions" />
     <property name="idea-exe-vmoptions64" value="idea64.exe.vmoptions" />
     <property name="idea-bat" value="idea.bat" />
@@ -50,12 +51,14 @@
     <target name="idea-properties-win" if="idea-for-win">
         <property name="idea-ext" value="zip"/>
         <property name="idea-vmo" value="${idea-exe-vmoptions}"/>
+        <property name="idea-vmo64" value="${idea-exe-vmoptions64}"/>
         <property name="idea-patch-home" value="${idea-unpack}" />
     </target>
 
     <target name="idea-properties-mac" if="idea-for-mac">
         <property name="idea-ext" value="dmg"/>
         <property name="idea-vmo" value="${idea-mac-vmoptions}"/>
+        <property name="idea-vmo64" value="${idea-lin-vmoptions64}"/>
         <!-- support for new IntelliJ IDEA products layout -->
         <condition property="idea-patch-home" value="${idea-unpack}/Contents" else="${idea-unpack}">
            <available type="dir" file="${idea-unpack}/Contents/lib"/>
