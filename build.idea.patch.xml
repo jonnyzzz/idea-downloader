@@ -113,7 +113,7 @@ cd `dirname $script`
           <available file="${idea-patch-home}/Contents/Info.plist" />
         </condition>
         <replaceregexp file="${idea-patch-info-plist}" match="-agentlib:yjp[^\s]+" replace="" flags="g" byline="true"/>
-        <replaceregexp file="${idea-patch-info-plist}" match="&lt;string&gt;1.[6789]\*&lt;/string&gt;" replace="&lt;string&gt;${idea-mac-jdk-version}*&lt;/string&gt;" flags="g" byline="true"/>
+        <replaceregexp file="${idea-patch-info-plist}" match="&lt;string&gt;(1.[6789]\+?\*?,?)+&lt;/string&gt;" replace="&lt;string&gt;${idea-mac-jdk-version}*&lt;/string&gt;" flags="g" byline="true"/>
     </target>
 
     <target name="update-idea-patch-props">
