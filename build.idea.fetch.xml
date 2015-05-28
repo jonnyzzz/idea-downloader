@@ -16,7 +16,7 @@
                 <info organisation="Jetbrains" module="TeamCity"/>
                 <dependencies>
                     <dependency org="org" name="${idea-build-type}" rev="${idea-build-number}">
-                        <include name="ideaIU-[0-9\.]+(\.tar)?" ext="${idea-ext}" matcher="exactOrRegexp"/>
+                        <include name="ideaIU-[0-9\.]+(\.tar)?(-custom-jdk-bundled)?" ext="${idea-ext}" matcher="exactOrRegexp"/>
                         <include name="idea.jar.unscramble/idea" ext="jar" matcher="exactOrRegexp"/>
                     </dependency>
                 </dependencies>
