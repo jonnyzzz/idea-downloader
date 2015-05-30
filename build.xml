@@ -17,6 +17,7 @@
    <echo>Use 'ws', 'ws-9'                   =>  run-ws  </echo>
    <echo>Use 'kotlin'  --- bootstrap build              </echo>
    <echo>    'kotlin-trunk                              </echo>
+   <echo>    'kotlin-M12'                               </echo>
    <echo>    'kotlin-M11'                               </echo>
    <echo>    'kotlin-M10'                               </echo>
    <echo>    'kotlin-M9', 'kotlin-M8',                  </echo>
@@ -201,6 +202,17 @@
            build-number="${idea.build}">
          <teamcity-plugin/>
          <kotlin-plugin build-number="${kotlin.build}"/>
+     </idea>
+ </target>
+
+ <target name="kotlin-M12">
+     <idea dest="kotlin"
+           debug-port="5006"
+           build-type="ijplatform_IjPlatform141_IdeaTrunk_InstallersForEapRelease"
+           build-number="EAP.tcbuildtag"
+           unscrambled="false" >
+         <teamcity-plugin/>
+         <kotlin-plugin build-number="M12.1.tcbuildtag" build-branch="M12/bootstrap"/>
      </idea>
  </target>
 

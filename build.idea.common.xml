@@ -53,10 +53,12 @@
         <property name="idea-vmo" value="${idea-exe-vmoptions}"/>
         <property name="idea-vmo64" value="${idea-exe-vmoptions64}"/>
         <property name="idea-patch-home" value="${idea-unpack}" />
+        <property name="idea-infix-ivy" value="" />
     </target>
 
     <target name="idea-properties-mac" if="idea-for-mac">
         <property name="idea-ext" value="dmg"/>
+        <property name="idea-infix-ivy" value="-custom-jdk-bundled" />
         <property name="idea-vmo" value="${idea-mac-vmoptions}"/>
         <property name="idea-vmo64" value="${idea-lin-vmoptions64}"/>
         <!-- support for new IntelliJ IDEA products layout -->
@@ -68,6 +70,7 @@
     <target name="idea-properties-linux" if="idea-for-linux">
         <!-- Waiting for TW-37515 fix to be deployed on buildserver, then extension should be changed to .tar.gz-->
         <property name="idea-ext" value="gz"/>
+        <property name="idea-infix-ivy" value="(\.tar)?" />
         <property name="idea-vmo" value="${idea-lin-vmoptions}"/>
         <property name="idea-vmo64" value="${idea-lin-vmoptions64}"/>
         <property name="idea-patch-home" value="${idea-unpack}" />
