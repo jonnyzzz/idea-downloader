@@ -54,7 +54,7 @@
 
         <mkdir dir="${idea-temp}/mount.copy"/>
         <exec executable="bash">
-            <arg line="-c 'cp -R ${idea-temp}/mount/${idea-product-dir-mask} ${idea-temp}/mount.copy'"/>
+            <arg line="-c 'cp -Rpf ${idea-temp}/mount/${idea-product-dir-mask} ${idea-temp}/mount.copy'"/>
         </exec>
 
         <move todir="${idea-unpack}">
@@ -64,6 +64,8 @@
             <cutdirsmapper dirs="1"/>
         </move>
 
+        <!-- sadly it's not clear why NSBundle fails to load here, but the only way to get IDEA running is to force it using public OS JRE -->
+        <delete dir="${idea-unpack}/Contents/jre" />
         <delete dir="${idea-temp}/mount.copy"/>
 
         <exec executable="hdiutil" dir="${idea-temp}">

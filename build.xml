@@ -352,7 +352,7 @@
 
           <exec dir="${bin}" osfamily="mac" executable="open">
               <arg path="${bin}/@{dest}.app"/>
-              <env key="IDEA_JDK" value="${IDEA_JAVA_HOME}"/>
+              <!--<env key="IDEA_JDK" value="${IDEA_JAVA_HOME}"/> -->
           </exec>
 
           <exec dir="${bin}" os="Linux" executable="bash">
