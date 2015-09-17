@@ -15,7 +15,7 @@
                 <info organisation="Jetbrains" module="TeamCity"/>
                 <dependencies>
                     <dependency org="org" name="${idea-build-type}" rev="${idea-build-number}">
-                        <include name="([Cc][Pp][Pp][Ii][Dd][Ee]|[Cc][lL][iI][oO][nN])-[0-9]+\.[0-9]+(\.[0-9]+)?(\.tar)?" ext="${idea-ext}" matcher="exactOrRegexp"/>
+                        <include name="([Cc][Pp][Pp][Ii][Dd][Ee]|[Cc][lL][iI][oO][nN])-[0-9]+\.[0-9]+(\.[0-9]+)?(${idea-infix-ivy})?(\.tar)?" ext="${idea-ext}" matcher="exactOrRegexp"/>
                     </dependency>
                 </dependencies>
             </ivy-module>
