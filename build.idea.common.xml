@@ -20,7 +20,7 @@
     <echo>idea-linux:   ${idea-for-linux} </echo>
 
     <!-- external parameters -->
-    <property name="idea-build-type" value="IDEA_Trunk_Installers"/>
+    <property name="idea-build-type" value="ijplatform_master_Idea_Installers"/>
     <property name="idea-build-number" value="latest.lastSuccessful"/>
     <property name="idea-version" value="trunk"/>
     <property name="idea-debug-port" value="5005"/>
