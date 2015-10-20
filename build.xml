@@ -10,6 +10,7 @@
 
  <target name="start">
    <echo>Use 'idea', 'idea-eap'             =>  run     </echo>
+   <echo>Use 'idea-15', 'idea-15-eap'       =>  run     </echo>
    <echo>Use 'idea-14.1', 'idea-14.1-eap'   =>  run     </echo>
    <echo>Use 'idea-14', 'idea-14-eap'       =>  run     </echo>
    <echo>Use 'idea-13.1', 'idea-13.1-eap'   =>  run     </echo>
@@ -103,6 +104,23 @@
  <target name="idea-eap">
      <idea dest="idea"
            build-type="ijplatform_master_IdeaTrunkEap_Installers"
+           build-number="EAP.tcbuildtag">
+         <teamcity-plugin/>
+     </idea>
+ </target>
+
+ <target name="idea-15">
+     <property name="idea.build" value="latest.lastSuccessful" />
+     <idea dest="idea"
+           build-type="ijplatform_IjPlatform143_Idea_Installers"
+           build-number="${idea.build}">
+         <teamcity-plugin/>
+     </idea>
+ </target>
+
+ <target name="idea-15-eap">
+     <idea dest="idea"
+           build-type="ijplatform_IjPlatform143_Idea_InstallersForEapRelease"
            build-number="EAP.tcbuildtag">
          <teamcity-plugin/>
      </idea>
@@ -309,8 +327,8 @@
  <!-- we call this script to fetch all desired dependencies -->
  <target name="idea-pre-fetch-auto" depends="fetch-only">
      <antcall2 target="idea"/>
-     <antcall2 target="kotlin-M12"/>
-     <antcall2 target="py-eap" />
+     <antcall2 target="idea-15"/>
+     <antcall2 target="idea-15-eap"/>
      <antcall2 target="cpp-eap" /> 
   </target>
 
